@@ -21,6 +21,8 @@ Topics covered throughout the course:
 * Hidden Markov Models
 * Estimation theory
 
+Also see similar notes for the course [MI1: Supervised Learning course](https://github.com/kashefy/mi1notes/)
+
 See [Releases](https://github.com/kashefy/mi2notes/releases) to download the latest pdf files.
 
 ## Instructions on compiling the LaTeX sources ##
