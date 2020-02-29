@@ -4,7 +4,7 @@
 [![License: CC BY-SA 4.0](https://licensebuttons.net/l/by-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 This is a collection of notes I've been making for the course [Machine Intelligence 2: Unsupervised Learning](https://www.ni.tu-berlin.de/menue/teaching_activities/all_courses/machine_intelligence_ii/) at the TU Berlin. 
-Machine Intelligence 1 is the first part of two consecutive courses on topics in machine learning and artificial neural networks taught by Prof. Klaus Obermayer of the [Neural Information Processing Group](www.ni.tu-berlin.de) at TU Berlin.
+MI 2 is the second part of two consecutive courses on topics in machine learning and artificial neural networks taught by Prof. Klaus Obermayer of the [Neural Information Processing Group](www.ni.tu-berlin.de) at TU Berlin.
 
 Topics covered throughout the course: 
 * Principal Component Analysis
