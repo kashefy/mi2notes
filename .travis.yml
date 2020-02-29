@@ -20,4 +20,4 @@ deploy:
   skip_cleanup: true
   on:
     repo: kashefy/mi2notes
-    branch: master  file: ''
+    branch: master
