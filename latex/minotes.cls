@@ -104,6 +104,3 @@
 % see corresponding \notesonly for what to include in notes but not in slides mode
 \newcommand{\slidesonly}[1]{}
 
-\newcommand\labelitemi{\textbullet}
-
-\newcommand{\inparaenum}{\enumerate}
