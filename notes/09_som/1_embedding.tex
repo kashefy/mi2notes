@@ -1,0 +1,295 @@
+
+
+\begin{frame}
+
+
+\section{Dimensionality reduction:}
+
+\notesonly{
+We want to be able to visualize some data that is high-dimensional. We have already encountered approaches for reducing the dimensionality of the data: PCA is one of them. \figref{fig:spiral} 
+provides an example of this.
+}
+
+\begin{figure}[ht]
+     \centering
+     \savebox{\imagebox}{\includegraphics[width=0.4\textwidth]{img/spiral_data.png}}%
+     \begin{subfigure}[t]{0.4\textwidth}
+         \centering
+         \usebox{\imagebox}% Place largest image
+         \caption{original observations $\vec x$}
+         \label{fig:spiral_data}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[t]{0.35\textwidth}
+         \centering
+         \raisebox{\dimexpr.5\ht\imagebox-.5\height}{% Raise smaller image into place
+         \includegraphics[width=\textwidth]{img/spiral_pca.png}
+         }
+         \caption{projection onto the first 2 PCs}
+         \label{fig:spiral_pca}
+     \end{subfigure}
+     \caption{Dimensionality reduction of ``spiral data''. Points are colored according to their index in the dataset.}
+	 \label{fig:spiral}
+\end{figure}
+
+\end{frame}
+\begin{frame}
+
+\newpage
+
+\section{Global vs. local structure:}
+
+\notesonly{
+Let us examine another dataset on which we will also apply PCA\footnote{We will only consider standard linear PCA.} (c.f. \figref{fig:s_data_pca}). The purpose of this is to make the distinction between global and local structure in the data and which type of structure is captured by PCA (the standard linear version of PCA):
+}
+
+\begin{figure}[h]
+	\centering
+    \includegraphics[width=12cm]{img/s_data_pca.png}
+	\caption{PCA projection on the $\textbf{S}$ dataset. Points are colorized according to their index in the dataset.}
+	\label{fig:s_data_pca}
+\end{figure}
+
+\end{frame}
+
+\notesonly{
+Looking at the PCA projections, we recognize that they closely resemble a top-down view of the data. 
+The top-down view is effectively a projection of the data onto the xy-plane. The solution found by PCA is one that explains this 3-dimensional \textbf{S} data using a 2D projection such that the variance explained is maximal. The resemblance between the PCA projections and the top-down view tells us that the main ``directions'' in the data are:
+\begin{itemize}
+\renewcommand\labelitemi{--}
+\item \textbf{First}, the direction explained by the PC with highest eigenvalue ($PC_1$):\\
+	A crude way of describing it, is that it lies parallel to the original y-axis. It explains the ``thickness'' of the \textbf{S}.
+\item \textbf{Second}, the data also follows the direction of the the original x-axis. It is actually slightly tilted. This tilt explains why some color regions appear more narrow on the $PC_2$ axis, than they do in the top-down view.
+\end{itemize}
+
+The scree plot tells us how much variance is explained by each principle component. The difference between the last two PCs is less than the difference between either of them and the first PC. 
+
+\question{Why does $PC_1$ explain more variance than either $PC_2$ or $PC_3$?}\\
+
+- The obivous reason is that this is by design. PCA sorts the PCs in order of descending variance ($\corresponds$ eigenvalues). But this is not what we're asking. The question is specific to this \textbf{S}-data. \emph{Why does the PC that lies parallel to the y-axis explain more variance than the PC that lies parallel to the x-axis?} The reason for this is that any point on the $\textbf{S}$ gets  repeated along the y-axis. This three-dimensional $\textbf{S}$ is really a concatenation of multiple ${S}$-curves. The first PC represents which ${S}$-curve a point belongs to. The only thing left to do is to explain \emph{where} we are on a single curve. The second PC is not sufficient to fully describe this with low reconstruction error. We can only achieve a reconstruction error that is sufficiently low if we also take the third PC into account. So the first thing to point out is that PCA does not give us an ideal dimensionality reduction for this dataset. The slight tilt in $PC_2$ is that it only partially describes the $z$ coordinate of a point. We therefore expect that $PC_3$ is needed to fully recover that $z$ coordinate.
+}
+
+\begin{frame}
+\question{What is PCA doing wrong on the \textbf{S}-data?}
+
+\slidesonly{
+\begin{figure}[ht]
+	\centering
+    \includegraphics[width=12cm]{img/s_data_pca.png}
+	\caption{Comparing PCA projections with embedding solutions. Points are colorized according to their index in the dataset.}
+	\label{fig:s_data_pca}
+\end{figure}
+}
+
+\notesonly{
+- The points were colored according to the order in which they appear in the dataset. PCA does not account for this order. Shuffling the order of the samples leads to the exact same PCs. Nonetheless, we recognize that each group of similarly colored points share proximity to one another. To be more specific: Points with the same color lie on the same location on two different ${S}$-curves. So color represents the position on a curve and that position can only be described by the remaining two PCs. When we look at the PCA projection, we also recognize that colors overlap, specifically Blue, Green and and Red. Those three colors represent different elevation levels on the $\textbf{S}$. \emph{Is this overlap a bad thing?} They have something in common, so we want them to appear closer to one another. So let us look at what the PCA projections tell us about the color groups:
+
+
+\begin{itemize}
+\renewcommand\labelitemi{--}
+\item \textcolor{red}{Red} is closer to \textcolor{blue}{Blue} than it is to \colorbox{yellow}{Yellow}. Looking at $PC_2$ confirms this.
+\item \textcolor{red}{Red}, \textcolor{blue}{Blue} and \textcolor{green}{Green} are close to one another. Looking at $PC_2$ confirms this also. However, it does not reveal that \textcolor{red}{Red} is actually \textbf{closer} to {\color{green}{Green}}, than it is to \textcolor{blue}{Blue}.
+\end{itemize}
+}
+\end{frame}
+
+What is missing from PCA is that it doesn't prioritize that this $\textbf{S}$ is made up from multiple ${S}$-curves stacked next to each other. Knowing this information enables to find a much more compact representation for describing the data. One might actually find it completly irrelevant that the data describes resembles an $\textbf{S}$ and by doing so, one could find a more compact representation for the data. This is done by finding a representaiton that focus on preserving local structure.
+
+PCA is designed to find ``global'' structure in the data. It does not restrict itself to preserving local structure. The colors show us the local structure in the data and we no longer recognize this in the PCA projections. Clustering methods base their structure on proximity measures. The proximity can be measured between a point and other data points (e.g. pairwise clustering). Clustering reveals more information about local structure than it does about global structure (i.e. the index/label assigned to a cluster is arbitrary).
+
+\question{What about ICA?}\\
+
+- The independence assumption in ICA also enables it to find local structures.
+
+This is not to make the point that linear PCA is not an effective method for dimensionality reduction. This is \textbf{not} the takeaway from all this is. The point is to know that linear PCA attends to global structure and that the user needs to decide whether they are actually interested in global or local structures. Do we care about where we are on an $S$-curve or not?
+
+
+\begin{frame}
+\question{What do we mean when we talk about \emph{global} and \emph{local} structures in the data?}\\
+
+\notesonly{
+- Pick any two neighboring points from some dataset. Their proximity to one another lets us assume they have more in common than a pair of points that are far away from one another \footnote{This proximity assumption forms the basis for pairwise clustering.}. If we perform PCA on this data and project it onto the principle components, we may find that the two points that were neighbors in the original space are no longer neighbors in the space spanned by the PCs. To be more precise, if their projections do happen to appear close to one another, then this is due to the linearity in the data. But what about non-linear manifolds? PCA does not try to preserve any neighborhood or ``local'' information. This becomes a problem if the ``local'' information is key to \emph{efficiently} reduce the dimensionality.
+}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=4.3cm]{img/fig3_lle_intro_cropped_pca.png}
+	\caption{PCA projections of translated versions of the same image}
+	\label{fig:faces_translated_pca}
+\end{figure}
+
+\question{What are the 2-d coordinates of the face if it is shifted to the bottom-left corner?}
+
+\end{frame}
+
+
+Consider the images in \figref{fig:faces_translated_pca}. The data consists of images where a \textbf{single} picture of a face surrounded by some noisy background. Each image shows the face picture at a different location within the image. The images are projected onto the space spanned by the first two PCs. We examine the projections due to moving the face from one corner to another and find that no relation between the coordinates of the projection and the translation applied to the face picture. If we wanted to predict the coordinates of an image where the face is shifted to the bottom left corner, we wouldn't be able to make that prediction.
+
+\newpage
+
+\begin{frame}
+\section{Locally Linear Embedding (LLE)}
+
+\notesonly{
+\underline{Motivation:}\\
+
+Find structure in the data that extends to non-linear manifolds (e.g. $\textbf{S}$-dataset). 
+Utilize this to reduce the dimensionality of the data such that points that lie close \textbf{on} the manifold, also lie close when projected (we will refer to the preserving local neighborhoods / ``structure preserving'' as \emph{embedding}).
+}
+\begin{figure}[ht]
+	\centering
+    \includegraphics[width=12cm]{img/s_data_proj.png}
+	\caption{$\textbf{S}$-dataset, PCA projections and LLE solutions. Points are colorized according to their index in the dataset.}
+	\label{fig:s_data_proj_lle}
+\end{figure}
+
+
+\end{frame}
+
+Looking at \figref{fig:s_data_proj_lle} we see that the nonlinear manifold is preserved in the LLE embedding, while PCA does not capture the non-linear local structure. The same can be said for \figref{fig:faces_translated_pca_lle}, translating the images from one corner to another has a corresponding translation in the embedded space. In this case we can also infer the coordinates of an image where the face appears in the bottom-left corner in the embedded space.
+
+\begin{frame}
+\slidesonly{
+ \frametitle{Locally Linear Embedding (LLE)}
+}
+ 
+\begin{figure}[ht]
+	\centering
+    \includegraphics[width=4cm]{img/fig3_lle_intro_cropped.png}
+	\caption{PCA projections and LLE of translated versions of the same image. What would be the coordinates of the face-in-bottom-left-corner-image be?}
+	\label{fig:faces_translated_pca_lle}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\section{Locally Linear Embedding (LLE): Algorithm outline}
+
+\notesonly{
+LLE is a fairly simple algorithm. Local structure is preserved by optimizing the projection of a neighborhood of points (PCA finds a projection for all points collectively).
+}
+\begin{figure}[ht]
+	\centering
+    \includegraphics[width=8cm]{img/section4_fig11_K2}
+	\label{fig:tangentialk2}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\textbf{switch to lecture slides}
+
+\end{frame}
+
+\begin{frame}{Step 2: calculate reconstruction weights}
+\begin{equation}
+E(\vec{W}) = \sum_{\alpha=1}^{p} \underbrace{\lVert\vec{x}^{(\alpha)} - \sum_{\beta=1}^{p} \mathrm{W}_{\alpha \beta} \vec{x}^{(\beta)}\rVert^2}_{
+\substack{=e^{(\alpha)}\\\text{reconstruct } \vec{x}^{(\alpha)} \text{ by its } \\ K \text{ nearest neighbors only}}
+}
+\eqexcl \min_{\vec W}
+\end{equation}
+\begin{equation}
+\text{s.t.} \quad \mathrm{W}_{\alpha \beta} = 0 \text{ if } \beta \notin \operatorname{KNN}(\vec{x}^{(\alpha)}), \qquad
+\sum_{\beta=1}^{p} \mathrm{W}_{\alpha \beta} = 1
+\end{equation}\\
+
+for each data point $\vec{x}^{(\alpha)}$ (result from applying Lagrange multiplier method):
+\begin{itemize}
+	\item local ``covariance'' matrix (symmetric \& positive semidefinite) $\vec{C}^{(\alpha)} \in \mathbb{R}^{K,K}:$ 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\slidesonly{\frametitle{Step 2: calculate reconstruction weights (cont'd)}}
+
+\slidesonly{
+\begin{equation}
+\mathrm{W}_{\alpha \beta} = 0 \text{ if } \beta \notin \operatorname{KNN}(\vec{x}^{(\alpha)}), \qquad
+\sum_{\beta=1}^{p} \mathrm{W}_{\alpha \beta} = 1
+\end{equation}
+}
+
+\begin{align}
+e^{(\alpha)} &= \lVert\vec{x}^{(\alpha)} - \sum_{\beta=1}^{p} \mathrm{W}_{\alpha \beta} \vec{x}^{(\beta)}\rVert^2\\
+&\stackrel{\text{sum to 1 for} \beta \in \text{KNN}}{=} \lVert \sum_{\beta=1}^{p} \mathrm{W}_{\alpha \beta} \vec{x}^{(\alpha)} - \sum_{\beta=1}^{p} \mathrm{W}_{\alpha \beta} \vec{x}^{(\beta)}\rVert^2\\
+\end{align}
+
+\textbf{switch to LLE lecture slides}
+
+\end{frame}
+
+\begin{frame}%[label=g_alpha_beta_proof]{Supplementary Material}
+%\begin{textblock}{5}(13,0.075)
+	%\hyperlink{g_alpha_beta_slide}{\beamerbutton{back to lecture}}
+%\end{textblock}
+	Derivation of $g_{\alpha \beta}$ in the cost function
+	$F(\vec U) =
+    \sum_{\alpha=1}^{p} 
+	\bigg(  \vec{u}^{(\alpha)}  - \sum_{\beta=1}^{p} W_{\alpha \beta} \vec{u}^{(\beta)}
+	\bigg) ^ 2
+    $ 
+    for finding the optimal embedding coordinates.\\
+    First, a brief refresher on binomial expansion of vectors:
+	%{\footnotesize{}
+    \begin{align}
+    \big( 
+		\vec{a}
+		- \vec{b}
+	\big) ^ 2 
+    &= \big(  \vec{a} - {\color{blue}\vec{b}} \big)^\top \big(  \vec{a} - {\color{red}\vec{b}} \big)\\
+    &= \vec a^\top \vec a 
+    - \vec a^\top {\color{red}\vec{b}}
+    - {\color{blue}\vec{b}^\top} \vec a 
+    - {\color{blue}\vec{b}^\top} {\color{red}\vec{b}}
+    \end{align}\\
+    
+    Let $\;\vec a = \vec u^{(\alpha)}\;$ and 
+    $\;{\color{red}
+    \vec{b}=\sum_{\beta=1}^{p} W_{\alpha \beta} \vec{u}^{(\beta)}
+    } \Leftrightarrow {\color{blue}
+    \vec{b}^{\top}=\sum_{\beta=1}^{p} 
+    W_{\beta \alpha} \left(\vec{u}^{(\beta)}\right)^\top
+    }
+    $
+    
+    \question{Why do we flip the indices from 
+    ${\color{red} W_{\alpha \beta}}$ to ${\color{blue} W_{\beta \alpha}}$?}\\
+    The reason we flip the Transposing $\vec u^{(\beta)}$ 
+    
+    \begin{align}
+	= &\sum_{\alpha=1}^{p} 
+	\bigg[ 
+	(\vec{u}^{(\alpha)})^2
+	- 2 \sum_{\beta=1}^{p} W_{\alpha \beta} (\vec{u}^{(\alpha)} )^\top \vec{u}^{(\beta)}
+	+
+	\sum_{\beta=1, \gamma=1}^{p} W_{\alpha \beta} W_{\alpha \gamma} (\vec{u}^{(\beta)} )^\top \vec{u}^{(\gamma)}
+	\bigg]
+	\\
+	= &\sum_{\alpha=1}^{p} 
+	\bigg[ 
+	(\vec{u}^{(\alpha)})^2
+	- \sum_{\beta=1}^{p} W_{\alpha \beta} (\vec{u}^{(\alpha)} )^\top \vec{u}^{(\beta)}
+	- \sum_{\beta=1}^{p} W_{\beta \alpha} (\vec{u}^{(\beta)} )^\top \vec{u}^{(\alpha)}
+	\\~~~~~~~&+
+	\sum_{\beta=1}^{p} 
+		\sum_{\gamma=1}^{p} 
+		\bigg(
+			W_{\gamma \alpha} 
+			W_{ \gamma \beta}
+		\bigg) 
+		(\vec{u}^{(\alpha)} )^\top \vec{u}^{(\beta)}
+	\bigg]
+	\\
+	= &\sum_{\alpha, \beta=1}^{p} 
+	\bigg\{ \underbrace{
+		\delta_{\alpha \beta}
+		- W_{\alpha \beta}
+		- W_{\beta \alpha}
+		+
+		\sum_{\gamma=1}^{p} 
+			W_{\gamma \alpha} W_{\gamma \beta} }_{=g_{\alpha \beta}}
+	\bigg\}
+	(\vec{u}^{(\alpha)} )^\top \vec{u}^{(\beta)}
+	\end{align}
+    %}
+\end{frame}
