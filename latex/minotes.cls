@@ -10,7 +10,7 @@
 \RequirePackage[T1]{fontenc}
 \usepackage{hyperref}
 \usepackage[overlay,absolute]{textpos}
-\RequirePackage{enumerate}
+\usepackage{enumerate}
 \RequirePackage{graphics,graphicx}
 \usepackage{paracol}
 \usepackage{algorithm2e}
