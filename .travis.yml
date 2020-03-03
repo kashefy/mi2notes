@@ -11,7 +11,7 @@ after_success:
 deploy:
   provider: releases
   api_key: 
-    secure: "$GITHU8_API_KEY"
+    secure: nGqBiDrTL7nI1cqLYG4ReMJjKGhws2bzEUhr+B46QesMif3jAlHUIezioJX3yEMKF78xTE6kf6Iye36vaTHIg0uJMmZV9IOWhxEfU54r2rwcoH//WbcPzHiICojwVTQUqpourpsDCRMcT2xAM7rMTOQA63reafQapAdXy9NCrXvtt73GS8PCUOh3KFDRisgonkv0OD/sVMLxi30mcKxSvHQ0tgJ/ctMtskCTBkk33qickbW6B+8IbLx6X85CVXkZG/oo+gtTf73B85OYOD+3bII3q9p/xyJS72P7S42qs+kF16b1+/2gdZwrnsEEhG9F78JFL+ZLqdcWthqwtLx9asNYaojVtaWqpHP6+wxTP2L2OemlHSPaSyDq+OBSHaWWrhjgQ6xY+tvwje0u4vYFqF4HNj9jdVo5gOds9XAkkAzvXQwfvj2FCzLJwvBwv1CHtFGObONlJac282kUjIgfbR1AbPxYVZVMSSJkI38ehaXsoowbc6VdzxGIGyOrOzJQSzItWqE0ui6OzA7lqs6PihV79DwbQNSGFWx1YyPdHm9fhHaCyZ6V5cgfDQ1gswQjkU4tL2MVDrc0V1TrP96uJVQkNXkjZNrbTjZ/gEMXo+SwWIqeITmDwwubLEE43uALIH26e7MdGmH4fmihfWB/Hv4J1snseJpihJDzD9Cbc8M=
   file_glob: true
   file:
   - "./notes/**/tutorial_*.slides.pdf"
