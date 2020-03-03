@@ -57,7 +57,7 @@ We will discuss several methods for solving the ICA problem:
 
 We first will look into some key concepts employed by the \emph{Infomax} method.
 
-\newpage
+\clearpage
 
 \underline{Outline for \emph{Infomax} ICA:}
 \begin{itemize}
@@ -148,7 +148,7 @@ $\E \lbrack x^2 \, y^2 \rbrack
 
 we see that the requirement for independence in \eqref{eq:statindepexp} is violated. The variables are therefore uncorrelated but not independent.
 
-\newpage
+\clearpage
 
 \question{How does statistical independence fit into ICA?}
 
@@ -267,7 +267,7 @@ D_{KL}\lbrack\,p\, ||\, q\,\rbrack
 
 for the continuous case.
 
-\newpage 
+\clearpage 
 Let's start putting things into the context of ICA:
 
 Recalling the factorization in \eqref{eq:facts} which is based on the assumption that such facotrization can be found by minimizing 
@@ -367,7 +367,7 @@ between the pdf of a random vector $\widehat {\vec s}$ of length $N$ and the mar
 $\widehat{s_i}$\footnote{A much smoother walkthrough for this can be found in 
 Haykin Ch. 10.5}
 
-\newpage
+\clearpage
 
 \section{The Infomax Principle (Bell \& Sejnowski, 1995)}
 
@@ -456,7 +456,7 @@ Whether Infomax by maximizing entropy\footnote{if interested see Bell, A. J., \&
 or finding a factorization via the KL-divergence,
 both are based on the Infomax principle and arrive at the same solution.
 
-\newpage
+\clearpage
 
 \section{Approach 1: Infomax via KL-divergence for the transformed densities}
 \begin{eqnarray}
@@ -568,7 +568,7 @@ We therefore obtain for the value of the Jacobian determinant
 		\sum\limits_{k = 1}^N \mathrm{w}_{lk} \mathrm{x}_k \Bigg).
 \end{equation}
 
-\newpage
+\clearpage
 
 Inserting \eqref{eq:conservationvec} and \eqref{eq:uxj} into the Infomax cost function from \eqref{eq:infomax} gives 
 \begin{eqnarray}
@@ -689,7 +689,7 @@ or using \emph{on-line-learning} by updating $w_{ij}$ with each individual cost 
 \label{alg:onlineGD}
 \end{algorithm}
 
-\newpage
+\clearpage
 
 \subsection{Natural Gradient Learning}
 The natural gradient allows for an efficient \& fast learning rule (no matrix inversions
