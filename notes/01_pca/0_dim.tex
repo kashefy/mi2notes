@@ -1,5 +1,7 @@
 \section{The setting}
 
+\begin{frame}\frametitle{\secname}
+    
 \underline{Data:}
 
 observations: $\big\{ \vec{x}^{(\alpha)} \big\}, \alpha = 1, \ldots, p; \quad \vec{x} \in \R^N$
@@ -25,9 +27,11 @@ Our entire dataset:
 \right) \in \R^{N \times p}
 \]
 
-\section{Dimensionality Reduction}
-\vspace{0.5cm}
+\end{frame}
 
+\section{Dimensionality Reduction}
+
+\begin{frame}\frametitle{\secname}
 We want to reduce the number of elements in $\vec x \in \R^N$
 while retaining as most of the intrinsic information content.
 
@@ -35,9 +39,11 @@ while retaining as most of the intrinsic information content.
 
 \question{What is the difference between dimensionality reduction and compression, if any?}
 
-\newpage
+\end{frame}
 
-\underline{Simple truncation:}
+%\newpage
+\subsection{Simple truncation}
+\begin{frame}\frametitle{\subsecname}
 
 Let\\[0.2cm]
 $\vec x \in \R^N$,\\
@@ -55,3 +61,32 @@ MSE  &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetild
 They will end up with an MSE equal to $\sum_{j=M+1}^{N} \sigma_j^2$, where $\sigma_j^2$ is the variance of the $x_j$.\\
 
 \underline{Objective:} Rotate/Transform the data s.t. truncating the transformed vector $\vec v \in \R^M$ is optimum in the sense of minimal MSE.
+
+\end{frame}
+
+\begin{frame}
+    
+\begin{tikzpicture}
+  %\draw [distance=5.4pt, postaction={decorate, draw=black, decoration=zigzag}] (0,0) -- (40pt,0);
+\draw[decoration = {zigzag,segment length = 2mm, amplitude = 1mm},decorate] (0,0)--(1,0);
+\end{tikzpicture}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[]
+\resizebox{.5\textwidth}{!}{%
+\begin{tabular}{|c|c|c|}
+\cline{1-1} \cline{3-3}
+Class & \hspace{.2\linewidth} & l\_2 \\ \cline{1-1} \cline{3-3} 
+1 &  & -1 \\ \cline{1-1} \cline{3-3} 
+2 &  & 1 \\ \cline{1-1} \cline{3-3} 
+3 &  & 1 \\ \cline{1-1} \cline{3-3} 
+\hspace{-9.55mm}
+\begin{tikzpicture}
+\draw[decoration={zigzag,segment length=2mm, amplitude=1mm},decorate](0,0)--(1.,0);
+\end{tikzpicture}\hspace{-8.15mm} &  & -1 \\ \cline{1-1} \cline{3-3} 
+\end{tabular}%
+}
+\end{table}
+
+\end{frame}
