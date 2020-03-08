@@ -1,0 +1,62 @@
+\subsection{Applying PCA}
+
+What can we do with PCA?
+
+\begin{enumerate}
+\item Dimensionality reduction
+\item Visualization (e.g. plot the projections onto the first 2 or 3 PCs.)
+\item Whitening (i.e. decorrelate the data) - exploit that eigenvectors form an orthonormal basis.
+$$
+\vec v^{(\alpha)} = \vec x_{whitened}^{(\alpha)} = \vec{\Lambda}^{-\frac{1}{2}}\vec{M}^\top\vec{x}^{(\alpha)}
+\quad
+\forall \alpha
+$$
+
+\question{What is the covariance of $\vec x_{whitened}$?}
+
+\end{enumerate}
+
+\newpage
+\subsection{A note on implementation:}
+
+\question{Is an off-the-shelf implementation such as\\ sklearn.decomposition.PCA for python really necessary?}
+
+PCA boils down to solving the eigenvalue problem.
+We bascially need a routine with which to solve the eigenvalue problem. For python, the obvious choice is to use a routine like \textit{numpy.linalg.eig(A)}. \emph{Whatch out for how to intepret the output.}
+
+\question{Are there alternatives to eigenvalue decomposition?}
+
+Yes, namely,
+
+\underline{Singular Value Decomposition (SVD)}:\\
+Let $\vec X' \in \R^{N \times p}$ be the centered dataset (centering is a must):
+$$
+\vec X'_{N \times p} = \vec U_{N \times N} \, \vec S_{N \times p} \, \vec V^\top_{{p \times p}}
+$$
+where,
+$$
+\vec U^\top \vec U = \vec I_{N \times N}
+$$ and 
+$$
+\vec V^\top \vec V = \vec I_{p \times p}
+$$ (i,e. $\vec U$, $\vec V$ are orthogonal.).
+\begin{itemize}
+\item The columns of $\vec U$ make up the eigenvectors of $\vec X'\vec X'^\top$.
+\item The columns of $\vec V$ (or rows of $\vec V^\top$) make up the eigenvectors of $\vec X'^\top\vec X'$.
+\item $\vec S$ is a diagonal matrix. The singular values in $\vec S$ (the diagonal entries) are the \textbf{square roots} of the  eigenvalues of the eigenvectors of $\vec X'\vec X'^\top$ or $\vec X'^\top\vec X'$.
+
+\end{itemize}
+Recall:
+
+$$
+\vec C = \E[\vec X \vec X^\top] = \frac{1}{p} \vec X \vec X^\top
+$$
+
+\underline{When to use SVD vs. Eig? \textbf{Not dogma}}
+
+\begin{itemize}
+
+\item Numerical instabilities in eigendecomposition of very large covariance matrix $\rightarrow$ SVD
+\item SVD not applicable to Kernel-PCA $\rightarrow$ Eig
+\item Computational efficiency $\rightarrow$ SVD (depends...?)
+\end{itemize}
