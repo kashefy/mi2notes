@@ -43,50 +43,192 @@ while retaining as most of the intrinsic information content.
 
 %\newpage
 \subsection{Simple truncation}
+
+
+
+
 \begin{frame}\frametitle{\subsecname}
 
-Let\\[0.2cm]
-$\vec x \in \R^N$,\\
-$\E[\vec x] = \vec 0$ (i.e. for each variable $x_i$ its mean $m_i = \sum_{\alpha=1}^{p} x_i^{(\alpha)} = 0$) and $1 < M\, < N$.\\[0.2cm]
-We simply transmit the first $M$ elements of $\vec x$. The recipient reconstructs all $N$ elements by adding zero entries for all missing elements (i.e. \textit{zero-padding}).\\[0.2cm]
-How much error will they accumulate in this case?\\[0.2cm]
-Let $\widetilde{\vec{x}}$ be the reconstructed observation. The first $M$ elements were transmitted perfectly, zero padding is used to extend the vector to its original size of $N$ elements:
-\begin{align*}
-MSE  &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2\\
-     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \left(\underbrace{\sum\limits_{j = 1}^M ( x_j^{(\alpha)} - \widetilde{x_j}^{(\alpha)} )^2}_{\substack{=0 \\\text{ (perfect transmission)}}} + \sum\limits_{j = M+1}^N ( x_j^{(\alpha)} - \underbrace{\widetilde{x_j}^{(\alpha)}}_{\substack{=0\\ \text{padded}}}\;)^2 \right)\\
-     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = M+1}^N ( x_j^{(\alpha)} )^2 \\
-     &=  \sum\limits_{j = M+1}^N \frac{1}{p} \sum\limits_{\alpha = 1}^p  ( x_j^{(\alpha)} )^2 \\
-     &=  \sum\limits_{j = M+1}^N \sigma_j^2 \\
-\end{align*}
-They will end up with an MSE equal to $\sum_{j=M+1}^{N} \sigma_j^2$, where $\sigma_j^2$ is the variance of the $x_j$.\\
+\begin{center}
+\begin{minipage}{0.3\textwidth}
 
-\underline{Objective:} Rotate/Transform the data s.t. truncating the transformed vector $\vec v \in \R^M$ is optimum in the sense of minimal MSE.
+	%\begin{table}[]
+	%\centering
+	\resizebox{\textwidth}{!}{%
+	\begin{tabular}{c|cccc}
+			  & \multicolumn{1}{c}{$\vec x^{(1)}$} & \multicolumn{1}{c}{$\vec x^{(2)}$} & \multicolumn{1}{c}{\ldots} & $\vec x^{(p)}$ \\ \hline%\cline{1-3} \cline{5-5} 
+	$x_1$     & -0.2                           & 0.1                            &                       & 0.2       \\ \cline{1-1}
+	$x_2$     & 0.1                            & 3.1                            &                       & -1.0      \\ \cline{1-1}
+	$x_3$     & 2.5                            & 7.2                            &                       & -0.8      \\ %\cline{1-1}
+	  \vdots        &            \vdots                    &     \vdots                          & \begin{tabular}[c]{@{}c@{}}\ldots\vspace{2.5mm}\end{tabular} &      \vdots     \\ %\cline{1-1}
+	$x_{N-2}$ & -7.1                           & -3.5                           &                       & 7.0       \\ \cline{1-1}
+	$x_{N-1}$ & -10.3                          & -0.3                           &                       & 4.5       \\ \cline{1-1}
+	$x_N$     & 4.0                            & 1.3                            &                       & 6.6       \\ \hline
+	\end{tabular}%
+	}
+	%\end{table}
+\end{minipage}
+\begin{minipage}{0.33\textwidth}
+	\begin{center}
+		\includegraphics[width=0.99\textwidth]{img/telephone_masts_depth}%
+	\end{center}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+
+	\resizebox{\textwidth}{!}{%
+	\begin{tabular}{c|cccc}
+			  & \multicolumn{1}{c}{$\vec x^{(1)}$} & \multicolumn{1}{c}{$\vec x^{(2)}$} & \multicolumn{1}{c}{\ldots} & $\vec x^{(p)}$ \\ \hline%\cline{1-3} \cline{5-5} 
+	$x_1$     & -0.2                           & 0.1                            &                       & 0.2       \\ \cline{1-1}
+	$x_2$     & 0.1                            & 3.1                            &                       & -1.0      \\ \cline{1-1}
+	$x_3$     & 2.5                            & 7.2                            &                       & -0.8      \\ %\cline{1-1}
+	  \vdots        &            \vdots                    &     \vdots                          & \begin{tabular}[c]{@{}c@{}}\ldots\vspace{2.5mm}\end{tabular} &      \vdots     \\ %\cline{1-1}
+	$x_{N-2}$ & -7.1                           & -3.5                           &                       & 7.0       \\ \cline{1-1}
+	\only<1>{
+	$x_{N-1}$ & -10.3                          & -0.3                           &                       & 4.5       \\ \cline{1-1}
+	$x_N$     & 4.0                            & 1.3                            &                       & 6.6       \\ \hline
+	}
+	\only<2>{
+	%\hline{\vspace{\dimexpr 2.2ex-\doublerulesep}}
+	$\hcancel[red]{x_{N-1}}$ &          \textcolor{red}{?}             &          \textcolor{red}{?}             &                    &    \textcolor{red}{?}   \\ \cline{1-1}
+	$\hcancel[red]{x_{N}}$     &                      \textcolor{red}{?}        &               \textcolor{red}{?}            &                   & \textcolor{red}{?}      \\ \hline
+	}
+	\only<3>{
+	%\hline{\vspace{\dimexpr 2.2ex-\doublerulesep}}
+	$\color{blue}{x_{N-1}}$ &          \textcolor{blue}{0}             &          \textcolor{blue}{0}          &                    &   \textcolor{blue}{0}  \\ \cline{1-1}
+	$\color{blue}{x_{N}}$     &                      \textcolor{blue}{0}        &              \textcolor{blue}{0}           &                   & \textcolor{blue}{0}   \\ \hline
+	}
+	\end{tabular}%
+	}
+\end{minipage}
+
+\only<3>{
+\vspace{5mm}
+	restore $N$-dimensional vector using \textcolor{blue}{simple trunction}.
+	
+\begin{minipage}{\textwidth}
+\begin{minipage}{0.33\textwidth}
+	\begin{center}
+		\includegraphics[width=0.99\textwidth]{img/tram}%
+	\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}{0.33\textwidth}
+	\begin{center}
+		\includegraphics[width=0.99\textwidth]{img/tram_missing}%
+	\end{center}
+\end{minipage}
+\end{minipage}
+}
+
+
+
+\end{center}
+
+\end{frame}
+
+\subsubsection{Procedure}
+
+\begin{frame}\frametitle{\subsecname:~\subsubsecname}
+
+Let
+\slidesonly{\vspace{-5mm}}
+\begin{itemize}
+\item[]$\vec x \in \R^N$,\\
+\item[] w.l.o.g. $\E[\vec x] \eqexcl \vec 0$ (i.e. for each variable $x_i$ its mean $m_i = \sum_{\alpha=1}^{p} x_i^{(\alpha)} \eqexcl 0$)
+\end{itemize}
+
+\pause
+
+\begin{enumerate}
+\item \underline{Dimensionality Reduction}: From $N$ to $M$: $1 < M\, < N$\\
+$\Rightarrow$ simply transmit the first $M$ elements of $\vec x$. 
+\pause
+\item \underline{Reconstruction}: The recipient reconstructs all $N$ elements by adding zero entries for all missing elements (i.e. \textit{zero-padding}):\\
+Let $\widetilde{\vec{x}}$ be the reconstructed observation, where\\ 
+ 
+ \begin{equation}
+ % = $ for $j=1,\ldots,M% (perfect reconstruction for the first $M$ elements),
+ \widetilde{x}_j = \begin{cases} 
+      {x}_j & \text{for}~j=1,\ldots,M \qquad \text{(perfect reconstruction)} \\
+      0 & \text{for}~j=M+1,\ldots,N \quad \text{zero-padding} 
+   \end{cases}
+ \end{equation}
+\end{enumerate}
+
+\question{How much error will the recipient accumulate in the case of simple trunction?}
+
+\end{frame}
+
+\subsubsection{Measuring the error}
+
+\begin{frame}\frametitle{\subsecname:~\subsubsecname}
+
+\notesonly{
+We measure the MSE between every original point $\vec x$ and its reconstruction $\widetilde{\vec{x}}$.
+
+Let $\widetilde{\vec{x}}$ be the reconstructed observation. }
+
+\slidesonly{\vspace{-7mm}}
+
+\begin{align}
+\visible<1->{
+\mathit{MSE}  &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2
+	\notesonly{\\&}=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = 1}^M ( {x}_j^{(\alpha)} - \widetilde{{x}}^{(\alpha)}_j )^2\\
+	\intertext{The \textcolor{blue}{first $M$} elements were transmitted perfectly, \textcolor{red}{zero padding} is used to extend the vector to its original size of $N$ elements}
+}
+\visible<2->{
+     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \bigg(
+     \underbrace{
+		{\color{blue}\sum\limits_{j = 1}^M} ( x_j^{(\alpha)} - \widetilde{x_j}^{(\alpha)} )^2
+		}_{
+		\substack{=0 \\\text{ (perfect transmission)}}
+		} 
+		+ {\color{red}\sum\limits_{j = M+1}^N} ( x_j^{(\alpha)} - 
+	\underbrace{
+	\vphantom{\sum\limits_{j = 1}^M ( x_j^{(\alpha)} - \widetilde{x_j}^{(\alpha)} )^2}
+	\widetilde{x_j}^{(\alpha)}
+	}_{\substack{=0\\ \text{padded}}}
+	\;)^2 \bigg)\\
+     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = M+1}^N ( x_j^{(\alpha)} )^2
+     \notesonly{\\&}=  \sum\limits_{j = M+1}^N \frac{1}{p} \sum\limits_{\alpha = 1}^p  ( x_j^{(\alpha)} )^2 \\
+     &=  \sum\limits_{j = M+1}^N \sigma_j^2
+     }
+\end{align}
 
 \end{frame}
 
 \begin{frame}
-    
-\begin{tikzpicture}
-  %\draw [distance=5.4pt, postaction={decorate, draw=black, decoration=zigzag}] (0,0) -- (40pt,0);
-\draw[decoration = {zigzag,segment length = 2mm, amplitude = 1mm},decorate] (0,0)--(1,0);
-\end{tikzpicture}
 
-% Please add the following required packages to your document preamble:
-% \usepackage{graphicx}
-\begin{table}[]
-\resizebox{.5\textwidth}{!}{%
-\begin{tabular}{|c|c|c|}
-\cline{1-1} \cline{3-3}
-Class & \hspace{.2\linewidth} & l\_2 \\ \cline{1-1} \cline{3-3} 
-1 &  & -1 \\ \cline{1-1} \cline{3-3} 
-2 &  & 1 \\ \cline{1-1} \cline{3-3} 
-3 &  & 1 \\ \cline{1-1} \cline{3-3} 
-\hspace{-9.55mm}
-\begin{tikzpicture}
-\draw[decoration={zigzag,segment length=2mm, amplitude=1mm},decorate](0,0)--(1.,0);
-\end{tikzpicture}\hspace{-8.15mm} &  & -1 \\ \cline{1-1} \cline{3-3} 
-\end{tabular}%
+\slidesonly{
+\begin{equation}
+\mathit{MSE}  =  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2 = \sum\limits_{j = M+1}^N \sigma_j^2
+\end{equation}
 }
-\end{table}
+
+In the case of simple trunctation 
+the recipient will end up with an MSE equal to $\sum_{j=M+1}^{N} \sigma_j^2$, where $\sigma_j^2$ is the variance of the $x_j$.
+\only<1>{
+\begin{equation}
+\sigma_j^2 = \E\lbrack~(x_j - m_j)^2~\rbrack \stackrel{m_j=0}{=} \E\lbrack~(x_j)^2~\rbrack
+\end{equation}
+}
+
+\pause
+
+\slidesonly{\vspace{5mm}}
+
+\underline{Objective:} Rotate/Transform the data s.t. truncating the transformed vector $\vec v \in \R^M$ is optimum in the sense of minimal MSE.
+
+
+\question{Any ideas?}
+
+\pause
+
+- Sort the $N$ component in $\vec x$ from highest to lowest variance. \notesonly{The transformation here would be some permutation of the idenitty matrix that accomplishes the sorting.}\slidesonly{transformation: permutation of identity matrix}
+
+\question{Is this enough?}
+
+- No, we still have to take the \emph{covariances} into consideration.
 
 \end{frame}
+

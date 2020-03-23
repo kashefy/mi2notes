@@ -93,7 +93,10 @@
 
 \newcommand{\question}[2]{%
 	\vspace{4mm}%
-	{Q\thesheetno.\arabic{question}: ~ \textit{#1}%
+	{Q:~\textit{#1}
+	%Omit question number from slides because pause and similar will increment anyway
+	% makes more sense to keep the numbering in the notes version but not so much for the slides
+	%\thesheetno.\arabic{question}: ~ \textit{#1}%
 	}\\[5mm]%
 	\addtocounter{question}{1}%
 }

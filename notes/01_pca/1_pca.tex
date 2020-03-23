@@ -1,36 +1,67 @@
 \section{PCA}
 
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+    \begin{center}
+    Transform and rotate the data s.t. keeping only the first $M$ dimensions has minimal MSE.
+    \end{center}
+\end{frame}
+}
+
+\begin{frame}\frametitle{\secname: Procedure}
+
 \begin{enumerate}
+\only<1,2,4>{
 \item Center the data, $\E[\vec x] = \vec m  = \frac{1}{p} \sum_{\alpha=1}^{p} \vec x^{(\alpha)}\eqexcl \vec 0$.
 \item Let $\vec X'$ be the $N \times p$ matrix of the centered data.
 \item Measure the variance of each component in $\vec x_{centered}$. Not enough, the variables in $\vec x$ could be correlated.
 \item Measure covariances $C_{ij}$.
-\item Construct covariance matrix $\vec C$.\\
-$$ 
+\item Construct covariance matrix $\vec C$.
+\begin{equation}
 \vec C = \text{Cov}(\vec X') = \mathbf{\Sigma} = \E[\vec X' \vec X'^\top] \in \R^{N \times N}
-$$
-\item \textbf{eigenvalue decomposition}:\\
-$$
+\end{equation}
+}
+%\only<2,3>{
+\only<2,4->{\item}
+\only<3>{\item[]} \textbf{eigenvalue decomposition}\only<3>{:
+\begin{equation}
 \vec C \, \vec e_a \; = \; \lambda_a \vec e_a  \quad\text{(the eigenvalue problem of PCA)}
-$$
-$$
-\lambda_a: \text{the eigenvalue, the variance along principle component } a.
-$$
-$$
-\vec e_a: \text{the normalized eigenvector, the direction of PC } a \text{ in } R^N
-$$
+\end{equation}
+
+\begin{itemize}
+\item[] $\lambda_a: \text{the eigenvalue, the variance along principle component } a.$
+\item[] $\vec e_a: \text{the normalized eigenvector, the direction of the } a\text{-th PC in } \R^N$
+\end{itemize}
+%}
+
+%\only<3,4>{
 
 \question{How do we perform an eigenvalue decomposition?}
-((1) Get eigenvalues: $\det(\vec C-\lambda \vec I) = 0$, 
-(2) Find eigenvector $\vec e_a$ associated with each $\lambda_a$ by solving the linear system\\
+
+}
+
+\only<3>{
+\begin{enumerate}
+\item Get eigenvalues: $\det(\vec C-\lambda \vec I) = 0$, 
+\item Find eigenvector $\vec e_a$ associated with each $\lambda_a$ by solving the linear system\\
 $ (\vec C - \lambda_a \vec I )\, \vec e_a = \vec 0$
-(see {\emph{math\_primer.pdf} on ISIS}  for details)
+\footnote{see {\emph{math\_primer.pdf} on ISIS}  for details.}
+\end{enumerate}
+}
+
+\only<4>{
 \item Order eigenvalues in descending order. (Highest variance first). The ordered eigenvectors are the \emph{principle components} of the dataset $\vec X$.
 
 \question{What is a scree plot?}
 
 \item Rotate $\vec x_{centered}$ using the first $M$ PCs.
+}
 \end{enumerate}
+
+\end{frame}
 
 %\newpage
 
