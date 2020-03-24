@@ -105,7 +105,9 @@ while retaining as most of the intrinsic information content.
 \vspace{5mm}
 	restore $N$-dimensional vector using \textcolor{blue}{simple trunction}.
 	
-\begin{minipage}{\textwidth}
+\svspace{5mm}
+
+\begin{minipage}{.8\textwidth}
 \begin{minipage}{0.33\textwidth}
 	\begin{center}
 		\includegraphics[width=0.99\textwidth]{img/tram}%
@@ -171,6 +173,7 @@ Let $\widetilde{\vec{x}}$ be the reconstructed observation. }
 \slidesonly{\vspace{-7mm}}
 
 \begin{align}
+\label{eq:mse}
 \visible<1->{
 \mathit{MSE}  &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2
 	\notesonly{\\&}=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = 1}^M ( {x}_j^{(\alpha)} - \widetilde{{x}}^{(\alpha)}_j )^2\\

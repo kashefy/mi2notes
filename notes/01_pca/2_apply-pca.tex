@@ -1,6 +1,17 @@
 \subsection{Applying PCA}
 
-What can we do with PCA?
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \subsecname
+    \end{center}
+    \begin{center}What can we do with PCA?
+    \end{center}
+\end{frame}
+}
+
+
+\begin{frame}\frametitle{\subsecname}
 
 \begin{enumerate}
 \item Dimensionality reduction
@@ -14,45 +25,71 @@ $$
 
 \question{What is the covariance of $\vec x_{whitened}$?}
 
+\pause
+
+-the Identity matrix.
+
 \end{enumerate}
 
+\end{frame}
+
 \newpage
-\subsection{A note on implementation:}
+
+
+\subsubsection{A note on implementation:}
+
+\begin{frame}\frametitle{\subsubsecname}
 
 \question{Is an off-the-shelf implementation such as\\ sklearn.decomposition.PCA for python really necessary?}
 
 PCA boils down to solving the eigenvalue problem.
 We bascially need a routine with which to solve the eigenvalue problem. For python, the obvious choice is to use a routine like \textit{numpy.linalg.eig(A)}. \emph{Whatch out for how to intepret the output.}
 
+\end{frame}
+
+\begin{frame}{Only}\frametitle{\subsubsecname}
+
+\svspace{-5mm}
+
 \question{Are there alternatives to eigenvalue decomposition?}
 
-Yes, namely,
+\notesonly{Yes, namely,}
 
 \underline{Singular Value Decomposition (SVD)}:\\
 Let $\vec X' \in \R^{N \times p}$ be the centered dataset (centering is a must):
-$$
+\begin{equation}
 \vec X'_{N \times p} = \vec U_{N \times N} \, \vec S_{N \times p} \, \vec V^\top_{{p \times p}}
-$$
+\end{equation}
+\svspace{-5mm}
 where,
-$$
+\begin{equation}
 \vec U^\top \vec U = \vec I_{N \times N}
-$$ and 
-$$
+\notesonly{
+\end{equation} and 
+\begin{equation}
+}
+\slidesonly{\quad \text{and} \quad}
 \vec V^\top \vec V = \vec I_{p \times p}
-$$ (i,e. $\vec U$, $\vec V$ are orthogonal.).
+\end{equation} (i.e. $\vec U$, $\vec V$ are orthogonal).
 \begin{itemize}
-\item The columns of $\vec U$ make up the eigenvectors of $\vec X'\vec X'^\top$.
-\item The columns of $\vec V$ (or rows of $\vec V^\top$) make up the eigenvectors of $\vec X'^\top\vec X'$.
-\item $\vec S$ is a diagonal matrix. The singular values in $\vec S$ (the diagonal entries) are the \textbf{square roots} of the  eigenvalues of the eigenvectors of $\vec X'\vec X'^\top$ or $\vec X'^\top\vec X'$.
 
+\item<only@2> The columns of $\vec V$ (or rows of $\vec V^\top$) make up the eigenvectors of $\vec X'^\top\vec X'$.
+\item<only@3,4,5> The columns of $\vec U$ make up the eigenvectors of $\vec X'\vec X'^\top$.
+\item<only@4,5> $\vec S$ is a diagonal matrix. The singular values in $\vec S$ (the diagonal entries) are the \textbf{square roots} of the  eigenvalues of the eigenvectors of $\vec X'\vec X'^\top$ or $\vec X'^\top\vec X'$.
 \end{itemize}
+
+\only<5>{
 Recall:
-
 $$
-\vec C = \E[\vec X \vec X^\top] = \frac{1}{p} \vec X \vec X^\top
+\vec C = \E[\vec X' \vec X'^\top] = \frac{1}{p} \vec X' \vec X'^\top
 $$
+}
 
-\underline{When to use SVD vs. Eig? \textbf{Not dogma}}
+\end{frame}
+
+\begin{frame}\frametitle{\subsubsecname}
+
+\question{When to use SVD vs. Eig? \textbf{Not dogma}}
 
 \begin{itemize}
 
@@ -60,3 +97,11 @@ $$
 \item SVD not applicable to Kernel-PCA $\rightarrow$ Eig
 \item Computational efficiency $\rightarrow$ SVD (depends...?)
 \end{itemize}
+
+\slidesonly{
+$$
+\vec X' \in \R^{N \times p} \quad \leadsto \quad \vec C = \frac{1}{p} \vec X' \vec X'^\top
+$$
+}
+
+\end{frame}
