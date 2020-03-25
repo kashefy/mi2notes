@@ -4,25 +4,31 @@
 
 \mode<presentation>{
 \begin{frame}
-    %\begin{center}
-    %\slidesonly{\huge}\secname
-    %\end{center}
-    \begin{center}
-        \only<3>{What to expect from this course}
         \only<1,2>{
-        What \underline{not} to expect from this course} 
-    \end{center}
-    \vspace{10mm}
+        \frametitle{What \underline{not} to expect from this course}} 
+        \only<3->{\frametitle{Then what \underline{can} we expect from this course?}}
+    %\vspace{10mm}
     \only<2>{
     \begin{center}
     %Not your typical data science course
 	\includegraphics[width=5cm]{img/meme_mi2}
     \end{center}
     }
-    \only<3>{
+    \only<3->{
     \begin{center}
         breadth of topics, not necessarily state of the art\\
         theoretical aspects of the learning algorithms
+    \end{center}
+    }
+    \only<4->{
+    \begin{center}
+    implementing the algorithms - programming exercises.
+    \end{center}
+    }
+    \only<5>{
+    \begin{center}
+    %Not your typical data science course
+	\includegraphics[width=5.5cm]{img/meme_programming}
     \end{center}
     }
     
