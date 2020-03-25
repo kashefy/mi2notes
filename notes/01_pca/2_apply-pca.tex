@@ -2,10 +2,13 @@
 
 \mode<presentation>{
 \begin{frame} 
-    \begin{center} \huge
-        \subsecname
+    %\begin{center} \huge
+        %\subsecname
+    %\end{center}
+    \begin{center}
+		\includegraphics[width=5cm]{img/meme_knowpca}
     \end{center}
-    \begin{center}What can we do with PCA?
+    \begin{center}What can we do with it?
     \end{center}
 \end{frame}
 }
@@ -42,8 +45,19 @@ $$
 
 \question{Is an off-the-shelf implementation such as\\ sklearn.decomposition.PCA for python really necessary?}
 
+\notesonly{
 PCA boils down to solving the eigenvalue problem.
-We bascially need a routine with which to solve the eigenvalue problem. For python, the obvious choice is to use a routine like \textit{numpy.linalg.eig(A)}. \emph{Whatch out for how to intepret the output.}
+We bascially need a routine with which to solve the eigenvalue problem. 
+}
+\pause
+
+    \begin{center}
+		\includegraphics[width=5cm]{img/meme_eig}
+    \end{center}
+    
+\pause
+
+For python, the obvious choice is to use a routine like \textit{numpy.linalg.eig(A)}. \emph{Watch out for how to intepret the output.}
 
 \end{frame}
 

@@ -15,6 +15,12 @@
 
 \begin{enumerate}
 	\item Center the data, $\E\lbrack\vec x\rbrack = \vec m  = \frac{1}{p} \sum_{\alpha=1}^{p} \vec x^{(\alpha)}\eqexcl \vec 0$.
+	\only<2>{
+	\begin{center}
+		\includegraphics[width=5.5cm]{img/meme_center}
+    \end{center}
+	}
+	\visible<3->{
 	\item Let $\vec X'$ be the $N \times p$ matrix of the centered data.
 	\item Measure the variance of each component in $\vec x_{\mathit{centered}}$. Not enough, the variables in $\vec x$ could be correlated.
 	\item Measure covariances $C_{ij}$.
@@ -25,6 +31,7 @@
 	\item \textbf{eigenvalue decomposition}
 	\item Order eigenvalues in descending order. (Highest variance first). The ordered eigenvectors are the \emph{principle components} of the dataset $\vec X$.
 	\item Rotate $\vec x_{\mathit{centered}}$ using the first $M$ PCs.
+	}
 \end{enumerate}
 
 
