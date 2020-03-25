@@ -1,125 +1,31 @@
 
-\section{PCA: Recap}
-
-\begin{itemize}
-\item requires centering the data
-\item eigendecomposition of $Cov(\vec X)$
-\item Alternatively: SVD($\vec X$)
-\item sensitive to the scales of the individual variables
-\item deterministic, insensitive to the order of the observations
-\item Applications: dimensionality reduction, outlier detection, whitening
-\item limited to linear correlations
-\item will be referred to as ``standard'' or ``batch'' PCA.
-\end{itemize}
-
-\question{What are the implications of computing PCA on \emph{non-stationary} data?}
-
-- We need an online method for computing the directions of highest variance that adapts to possible changes in this direction over time.
-
-\section{Hebbian Learning}
-
-\begin{center}
-\textit{``Neurons that fire together wire together.''} - Donald Hebb
-\end{center}
-
-observations: $\big\{ \vec{x}^{(\alpha)} \big\}, \alpha = 1, \ldots, p; \quad \vec{x} \in \R^N$\\
-
-assumption: centered data\\
-
-response: $y = \sum_{i=1}^{N} w_i x_i = \vec w^{\top} \vec x$\\
-
-We don't really have a desired output for the network.\\
-However, we can interpret its response $y$.
-The inner product yields a higher value whenever $\vec x$ is ``close'' to $\vec w$.
-Therefore, $y$ measures similarity between $\vec x$ and $\vec w$.
-A large value of $y$ means that the network ``recognizes'' the stimulus $\vec x$.\\
-
-\newpage
-
-\underline{Motivation for Hebbian learnig:}\\
-
-We can use this to build associative memory (i.e. correlation learning).
-
-Applicable to non-stationary data.
-
-More importantly, a single linear neuron 
-can organize itself such that its synaptic weights converge to a filter 
-for the first principle component (Oja, 1982).\\
-
-\underline{The Hebbian learning rule:}
-
-$$
-\vec w(t+1) = \vec w(t) + \underbrace{\epsilon y(\vec x^ {(\alpha)}; \vec w(t)) \vec x^{(\alpha)}}_{= \Delta \vec w}
-$$
-where $\epsilon$ is the learning rate.\\
-
-\underline{The consequences of using this update rule in simulation:}\\
-
-\begin{enumerate}
-\item Divergence.\\
-As $t \rightarrow \infty$ \qquad $\leadsto |\vec{w}| \rightarrow \infty$\\
-
-\question{How does nature deal with the divergence problem?}
-
-\item $\vec{e}_{\mathrm{w}} = \frac{\vec{w}}{|\vec{w}|}$ 
-\end{enumerate}
-
-\newpage
-
-\section{Oja's rule}
-\vspace{0.5cm}
-
-Modify the update rule such that it contains an 
-\emph{implicit normalization} to prevent divergence and 
-still have $\vec w$ converge to the direction of the first PC.
-
-\emph{How?} By adding a \emph{decay term} to the update rule.
-
-\underline{Oja's rule:}
-\begin{equation*}
-	\Delta \mathrm{w}_j = \varepsilon y_{ \big( \vec{x}^{(\alpha)}; \vec{w}
-		\big) } \bigg\{ 
-			\underbrace{ \mathrm{x}_j^{(\alpha)} }_{
-				\substack{	\text{Hebbian} \\
-						\text{learning} }}
-			- \underbrace{ y_{ \big( \vec{x}^{(\alpha)}; \vec{w}
-				\big) } \mathrm{w}_j }_{\text{decay term}}
-			\bigg\}
-\end{equation*}
-
-\underline{Alternative:} \emph{Explicit normalization} (i.e. keep $|\vec w| = 1$ after each step by normalizing it.
-
-\begin{equation*}
-	\vec{w}(t+1) = 
-    \frac{\vec w(t) + \Delta \vec w}{|\vec w(t) + \Delta \vec w|} 
-    = \frac
-    {\overbrace{\vec{w}(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t)) \vec{x}^{(\alpha)}}^{\text{Hebbian learning}}}
-    {\underbrace{\left| \vec{w}(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t)) \vec{x}^{(\alpha)} \right|}_{\text{Euclidean weights normalization}}}
-\end{equation*}
-
-For the $j$-th component:\\
-\begin{equation*}
-    w_j(t+1) = \frac
-    {w_j(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t)) x_j^{(\alpha)}}
-    {\sqrt{ \sum_{k=1}^{N} \left( w_k(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t)) {x_k}^{(\alpha)} \right)^2}}
-\end{equation*}
-
-Keep in mind that the above explicit normalization uses the hebbian update rule 
-$\Delta \vec w = \epsilon y(\vec x^ {(\alpha)}; \vec w(t)) \vec x^{(\alpha)}$ without the decay term. 
-If we have the decay term, we wouldn't need an explicit normalization.
-
-\question{Does Oja's rule give different results than the explicit normalization?}
-
-No. In the excercise sheet you will demonstrate that for small $\varepsilon$ the explicit normalization can be reduced to Oja's rule using a Taylor expansion around $\varepsilon = 0$ and neglecting terms of second or higher order in $\varepsilon$. 
-
-\newpage
-
 \section{Online-PCA}
 
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+\end{frame}
+}
+
+\begin{frame}
 We have established that we can use Hebbian learning (Oja's rule to prevent divergence) 
 to find the direction of the first principle component $\vec e_1$ in the data. \\
 
+\pause
+
 Note that with $\vec w = \vec e_1 \; \rightarrow \; y = \vec e_1^\top \vec x =: a_1$\\
+
+\question{What else is there to do?}
+
+\pause
+
+- All other PCs
+
+\end{frame}
+
+\begin{frame}{\secname}
 
 We proceed to learning the next PC by doing the following:
 \begin{enumerate}
@@ -128,10 +34,10 @@ We proceed to learning the next PC by doing the following:
 \item Resume feeding new data points into the network computing its response $y_1$ and $y_2$.
 \item We exploit the fact that the PCs form an \emph{orthonormal basis}, specifically, we obtain a projection of $\vec x$ 
 into the subspace orthogonal to $\vec e_1$ that is the first PC:
-\begin{align*}
+\begin{align}
 \hat x_j &= x_j - w_{1j} \, y_1 \\
          &= x_j - a_1 (\vec e_1)_j
-\end{align*}
+\end{align}
 where $w_{1j}$ is the weight of the connection between $\hat x_j$ and the neuron $y_1$,
 \item Apply Oja's rule on $\vec w_2$.
 
@@ -143,6 +49,8 @@ For \emph{stationary data}: No need to apply updates to $\vec w_1$ anymore, sinc
 
 We get the remaining PCs by repeating the above except, that we project 
 the data onto the subspace orthogonal to all previous PCs (cf. slides 1.2 \#12-\#14).
+
+\end{frame}
 
 \newpage
 
