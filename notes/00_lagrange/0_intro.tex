@@ -4,15 +4,28 @@
 
 \mode<presentation>{
 \begin{frame}
+    %\begin{center}
+    %\slidesonly{\huge}\secname
+    %\end{center}
     \begin{center}
-    \slidesonly{\huge}\secname
+        \only<3>{What to expect from this course}
+        \only<1,2>{
+        What \underline{not} to expect from this course} 
     \end{center}
+    \vspace{10mm}
+    \only<2>{
     \begin{center}
-        What to expect
-        and not to expect
-        from this course
+    %Not your typical data science course
+	\includegraphics[width=5cm]{img/meme_mi2}
     \end{center}
-    \pause
+    }
+    \only<3>{
+    \begin{center}
+        breadth of topics, not necessarily state of the art\\
+        theoretical aspects of the learning algorithms
+    \end{center}
+    }
+    
 \end{frame}
 }
 
@@ -52,7 +65,20 @@ We are given data that is made up of observations\pause~\textbf{only}. No other 
 
 \begin{frame}{\subsubsecname}
 
-\question{What can when we only have observations?}
+\svspace{-5mm}
+
+\question{What can we do when we only have observations?}
+
+\pause
+
+\mode<presentation>{
+\only<2>{
+\vspace{-5mm}
+\begin{center}
+	\includegraphics[width=5cm]{img/meme_ai}
+\end{center}
+}
+}
 
 \pause
 
@@ -65,7 +91,7 @@ find interesting directions and/or structure in the data using only observations
 	\includegraphics[width=9cm]{img/mi2}
 \end{center}
 
-``interesting'' and  ''structure'' is expressed through the objective model.
+``interesting'' and  ``structure'' is expressed through the objective model.
 
 \end{frame}
 
@@ -100,24 +126,46 @@ The samples are often assumed to be \iid, but algorithms for handling sequential
 Example: $\vec x$ could represent user ratings, pixel values in images.
 }
 \end{frame}
-\begin{frame}
 
-\underline{Objective model}:
-\mode<presentation>{\vspace{5mm}}
+\begin{frame}{Objective model}
+
+%\svspace{-5mm}
 \mode<article>{
+\underline{Objective model}:
 An unsupervised learning algorithm is used to capture structure or directions in the data. This can be achieved by finding:
 }
 \begin{itemize}
 \item the underlying distribution $P(\vec x)$ that generated this data (e.g. density estimation),
-\item $\vec z := \vec f(\vec x)$, where $\vec z$ is a measure of 
+\item $\vec u := \vec f(\vec x)$, where $\vec u$ is a measure of 
 \begin{itemize}
-\item possible structure such as clustering or grouping in the data ($\vec z \in {0,\ldots,K-1}$), \\
+\item possible structure such as clustering or grouping in the data ($\vec u \in {0,\ldots,K-1}$), \\
 
-and/or
+\svspace{-5mm}
+
+\begin{center}
+	\includegraphics[trim=260 0 140 0,clip, width=2cm]{img/mi2}
+	\notesonly{\captionof{figure}{grouping of data}
+	}
+\end{center}
+
+\svspace{-15mm}
+
+and/or\\
+
+\vspace{7mm}
 
 \item possible directions in the data, by finding another continuous space for describing this data. \\
 
-Example: dimensionality reduction, $\vec z \in \R^M$ with $M < N$.
+Example: dimensionality reduction or an embedding space, $\vec u \in \R^M$ with $M < N$.
+
+
+\svspace{-5mm}
+
+\begin{center}
+	\includegraphics[trim=0 0 400 0,clip, width=2cm]{img/mi2}
+	\notesonly{\captionof{figure}{dimensionality reduction}
+	}
+\end{center}
 
 \end{itemize}
 \end{itemize}
