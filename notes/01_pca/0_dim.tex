@@ -44,9 +44,6 @@ while retaining as most of the intrinsic information content.
 %\newpage
 \subsection{Simple truncation}
 
-
-
-
 \begin{frame}\frametitle{\subsecname}
 
 \begin{center}
@@ -87,12 +84,12 @@ while retaining as most of the intrinsic information content.
 	$x_{N-1}$ & -10.3                          & -0.3                           &                       & 4.5       \\ \cline{1-1}
 	$x_N$     & 4.0                            & 1.3                            &                       & 6.6       \\ \hline
 	}
-	\only<2>{
+	\only<3>{
 	%\hline{\vspace{\dimexpr 2.2ex-\doublerulesep}}
 	$\hcancel[red]{x_{N-1}}$ &          \textcolor{red}{?}             &          \textcolor{red}{?}             &                    &    \textcolor{red}{?}   \\ \cline{1-1}
 	$\hcancel[red]{x_{N}}$     &                      \textcolor{red}{?}        &               \textcolor{red}{?}            &                   & \textcolor{red}{?}      \\ \hline
 	}
-	\only<3>{
+	\only<4->{
 	%\hline{\vspace{\dimexpr 2.2ex-\doublerulesep}}
 	$\color{blue}{x_{N-1}}$ &          \textcolor{blue}{0}             &          \textcolor{blue}{0}          &                    &   \textcolor{blue}{0}  \\ \cline{1-1}
 	$\color{blue}{x_{N}}$     &                      \textcolor{blue}{0}        &              \textcolor{blue}{0}           &                   & \textcolor{blue}{0}   \\ \hline
@@ -101,9 +98,19 @@ while retaining as most of the intrinsic information content.
 	}
 \end{minipage}
 
-\only<3>{
+\only<2>{
+\mode<presentation>{
+	\begin{center}
+		\includegraphics[width=0.2\textwidth]{img/telegram}
+		\captionof*{figure}{\footnotesize
+		Photo by \href{https://unsplash.com/@sandratansh?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText}{Sandra Tan} on \href{https://unsplash.com/s/photos/telegram?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText}{Unsplash}
+	}%
+	\end{center}
+	}
+}
+\only<5>{
 \vspace{5mm}
-	restore $N$-dimensional vector using \textcolor{blue}{simple truncation}.
+	restore $N$-dimensional vector using \textcolor{blue}{zero padding}.
 	
 \svspace{5mm}
 
@@ -142,7 +149,7 @@ Let
 \pause
 
 \begin{enumerate}
-\item \underline{Dimensionality Reduction}: From $N$ to $M$: $1 < M\, < N$\\
+\item \underline{Dimensionality Reduction}: From $N$ to $M$ with $0 < M\, < N$\\
 $\Rightarrow$ simply transmit the first $M$ elements of $\vec x$. 
 \pause
 \item \underline{Reconstruction}: The recipient reconstructs all $N$ elements by adding zero entries for all missing elements (i.e. \textit{zero-padding}):\\
@@ -176,7 +183,7 @@ Let $\widetilde{\vec{x}}$ be the reconstructed observation. }
 \label{eq:mse}
 \visible<1->{
 \mathit{MSE}  &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2
-	\notesonly{\\&}=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = 1}^M ( {x}_j^{(\alpha)} - \widetilde{{x}}^{(\alpha)}_j )^2\\
+	\notesonly{\\&}=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = 1}^N ( {x}_j^{(\alpha)} - \widetilde{{x}}^{(\alpha)}_j )^2\\
 	\intertext{The \textcolor{blue}{first $M$} elements were transmitted perfectly, \textcolor{red}{zero padding} is used to extend the vector to its original size of $N$ elements}
 }
 \visible<2->{
@@ -192,9 +199,9 @@ Let $\widetilde{\vec{x}}$ be the reconstructed observation. }
 	\widetilde{x_j}^{(\alpha)}
 	}_{\substack{=0\\ \text{padded}}}
 	\;)^2 \bigg)\\
-     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = M+1}^N ( x_j^{(\alpha)} )^2
-     \notesonly{\\&}=  \sum\limits_{j = M+1}^N \frac{1}{p} \sum\limits_{\alpha = 1}^p  ( x_j^{(\alpha)} )^2 \\
-     &=  \sum\limits_{j = M+1}^N \sigma_j^2
+     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p {\color{red}\sum\limits_{j = M+1}^N} ( x_j^{(\alpha)} )^2
+     \slidesonly{\;\;}\notesonly{\\&}=  {\color{red}\sum\limits_{j = M+1}^N} \frac{1}{p} \sum\limits_{\alpha = 1}^p  ( x_j^{(\alpha)} )^2 \\
+     &=  {\color{red}\sum\limits_{j = M+1}^N} \sigma_j^2
      }
 \end{align}
 
@@ -202,14 +209,15 @@ Let $\widetilde{\vec{x}}$ be the reconstructed observation. }
 
 \begin{frame}
 
+\vspace{-5mm}
+
 \slidesonly{
 \begin{equation}
-\mathit{MSE}  =  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2 = \sum\limits_{j = M+1}^N \sigma_j^2
+\mathit{MSE}  =  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2 = \sum\limits_{j = M+1}^N \sigma_j^2 \;,
 \end{equation}
 }
 
-In the case of simple truncation 
-the recipient will end up with an MSE equal to $\sum_{j=M+1}^{N} \sigma_j^2$, where $\sigma_j^2$ is the variance of the $x_j$.
+\notesonly{I}\slidesonly{i}n the case of simple truncation\notesonly{ the recipient will end up with an MSE equal to $\sum_{j=M+1}^{N} \sigma_j^2$}, where $\sigma_j^2$ is the variance of the $x_j$.
 \only<1>{
 \begin{equation}
 \sigma_j^2 = \E\lbrack~(x_j - m_j)^2~\rbrack \stackrel{m_j=0}{=} \E\lbrack~(x_j)^2~\rbrack
@@ -220,16 +228,25 @@ the recipient will end up with an MSE equal to $\sum_{j=M+1}^{N} \sigma_j^2$, wh
 
 \slidesonly{\vspace{5mm}}
 
-\underline{Objective:} Rotate/Transform the data s.t. truncating the transformed vector $\vec v \in \R^M$ is optimum in the sense of minimal MSE.
+\underline{Objective:} Rotate/Transform the data:
+
+\vspace{-3mm}
+\begin{equation}
+\vec u = \vec M^\top \vec x \qquad\quad \vec M := \text{TBD}
+\end{equation}
+
+s.t. truncating the transformed vector $\vec u \in \R^N$ is optimum in the sense of minimal MSE.
 
 
 \question{Any ideas?}
 
 \pause
 
-- Sort the $N$ component in $\vec x$ from highest to lowest variance. \notesonly{The transformation here would be some permutation of the identity matrix that accomplishes the sorting.}\slidesonly{transformation: permutation of identity matrix}
+- Sort the $N$ components in $\vec x$ from highest to lowest variance. \notesonly{The transformation here would be some permutation of the identity matrix that accomplishes the sorting.}\slidesonly{transformation: permutation of identity matrix}
 
-\question{Is this enough?}
+\question{Is this enough to be minimal in MSE?}
+
+\pause
 
 - No, we still have to take the \emph{covariances} into consideration.
 
