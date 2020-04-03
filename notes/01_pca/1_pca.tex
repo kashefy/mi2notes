@@ -11,26 +11,33 @@
 \end{frame}
 }
 
-\begin{frame}\frametitle{\secname: Procedure}
+\subsection{Procedure}
+
+\begin{frame}\frametitle{\secname: \subsecname}
 
 \begin{enumerate}
 	\item Center the data, $\E\lbrack\vec x\rbrack = \vec m  = \frac{1}{p} \sum_{\alpha=1}^{p} \vec x^{(\alpha)}\eqexcl \vec 0$.
-	\only<2>{
+\slidesonly{	\only<2>{
 	\begin{center}
 		\includegraphics[width=5.5cm]{img/meme_center}
     \end{center}
 	}
+}
 	\visible<3->{
-	\item Let $\vec X'$ be the $N \times p$ matrix of the centered data.
-	\item Measure the variance of each component in $\vec x_{\mathit{centered}}$. Not enough, the variables in $\vec x$ could be correlated.
-	\item Measure covariances $C_{ij}$.
-	\item Construct covariance matrix $\vec C$.
+	\item Let $\vec X$ be the $N \times p$ matrix of the centered data.
+	\item Measure
+	\begin{itemize}
+	\item the variance of each component in $\vec x$.\\
+	\textbf{Not enough}, the variables in $\vec x$ could be correlated.
+	\item the covariances $C_{ij} \;\; \forall\,i,j = 1,\ldots,N$.
+	\end{itemize}
+	\item[$\Rightarrow$] Construct the covariance matrix $\vec C$.
 		\begin{equation}
-		\vec C = \text{Cov}(\vec X') = \mathbf{\Sigma} = \E[\vec X' \vec X'^\top] \in \R^{N \times N}
+		\vec C = \text{Cov}(\vec X) = \mathbf{\Sigma} = \E\lbrack\vec X~\vec X^\top\rbrack \in \R^{N \times N}
 		\end{equation}
 	\item \textbf{eigenvalue decomposition}
-	\item Order eigenvalues in descending order. (Highest variance first). The ordered eigenvectors are the \emph{principle components} of the dataset $\vec X$.
-	\item Rotate $\vec x_{\mathit{centered}}$ using the first $M$ PCs.
+	\item Order eigenvalues in \emph{descending} order. (Highest variance first). The ordered eigenvectors are the \emph{principle components} of the dataset $\vec X$.
+	\item Project $\vec x$ onto the first $M$ PCs.
 	}
 \end{enumerate}
 
@@ -47,7 +54,7 @@
 
 \begin{itemize}
 \item[] $\lambda_a: \text{the eigenvalue, the variance along principle component } a.$
-\item[] $\vec e_a: \text{the normalized eigenvector, the direction of the } a\text{-th PC in } \R^N$
+\item[] $\vec e_a: \text{the \underline{normalized} eigenvector, the direction of the } a\text{-th PC in } \R^N$
 \end{itemize}
 
 \question{How do we perform an eigenvalue decomposition?}
@@ -55,10 +62,13 @@
 \pause
 
 \begin{enumerate}
-\item Get eigenvalues: $\det(\vec C-\lambda \vec I) = 0$, 
-\item Find eigenvector $\vec e_a$ associated with each $\lambda_a$ by solving the linear system\\
-$ (\vec C - \lambda_a \vec I )\, \vec e_a = \vec 0$
+\item Get eigenvalues:
+\begin{equation}\det(\vec C-\lambda \vec I) = 0,
+\end{equation} 
+\item Find the eigenvector $\vec e_a$ associated with each $\lambda_a$ by solving the linear system
 \footnote{If interested, see {\emph{math\_primer.pdf} on ISIS} for details and an example.}
+\begin{equation}(\vec C - \lambda_a \vec I )\, \vec e_a = \vec 0
+\end{equation}
 \end{enumerate}
 
 \end{frame}
@@ -77,15 +87,50 @@ Plotting the sorted eigenvalues is referred to as a \emph{scree plot}
 
 \end{frame}
 
-\subsection{Projection and Reconstruction error}
+\subsubsection{Projection onto the PC space}
+
+\begin{frame}\frametitle{\subsubsecname}
+
+Recall \notesonly{from \sectionref{sec:objective} }that we wanted to \notesonly{improve on simple truncation by
+transforming }\slidesonly{transform }the data before transmitting the first $M$ components.
+
+\notesonly{We described the projection as follows:}
+
+\begin{equation}
+\vec u = \vec M^\top \vec x = (a_1,a_2,\ldots,a_N)^\top
+\end{equation}
+
+
+We can now define the transformation using the normalized eigenvectors of the PCs:
+
+\begin{equation}
+\vec M := (\vec e_1, \vec e_2, \ldots,\vec e_N)
+\end{equation}
+
+\slidesonly{
+
+\begin{equation}
+	\vec{x} = \underbrace{ a_1 }_{ \vec{e}_1^\top \vec{x} } \vec{e}_1
+		+ \underbrace{ a_2 }_{ \vec{e}_2^\top \vec{x} } \vec{e}_2
+		+ \ldots
+		+ \underbrace{ a_N }_{ \vec{e}_N^\top \vec{x} } \vec{e}_N
+\end{equation}
+}
+
+
+\end{frame}
+
+\subsection{Reconstruction error}
 
 \begin{frame}\frametitle{How much better is this vs. simple truncation?}
 %\newpage
 
-\only<1,2>{
+\pause
+
+\only<2,3>{
 The transformation onto the PCs is linear:
 \begin{equation}
-	\vec{x}_{\mathit{centered}} = \underbrace{ a_1 }_{ \vec{e}_1^\top \vec{x} } \vec{e}_1
+	\vec{x} = \underbrace{ a_1 }_{ \vec{e}_1^\top \vec{x} } \vec{e}_1
 		+ \underbrace{ a_2 }_{ \vec{e}_2^\top \vec{x} } \vec{e}_2
 		+ \ldots
 		+ \underbrace{ a_N }_{ \vec{e}_N^\top \vec{x} } \vec{e}_N
@@ -106,13 +151,13 @@ If we only use the \textcolor{red}{first} ${\color{red}M}$ PCs for reconstructin
 
 \pause
 
-\only<2,3>{
+\only<3,4>{
 \begin{equation}
-E = \frac{1}{p} \sum_{\alpha = 1}^{p} (\vec x_{\mathit{centered}} - \widetilde{\vec{x}})^2 = \frac{1}{p} \sum_{\alpha = 1}^{p} \sum_{j = M+1}^{N} (a_j^{(\alpha)})^2
+E = \frac{1}{p} \sum_{\alpha = 1}^{p} (\vec x - \widetilde{\vec x})^2 = \frac{1}{p} \sum_{\alpha = 1}^{p} \sum_{j = M+1}^{N} (a_j^{(\alpha)})^2
 \end{equation}
-The MSE is equal to the sum of variances of the final $N-(M+1)+1$ components of the \emph{transformed} observations.\\
+The MSE is equal to the sum of variances of the final $\notesonly{N-(M+1)-1=}N-M$ components of the \emph{transformed} observations.\\
 }
-\only<3>{\notesonly{Since the PCs are ordered w.r.t to variance in descending order, }the variances of the last $N-M$ components of the transformed data are smallest.
+\only<4>{\notesonly{Since the PCs are ordered w.r.t to variance in descending order, }the variances of the last $N-M$ components of the transformed data are smallest.
 The transformation is therefore optimal in the sense of minimal MSE.
 }
 

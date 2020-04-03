@@ -168,7 +168,7 @@ Let $\widetilde{\vec{x}}$ be the reconstructed observation, where\\
 
 \end{frame}
 
-\subsubsection{Measuring the error}
+\subsubsection{Measuring the error}\label{sec:objective}
 
 \begin{frame}\frametitle{\subsecname:~\subsubsecname}
 
@@ -184,24 +184,24 @@ Let $\widetilde{\vec{x}}$ be the reconstructed observation. }
 \visible<1->{
 \mathit{MSE}  &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2
 	\notesonly{\\&}=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = 1}^N ( {x}_j^{(\alpha)} - \widetilde{{x}}^{(\alpha)}_j )^2\\
-	\intertext{The \textcolor{blue}{first $M$} elements were transmitted perfectly, \textcolor{red}{zero padding} is used to extend the vector to its original size of $N$ elements}
+	\intertext{The \textcolor{red}{first $M$} elements were transmitted perfectly, \textcolor{blue}{zero padding} is used to extend the vector to its original size of $N$ elements}
 }
 \visible<2->{
      &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \bigg(
      \underbrace{
-		{\color{blue}\sum\limits_{j = 1}^M} ( x_j^{(\alpha)} - \widetilde{x_j}^{(\alpha)} )^2
+		{\color{red}\sum\limits_{j = 1}^M} ( x_j^{(\alpha)} - \widetilde{x_j}^{(\alpha)} )^2
 		}_{
 		\substack{=0 \\\text{ (perfect transmission)}}
 		} 
-		+ {\color{red}\sum\limits_{j = M+1}^N} ( x_j^{(\alpha)} - 
+		+ {\color{blue}\sum\limits_{j = M+1}^N} ( x_j^{(\alpha)} - 
 	\underbrace{
 	\vphantom{\sum\limits_{j = 1}^M ( x_j^{(\alpha)} - \widetilde{x_j}^{(\alpha)} )^2}
 	\widetilde{x_j}^{(\alpha)}
 	}_{\substack{=0\\ \text{padded}}}
 	\;)^2 \bigg)\\
-     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p {\color{red}\sum\limits_{j = M+1}^N} ( x_j^{(\alpha)} )^2
-     \slidesonly{\;\;}\notesonly{\\&}=  {\color{red}\sum\limits_{j = M+1}^N} \frac{1}{p} \sum\limits_{\alpha = 1}^p  ( x_j^{(\alpha)} )^2 \\
-     &=  {\color{red}\sum\limits_{j = M+1}^N} \sigma_j^2
+     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p {\color{blue}\sum\limits_{j = M+1}^N} ( x_j^{(\alpha)} )^2
+     \slidesonly{\;\;}\notesonly{\\&}=  {\color{blue}\sum\limits_{j = M+1}^N} \frac{1}{p} \sum\limits_{\alpha = 1}^p  ( x_j^{(\alpha)} )^2 \\
+     &=  {\color{blue}\sum\limits_{j = M+1}^N} \sigma_j^2
      }
 \end{align}
 
