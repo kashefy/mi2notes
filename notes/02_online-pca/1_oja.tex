@@ -45,10 +45,10 @@ still
 
 \end{frame}
 
-\subsubsection{Alternative to Oja's rule}
+\subsection{Alternative: Explicit normalization}
 
 \mode<presentation>{   
-\begin{frame}{\subsubsecname}
+\begin{frame}{Alternative to Oja's rule}
 
 All Oja's rule does is:
 
@@ -92,9 +92,10 @@ For the $j$-th component:\\
 \end{block}
 
 Keep in mind that the above explicit normalization uses the original hebbian update rule 
-$\Delta \vec w = \epsilon y(\vec x^ {(\alpha)}; \vec w(t)) \vec x^{(\alpha)}$ \underline{without} the decay term. 
-If we had the decay term, we wouldn't need an explicit normalization.
-
+$\Delta \vec w = \epsilon y(\vec x^ {(\alpha)}; \vec w(t)) \vec x^{(\alpha)}$ \underline{without} the decay term.\\
+\notesonly{ 
+If we were using the decay term, we wouldn't need an explicit normalization.
+}
 \end{frame}
 
 \begin{frame}
