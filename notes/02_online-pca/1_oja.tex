@@ -23,7 +23,7 @@ Modify the update rule such that
 \item it contains an 
 \emph{implicit normalization} to prevent divergence and 
 still 
-\item have $\vec w$ converge to the direction of the first PC.
+\item $\vec w$ converges to the direction of the first PC.
 \end{itemize}
 
 \question{How?}
@@ -32,13 +32,15 @@ still
 
 \begin{block}{Oja's rule:}
 \begin{equation}
-	\Delta \mathrm{w}_j = \varepsilon~y_{ \big( \vec{x}^{(\alpha)}; \vec{w}
+	\Delta {w}_j = \varepsilon~y_{ \big( \vec{x}^{(\alpha)}; \vec{w}
 		\big) } \bigg\{ 
-			\underbrace{ \mathrm{x}_j^{(\alpha)} }_{
+			\underbrace{ x_j^{(\alpha)} }_{
 				\substack{	\text{Hebbian} \\
 						\text{learning} }}
-			- \underbrace{ y_{ \big( \vec{x}^{(\alpha)}; \vec{w}
-				\big) } \mathrm{w}_j }_{\text{decay term}}
+			- 
+					\underbrace{
+	y_{ \big( \vec{x}^{(\alpha)}; \vec{w} \big) } {w}_j
+	}_{\text{decay term}}
 			\bigg\}
 \end{equation}
 \end{block}
@@ -70,7 +72,7 @@ still
 }
 
 
-\begin{frame}{\subsubsecname}
+\begin{frame}{\subsecname}
 
 \begin{block}{Explicit normalization} 
 i.e. keep $|\vec w| = 1$ after each step by normalizing it.
@@ -79,28 +81,48 @@ i.e. keep $|\vec w| = 1$ after each step by normalizing it.
 	\vec{w}(t+1) = 
     \frac{\vec w(t) + \Delta \vec w}{|\vec w(t) + \Delta \vec w|} 
     = \frac
-    {\overbrace{\vec{w}(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t)) \vec{x}^{(\alpha)}}^{\text{Hebbian learning}}}
-    {\underbrace{\left| \vec{w}(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t)) \vec{x}^{(\alpha)} \right|}_{\text{Euclidean weights normalization}}}
+    {\overbrace{\vec{w}(t) + {\only<3->{\color{blue}}\varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t))~\vec{x}^{(\alpha)}}}^{\text{Hebbian learning}}}
+    {\underbrace{\left| \vec{w}(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t))~\vec{x}^{(\alpha)} \right|}_{\text{Euclidean weights normalization}}}
+    \label{eq:explicitnorm}
 \end{equation}
 
+\only<2>{
 For the $j$-th component:\\
-\begin{equation*}
+\begin{equation}
     w_j(t+1) = \frac
-    {w_j(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t)) x_j^{(\alpha)}}
-    {\sqrt{ \sum_{k=1}^{N} \left( w_k(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t)) {x_k}^{(\alpha)} \right)^2}}
-\end{equation*}
+    {w_j(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t))~x_j^{(\alpha)}}
+    {\sqrt{ \sum_{k=1}^{N} \left( w_k(t) + \varepsilon y(\vec{x}^{(\alpha)}; \vec{w}(t))~{x_k}^{(\alpha)} \right)^2}}
+\end{equation}
+
+}
+
+
+
 \end{block}
 
-Keep in mind that the above explicit normalization uses the original hebbian update rule 
-$\Delta \vec w = \epsilon y(\vec x^ {(\alpha)}; \vec w(t)) \vec x^{(\alpha)}$ \underline{without} the decay term.\\
 \notesonly{ 
+Keep in mind that the above explicit normalization in \eqref{eq:explicitnorm}}
+\only<3>{
+uses the \textcolor{blue}{original hebbian update rule}
+\notesonly{
+$\color{blue}\Delta \vec w = \varepsilon y(\vec x^ {(\alpha)}; \vec w(t)) 
+~\vec x^{(\alpha)}$} \underline{without} the decay term.}\notesonly{\\
 If we were using the decay term, we wouldn't need an explicit normalization.
+}
+
+\only<4>{
+\slidesonly{
+
+    \begin{center}
+		\includegraphics[width=3.5cm]{img/meme_decay}
+    \end{center}
+}
 }
 \end{frame}
 
 \begin{frame}
 
-\question{Does Oja's rule give different results than the explicit normalization?}
+\question{Does Oja's rule give different results than the explicit normalization?}\\
 
 - No.\\
 
