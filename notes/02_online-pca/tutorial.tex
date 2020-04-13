@@ -14,7 +14,7 @@
 % for slides
 \subtitle{\sheetnum \tutorialtitle}
 
-%\maxdeadcycles=1000 % Workaround for ! Output loop---100 consecutive dead cycles because of too many figures
+\maxdeadcycles=1000 % Workaround for ! Output loop---100 consecutive dead cycles because of too many figures
 
 % The following use of algroithms does not work well with the notes:
 %
@@ -39,6 +39,8 @@
 
 \begin{document} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%\chapter{T\sheetnum} % doesn't work with scrartcl
+
 \sheet{\sheetnum}{\tutorialtitleshort}
 
 \ttopic{\tutorialtitle}
@@ -62,17 +64,33 @@
 \newpage
 
 \mode<all>
+\input{./0_hebbian}
+\mode*
+
+\clearpage
+
+\mode<all>
+\input{./1_oja}
+\mode*
+
+\clearpage
+
+\mode<all>
 \input{./1_online-pca}
 \mode*
 
 \clearpage
 
-%\section{References}
-%\begin{frame}[allowframebreaks] \frametitle{References}
-	%\scriptsize
-	%\bibliographystyle{plainnat}
-	%\bibliography{bibliography}
-%\end{frame}
+\mode<all>
+\input{./2_apply-online-pca}
+\mode*
+
+\section{References}
+\begin{frame}[allowframebreaks] \frametitle{References}
+	\scriptsize
+	\bibliographystyle{plainnat}
+	\bibliography{bibliography}
+\end{frame}
 
 \end{rightcolumn}
 \end{paracol}
