@@ -5,7 +5,8 @@ before_install:
 #- sudo apt-get -qq update && sudo apt-get install -qq -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended latex-beamer texlive-science
 - tlmgr install index
 #- sudo tlmgr init-usertree
-- tlmgr install --reinstall --repository https://www.komascript.de/repository/texlive/2020 koma-script
+#- tlmgr install --reinstall --repository https://www.komascript.de/repository/texlive/2020 koma-script\
+install: skip
 script:
 - bash .ci/travis/make_all.sh
 after_success:
