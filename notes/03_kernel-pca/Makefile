@@ -22,9 +22,10 @@ handout: $(projname).handout.tex $(projname).tex
 # Repeat compilation for the references to show up correctly
 notes: $(projname).notes.tex $(projname).tex
 	$(compile) $(projname).notes.tex
+	$(compile) $(projname).notes.tex
 #	bibtex $(projname).notes
 #	$(compile) --interaction=batchmode  $(projname).notes.tex
-	$(compile) --interaction=batchmode  $(projname).notes.tex
+#	$(compile) --interaction=batchmode  $(projname).notes.tex
 	mv $(projname).notes.pdf $(targetname).notes.pdf 
 
 clean: cleans cleanh cleana
