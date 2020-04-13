@@ -1,0 +1,51 @@
+
+
+\subsection{Centering the kernel matrix}
+
+PCA operates on centered data. This is common for all forms  of PCA, 
+whether it is linear PCA, online PCA or Kernel PCA.
+In Kernel PCA, the $\vec X$ is transformed into a higher dimensional space by applying the kernel trick.
+Applying it to all $p$ training samples yields the kernel matrix, which is used in solving the transformed eigenvalue problem.
+
+All of the above assumed that we have successfully centered the kernel matrix. We now look at how this is done.
+
+\question{Do I need to center $\vec X$ before computing $ K_{\alpha \beta}$?}
+
+- No, Centering $\vec X$ before computing $K_{\alpha \beta}$ does not guarantee the kernel matrix to be centered. You only end up with $\vec{\widetilde K}$. 
+It is simply irrelevant whether the original data $\vec X$ is centered or not. 
+Therefore, we need to center the kernel matrix before solving the transformed eigenvalue problem.\\
+
+We use $\vec{\widetilde K}$ to denote the \emph{un-normalized} kernel matrix and $\vec K$ 
+to denote the kernel matrix \emph{after} it has been centered.
+
+\underline{Centering $\vec{\widetilde K}$:}
+
+The centering is built on the kernel trick as in Eq.\ref{eq:trick}, except that we compute the inner product using centered $\phi_{(\vec x)}$:
+
+\begin{equation*}
+	\underbrace{ \vec{\phi}_{\big( \vec{x}^{(\alpha)} \big)} }_{
+		\substack{ 	\text{``centered''} \\
+				\text{feature vectors}} }
+	= \widetilde{\vec{\phi}}_{\big( \vec{x}^{(\alpha)} \big)}
+		- \frac{1}{p} \sum\limits_{\gamma = 1}^p 
+		\underbrace{ \widetilde{\vec{\phi}}_{\big( \vec{x}^{(\gamma)} 
+				\big)} }_{
+			\substack{ 	\text{uncentered} \\
+					\text{feature vectors}} }
+					\qquad \forall \alpha
+\end{equation*}
+
+\begin{equation*}
+	K_{\alpha \beta} = \underbrace{\widetilde{K}_{\alpha \beta}}_{ _{= \, k \left ( \vec{x}^{(\alpha)},
+			\vec{x}^{(\beta)} \right )}}
+		- \;\underbrace{\frac{1}{p} \sum\limits_{\delta = 1}^p 
+		\widetilde{K}_{\alpha \delta}}_\text{\scriptsize{row avg.}} 
+		\; - \; \underbrace{\frac{1}{p} 
+		\sum\limits_{\gamma = 1}^p 
+		\widetilde{K}_{\gamma \beta}}_\text{\scriptsize{col. avg.}}
+		\;+ \;\underbrace{\frac{1}{p^2} 
+		\sum\limits_{\gamma, \delta = 1}^p 
+		\widetilde{K}_{\gamma \delta}}_\text{\scriptsize{matrix avg.}}
+\end{equation*}%
+
+(cf. slides 1.3 \#16-\#17 on how we arrive at the above centering)

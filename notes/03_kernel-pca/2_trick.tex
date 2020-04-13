@@ -1,0 +1,38 @@
+\section{The kernel trick}
+
+Representing a non-linear transformation using inner products of the data:
+\begin{equation}
+ \label{eq:trick}
+      \vec{\phi}_{(\vec{x})}^\top 
+		\vec{\phi}_{(\vec{x}')} = 
+      k(\vec{x}, \vec{x}')
+\end{equation}
+    
+where $k(\vec{x}, \vec{x}')$ is a kernel function applied 
+to any two pairs of observations.
+
+Applying the kernel function to \emph{each} pair in our dataset; \\
+$\vec x^{(\alpha)}$ and $\vec{x}^{(\beta)}$ 
+with $\alpha, \beta = 1, \ldots, p$ yields the scalar $K_{\alpha \beta}$. 
+Storing all scalars $K_{\alpha \beta} \; \forall (\alpha,\beta)$ yields 
+the un-normalized kernel matrix $\widetilde {\vec K}=\{K_{\alpha \beta}\}$:
+
+$$
+\widetilde {\vec K} = 
+\rmat{
+K_{11} & K_{12} & \ldots & K_{1p} \\
+K_{21} & K_{12} & \ldots & K_{2p} \\
+\vdots & & \ddots\\
+K_{p1} & & & K_{pp}
+}
+$$
+
+$\vec K$ (without the ``\textasciitilde'') denotes the normalized or ``centered'' kernel matrix.
+
+\question{What is the dimensionality of $\widetilde {\vec K}$?}
+
+\question{Is $K_{\alpha \beta}$ sensitive to translation and rotation of the data?}
+
+- No. $K_{\alpha \beta}$ is the pairwise relation between two observations. 
+Rotating the data or translating it will result in the same $K_{\alpha \beta}$. 
+However, scaling the data while keeping the kernel function fixed would produce a different $K_{\alpha \beta}$.

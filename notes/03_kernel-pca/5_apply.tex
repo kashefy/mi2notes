@@ -1,0 +1,16 @@
+
+
+\subsection{Applying Kernel PCA:}
+
+\question{How do I interpret the role of PCs?}
+
+
+(cf. 1.3 \#28)
+
+\subsection{A note on implementation:}
+
+\question{Should you solve the transformed eigenvalue problem using \emph{eigenvalue decomposition} or \emph{SVD}?}
+
+- \emph{eigenvalue decomposition} is the only option for Kernel PCA. \emph{SVD} is simply not applicable since we don't have access to $\vec \phi_((\vec x))$
+
+The kernel function is symmetric. $k(\vec x^{(\alpha)}, \vec x^{(\beta)}) = k(\vec x^{(\beta)}, \vec x^{(\alpha)})$. One can exploit this by reducing how many times the kernel function is actually applied while traversing the training samples when computing $\widetilde {\vec{K}}$.

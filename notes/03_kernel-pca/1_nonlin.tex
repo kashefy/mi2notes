@@ -1,0 +1,42 @@
+
+\section{Non-linear transformations}
+
+We use $N$ to denote the dimensionality of our input space and $p$ to denote the number of observations.\\
+Let $\vec x^{(\alpha)} \in \R^N$ and $\alpha = 1, \ldots, p$.
+
+The following mapping describes the non-linear transformation of each observation:
+$$
+\vec{\phi}: \vec{x} \mapsto \vec{\phi}_{(\vec{x})}
+$$
+
+An example of such a transformation - 2\textsuperscript{nd}-order monomials:
+$$
+\vec{\phi}_{(\vec{x})} = ( 
+    1, \;
+    \mathrm{x}_1, \;
+    \mathrm{x}_2, \;
+    \ldots \;
+    \mathrm{x}_N, \;
+    \mathrm{x}_1^2, \; 
+    \mathrm{x}_1 \mathrm{x}_2, \;
+    \mathrm{x}_2^2, \;
+    \mathrm{x}_1 \mathrm{x}_3, \;
+    \mathrm{x}_2 \mathrm{x}_3, \;
+    \mathrm{x}_3^2, \; \ldots, \;
+    \mathrm{x}_N^2
+    )^\top
+$$
+
+We actually don't need to define this transformation.
+All we need to know is that the dimensionality of $\vec{\phi}_{(\vec{x})}$ can be larger than $N$, possibly infinitely large.\\
+
+\underline{The purpose of non-linear transformations:}
+
+Two or more components in the original $\vec x$ (e.g. $x_1$, $x_2$) could have non-linear correlations (e.g. plotting those two components reveals a parabola). 
+Expanding the dimensionality of $\vec x$ through the above mapping introduces new dimensions in which correlations between the components in $\vec \phi_{(\vec x)}$ become \emph{linear}.
+
+\textbf{Caveat}:\\
+Directly applying this transformation on a single observation is not applicable. 
+We might never find a transformation that causes all non-linear correlations within $\vec x$ to become linear.
+
+We turn to the ``kernel trick'' to solve this problem.
