@@ -45,23 +45,23 @@
 
 % TOC - BEGIN
 % Requires KOMA-Script version > 3.15
-%\RedeclareSectionCommand[tocnumwidth=3.0em]{section}
-%\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
-%\RedeclareSectionCommand[tocnumwidth=4.0em]{subsubsection}
+\RedeclareSectionCommand[tocnumwidth=3.0em]{section}
+\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
+\RedeclareSectionCommand[tocnumwidth=4.0em]{subsubsection}
 % Spacing between section and text
 % Syntax: \titlespacing*{<command>}{<left>}{<before-sep>}{<after-sep>}
 \titlespacing*{\subsection}{0cm}{1cm}{0.5cm}
 \titlespacing*{\section}{0cm}{1cm}{1cm}
 
  %ENDNOTENLAYOUT%
-\renewcommand\enoteformat{\noindent\setlength\hangindent{0.5cm}\makebox[0.5cm][l]{\theenmark\,}}
-\def\enotesize{\footnotesize}
+%\renewcommand\enoteformat{\noindent\setlength\hangindent{0.5cm}\makebox[0.5cm][l]{\theenmark\,}}
+%\def\enotesize{\footnotesize}
 %
-\usepackage{xpatch}
-\xpretocmd\enoteheading{%
-  \titlespacing*{\section}{0cm}{3\baselineskip}{1\baselineskip}%
-}{}{\PatchFailed}
-\renewcommand{\notesname}{\normalsize\textit{Notes}}
+%\usepackage{xpatch}
+%\xpretocmd\enoteheading{%
+  %\titlespacing*{\section}{0cm}{3\baselineskip}{1\baselineskip}%
+%}{}{\PatchFailed}
+%\renewcommand{\notesname}{\normalsize\textit{Notes}}
 \let\footnote=\endnote
 % TOC - END
 
