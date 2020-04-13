@@ -12,11 +12,7 @@
 \usepackage{hyperref}
 \hypersetup{
   colorlinks   = true, %Colours links instead of ugly boxes
-%  urlcolor     = black, %Colour for external hyperlinks
-%  linkcolor    = black, %Colour of internal links
-%  citecolor   = black %Colour of citations
 }
-\usepackage{xstring} % for replace string command
 \usepackage{titlesec}
 \usepackage[overlay,absolute]{textpos}
 \usepackage{enumerate}
@@ -34,6 +30,7 @@
 \usepackage{xcolor,cancel}
 \usepackage{soul} % for strikethrough
 
+% Margins - BEGIN
 \setlength{\oddsidemargin}{0.25 in}
 \setlength{\evensidemargin}{-0.25 in}
 \setlength{\topmargin}{-0.9 in}
@@ -42,27 +39,13 @@
 \setlength{\headsep}{0.35 in}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+% Margins - END
 
 % TOC - BEGIN
 % Requires KOMA-Script version > 3.15
 \RedeclareSectionCommand[tocnumwidth=3.0em]{section}
 \RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
 \RedeclareSectionCommand[tocnumwidth=4.0em]{subsubsection}
-% Spacing between section and text
-% Syntax: \titlespacing*{<command>}{<left>}{<before-sep>}{<after-sep>}
-%\titlespacing*{\subsection}{0cm}{1cm}{0.5cm}
-%\titlespacing*{\section}{0cm}{1cm}{1cm}
-
- %ENDNOTENLAYOUT%
-%\renewcommand\enoteformat{\noindent\setlength\hangindent{0.5cm}\makebox[0.5cm][l]{\theenmark\,}}
-%\def\enotesize{\footnotesize}
-%
-%\usepackage{xpatch}
-%\xpretocmd\enoteheading{%
-  %\titlespacing*{\section}{0cm}{3\baselineskip}{1\baselineskip}%
-%}{}{\PatchFailed}
-%\renewcommand{\notesname}{\normalsize\textit{Notes}}
-%\let\footnote=\endnote
 % TOC - END
 
 % Update the following presets
@@ -87,12 +70,9 @@
 \renewcommand*{\thesection}{
 %\sectionprefix
 \thesheetno.\arabic{section}}
-%\def\ReplaceStr#1{%
-  %\IfSubStr{#1}{\sectionprefix}{%
-    %\StrSubstitute{#1}{\sectionprefix}{}}{#1}}
-%\titleformat{\section}
-  %{\normalfont\Large\bfseries\filcenter}{T\thesection}
-  %{0em}{}
+\titleformat{\section}
+  {}{T\thesection~T}
+  {0em}{}
     
 % Custom referencing - BEGIN
 % Use custom text for sections, figures and equations
@@ -117,8 +97,6 @@
 
 \pagestyle{miheadings}
 
-%\setcounter{section}{-1}
-
 % Questions - BEGIN
 % a \section like command for questions
 \newcounter{question}[section]
@@ -133,13 +111,6 @@
 % Questions - END
 
 % -----------------------------------------------------------------------------
-
-% Hints - BEGIN
-% making hints
-\newcommand{\hint}[1]{%
-  \begin{description} \item[Hint:] #1 \end{description} 
-}
-% Hints - END
 
 % Include in slides but exclude from notes
 % see corresponding \notesonly for what to include in notes but not in slides mode
