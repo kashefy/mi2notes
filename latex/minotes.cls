@@ -44,9 +44,25 @@
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
 
 % TOC - BEGIN
-\RedeclareSectionCommand[tocnumwidth=3.0em]{section}
-\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
-\RedeclareSectionCommand[tocnumwidth=4.0em]{subsubsection}
+% Requires KOMA-Script version > 3.15
+%\RedeclareSectionCommand[tocnumwidth=3.0em]{section}
+%\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
+%\RedeclareSectionCommand[tocnumwidth=4.0em]{subsubsection}
+% Spacing between section and text
+% Syntax: \titlespacing*{<command>}{<left>}{<before-sep>}{<after-sep>}
+\titlespacing*{\subsection}{0cm}{1cm}{0.5cm}
+\titlespacing*{\section}{0cm}{1cm}{1cm}
+
+ %ENDNOTENLAYOUT%
+\renewcommand\enoteformat{\noindent\setlength\hangindent{0.5cm}\makebox[0.5cm][l]{\theenmark\,}}
+\def\enotesize{\footnotesize}
+%
+\usepackage{xpatch}
+\xpretocmd\enoteheading{%
+  \titlespacing*{\section}{0cm}{3\baselineskip}{1\baselineskip}%
+}{}{\PatchFailed}
+\renewcommand{\notesname}{\normalsize\textit{Notes}}
+\let\footnote=\endnote
 % TOC - END
 
 % Update the following presets
@@ -67,7 +83,7 @@
 	\rule{\textwidth}{1pt}%
 	\vspace{0.5cm}
 }
-\newcommand{\sectionprefix}{T} % check width in toc
+%\newcommand{\sectionprefix}{T} % check width in toc
 \renewcommand*{\thesection}{
 %\sectionprefix
 \thesheetno.\arabic{section}}
@@ -115,7 +131,6 @@
 	\vspace{5mm}%
 }
 % Questions - END
-
 
 % -----------------------------------------------------------------------------
 
