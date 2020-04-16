@@ -1,5 +1,7 @@
 \section{The kernel trick}
 
+\begin{frame}\frametitle{\secname}
+
 Representing a non-linear transformation using inner products of the data:
 \begin{equation}
  \label{eq:trick}
@@ -9,7 +11,13 @@ Representing a non-linear transformation using inner products of the data:
 \end{equation}
     
 where $k(\vec{x}, \vec{x}')$ is a kernel function applied 
-to any two pairs of observations.
+to any two observations.
+
+\end{frame}
+
+\subsection{The Kernel matrix}
+
+\begin{frame}\frametitle{\subsecname}
 
 Applying the kernel function to \emph{each} pair in our dataset; \\
 $\vec x^{(\alpha)}$ and $\vec{x}^{(\beta)}$ 
@@ -17,7 +25,7 @@ with $\alpha, \beta = 1, \ldots, p$ yields the scalar $K_{\alpha \beta}$.
 Storing all scalars $K_{\alpha \beta} \; \forall (\alpha,\beta)$ yields 
 the un-normalized kernel matrix $\widetilde {\vec K}=\{K_{\alpha \beta}\}$:
 
-$$
+\begin{equation}
 \widetilde {\vec K} = 
 \rmat{
 K_{11} & K_{12} & \ldots & K_{1p} \\
@@ -25,14 +33,22 @@ K_{21} & K_{12} & \ldots & K_{2p} \\
 \vdots & & \ddots\\
 K_{p1} & & & K_{pp}
 }
-$$
+\end{equation}
 
-$\vec K$ (without the ``\textasciitilde'') denotes the normalized or ``centered'' kernel matrix.
+$\vec K$ (without the ``\textasciitilde'') denotes the normalized or ``centered'' kernel matrix. \notesonly{cf. \sectionref{sec:centerkernel} why and how to center the Kernel matrix.}
 
 \question{What is the dimensionality of $\widetilde {\vec K}$?}
+
+\end{frame}
+
+\begin{frame}\frametitle{The RBF Kernel}
+
+The Radial Basis function (RBF) 
 
 \question{Is $K_{\alpha \beta}$ sensitive to translation and rotation of the data?}
 
 - No. $K_{\alpha \beta}$ is the pairwise relation between two observations. 
 Rotating the data or translating it will result in the same $K_{\alpha \beta}$. 
 However, scaling the data while keeping the kernel function fixed would produce a different $K_{\alpha \beta}$.
+
+\end{frame}

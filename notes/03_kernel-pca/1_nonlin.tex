@@ -40,7 +40,7 @@ Let $\vec x^{(\alpha)} \in \R^N$ and $\alpha = 1, \ldots, p$.
 	}
 	\only<3>{
 	\slidesonly{
-		\includegraphics[width=0.7\textwidth]{img/mem_candononlinpca}%
+		\includegraphics[width=0.7\textwidth]{img/meme_candononlinpca}%
 	}
 	}
 	\mode<article>{
@@ -51,11 +51,10 @@ Let $\vec x^{(\alpha)} \in \R^N$ and $\alpha = 1, \ldots, p$.
 \only<2->{
 \svspace{-5mm}
 We could perform PCA on the transformed data $\vec \phi_{(\vec x)}$.\\
-\notesonly{The reasoning behind this is that }
-non-linear correlations between variables in $\vec x$ could be linear between variables in $\vec \phi_{(\vec x)}$.
+\notesonly{The reasoning behind this is that }non-linear correlations between variables in $\vec x$ could be linear between variables in $\vec \phi_{(\vec x)}$.
 
 \notesonly{
-This is the \undrline{purpose} of the non-linear transformaiton. That, two or more components in the original $\vec x$ (e.g. $x_1$, $x_2$) could have non-linear correlations (e.g. plotting those two components reveals a parabola). 
+This is the \underline{purpose} of the non-linear transformaiton. That, two or more components in the original $\vec x$ (e.g. $x_1$, $x_2$) could have non-linear correlations (e.g. plotting those two components reveals a parabola). 
 Expanding the dimensionality of $\vec x$ through the above mapping introduces new dimensions in which correlations between the components in $\vec \phi_{(\vec x)}$ become \emph{linear}.
 
 }
@@ -70,17 +69,36 @@ Expanding the dimensionality of $\vec x$ through the above mapping introduces ne
 
 \pause
 
+The potentially very high dimensionality of $\vec \phi_{(\vec x)}$ could prohibit us from storing the transformed data.\\
+
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{img/storehd}%
+	\notesonly{
+	\captionof{figure}{Storing 2-nd order monomials applied to an HD image.}
+	}
+\end{center}
+
+\notesonly{
+2-nd order monomial applied to one HD ($1280 \times 720$ pixels) image would require more than $400 GB$ of storage alone\footnote{
+$N=1280 \times 720 = 921600$ pixels, $d = \# x^1_j + \# x^2_j + \# \binom{N}{2} = (N+1) + N + \binom{N}{2} = 424,674,662,401$\\
+Let's say it's a grayscale image, so 1 Byte per pixel. This way we end up with $424$ GB and some change.
+}
+}
+
+
+\pause
+
 \svspace{5mm}
 
 \textbf{Caveat}:\\
 Directly applying this transformation on a single observation is not applicable. 
 We might never find a transformation that causes all non-linear correlations within $\vec x$ to become linear.\\
 
-\pause
+\end{frame}
 
-\svspace{5mm}
+\begin{frame}\frametitle{\secname}
 
-\slidesonly{Even better:}\\
+The upside:\\
 
 We actually don't need to define this transformation.
 All we need to know is that the dimensionality of $\vec{\phi}_{(\vec{x})}$ can be larger than $N$, possibly infinitely large.\\
