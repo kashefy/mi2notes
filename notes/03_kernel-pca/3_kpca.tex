@@ -678,43 +678,102 @@ Sort the eigenvectors such that the corresponding eigenvalues are arranged in de
 \subsubsection{Projection}
 
 \begin{frame}{\subsubsecname}
-In order to project some observation $\vec x$ into the PC space, we first map it into the non-linear space of $\phi$ 
-and then project that into the space spanned by the PCs. 
-By now we should expect that the transformation can only be performed via the kernel trick. 
-We basically represent this sample $\vec x$ by its relation to the \emph{training data} 
+\notesonly{In order t}\slidesonly{T}o project some observation $\vec x$ into the PC space, we first map it into \notesonly{the non-linear }space of $\phi$ 
+and then project that into the space spanned by the PCs.\\
+
+\pause
+
+\slidesonly{
+\begin{center}
+		\includegraphics[width=4cm]{img/meme_mapx}
+\end{center}
+}
+
+\notesonly{ 
+By now we should expect that the transformation will be performed}\slidesonly{Transform} via the kernel trick.
+\notesonly{We basically }represent this sample $\vec x$ by its relation to the \emph{training data} 
 (i.e. the $p$ observations that were used to compute the PCs).
 
-We derive the projection for Kernel PCA by starting with the projection used in linear PCA (cf. slides 1.3 \#11):
+\end{frame}
 
-The projection for linear PCA, specifically the component of $\vec x$ in the direction of the $k$-th PC is:
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+\visible<2->{
+\vspace{-12mm}
+\hspace{8.cm}
+\StickyNote[1.cm]{
+	\begingroup
+	\footnotesize
+	\begin{equation}
+	\label{eq:ephi}
+		\vec e = \sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}
+	\end{equation}
+	\endgroup
+}[3.cm]
+\vspace{-5mm}
+}
+}
+ 
+\notesonly{We derive the projection for Kernel PCA by starting}\slidesonly{Start} with the projection used in linear PCA.
+
+Recall in linear PCA, to get the component of $\vec x$ in the direction of the $k$-th PC we use:
+
+\svspace{-5mm}
+
 \begin{equation}
-\label{eq:projlin}
+\label{eq:projlinx}
 u_k(\vec x) = \vec e_k^\top \vec x
 \end{equation}
 
+Assuming we have a the $\phi$'s:
+
+\svspace{-3mm}
+
+\begin{equation}
+\label{eq:projlin}
+u_k(\phi_{(\vec x)}) = \vec e_k^\top \vec \phi_{(\vec x)}
+\end{equation}
+
+\pause
+
+\notesonly{
 We substitute $\vec \phi_{(\vec x)}$ for $\vec x$ and plug Eq.\ref{eq:ephi} into Eq.\ref{eq:projlin}:
+}
+
+\visible<3>{
+
+\svspace{-2mm}
 
 \begin{align}
 \label{eq:projk1}
 u_k(\vec \phi_{(\vec x)}) &= \sum^{p}_{\beta=1} a^{(\beta)} 
+\hspace{-3mm}
 \underbrace{
-\vec{\phi}^\top_{(\vec{x}^{(\beta)})} \vec \phi_{(\vec x)}
+\vec{\phi}^\top_{(\vec{x}^{(\beta)})} \, \vec \phi_{(\vec x)}
 }_{\substack{
 \text{recognize the familiar}\\
 \text{scalar product?}
-\\ =k(\vec x^{(\beta)}, \vec x) = K_{\beta,\vec x}}}\\
-&= \sum_{\beta=1}^{p} a_k^{(\beta)} K_{\beta, \vec x}
+\\ =k(\vec x^{(\beta)}, \vec x) = K_{\beta,\vec x}}}\notesonly{\\
+&}= \sum_{\beta=1}^{p} a_k^{(\beta)} K_{\beta, \vec x}
 \end{align}
 
-Note that $\vec x$ can be a sample that was used in computing the PCs or a completly new ``test'' point.
+\notesonly{Note that }$\vec x$ can be a sample that was used in computing the PCs or a completly new ``test'' point.
+}
 \end{frame}
 
 \subsubsection{Reconstruction}
 
 \begin{frame}{\subsubsecname}
 
+\slidesonly{
+\begin{center}
+		\includegraphics[width=4cm]{img/meme_reconstruct}
+\end{center}
+}
+
 Since we never had the transformation $\phi$ to begin with. 
 It is not psssible to simply project a sample from PC space back into the original $N$-dimensional input space. 
-Algorithms exist that approximate a ``pre-image'' of some new observation.
+Algorithms exist that \emph{approximate} a ``pre-image'' of some new observation.
 
 \end{frame}
