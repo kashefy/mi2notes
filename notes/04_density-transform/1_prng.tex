@@ -1,0 +1,44 @@
+\section{Density Transformation}
+
+\underline{Outline:}
+
+Before we tackle ICA itself, we first look at the more basic principle of \emph{density transformation} and 
+the \emph{convservation of probability}.\\
+We start with more specific cases of applying density transformations, 
+namely \emph{pseudo random number generators} and what the inverse of \emph{cumulative distribution functions (cdf)} can be used for.\\
+Finally we discuss how to generalize this in order to transform one probability density function (pdf) into another.
+
+\subsection{PRNG:}
+
+How can we sample from the uniform distribution $\in \lbrack0, 1)$?
+
+\begin{itemize}
+\item Create a sequence, preferrably with a wrong period.
+\item minimal pattern and sub-subsequences
+\item determinism has an advantage:
+\begin{enumerate}
+	\item \emph{reproducible} sequneces
+	\item efficiency; the starting element or ``seed'' and length of the sequence is suffcient is representative of the entire sequnece.
+\end{enumerate}
+\end{itemize}
+
+\underline{Linear congruential generator (LCG):}
+
+Start with a seed $y_0 \in \overbrace{\left\{0,\ldots,m-1\right\}}^{=:\;\mathcal{M}}$ with $m \in \N$ ($m$ controls the granularity). 
+The next sample $y_t$ is computed as:
+
+\begin{equation}
+y_t = \left( \, a \; y_{t-1} \; + \; b \, \right) \, \text{mod} \; m,
+\end{equation}
+where\\[-0.7cm]
+\begin{align*}
+a \in \mathcal{M}&\; \text{is the multiplier,} \\
+b \in \mathcal{M}&\; \text{is the increment.}
+\end{align*}
+
+Then $u_i = \frac{y_i}{m} \approx \,\mathcal{U} \in \lbrack0, 1)$.
+
+Although finicky and requiring careful parameterization, LCG gives us something for drawing from a uniform distribution. 
+Next, we look at how to draw samples of a random variable $X$ with a desired pdf $p_X(x)$. 
+using uniformly sampled values $\tilde z \in [0,1]$.
+
