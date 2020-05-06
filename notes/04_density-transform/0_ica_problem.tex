@@ -1,6 +1,8 @@
 
 \section{The ICA problem}
 
+\begin{frame}{\secname}
+
 Let $\vec s = (s_1, s_2,...,s_N)^\top$ denote the concatenation of independent sources 
 and $\vec x \in \R^N$ describe our observations. $\vec x$ relates to $\vec s$ through a 
 \emph{linear transformation} $\vec A$:
@@ -13,7 +15,18 @@ and $\vec x \in \R^N$ describe our observations. $\vec x$ relates to $\vec s$ th
 We refer to $\vec A$ as the \emph{mixing matrix} and Eq.\ref{eq:ica} as the \emph{ICA problem}, 
 which is recovering $\vec s$ from only observing $\vec x$.
 
-\underline{Example scenario:}
+\end{frame}
+
+\subsection{Example scenario}
+
+\begin{frame}{\subsecname}
+
+\begin{center}
+	\includegraphics[width=0.7\textwidth]{img/setting}
+	\captionof{figure}{Example scenario}
+\end{center}
+
+\notesonly{
 
 Two speakers are placed in a room and emit signals $s_1$ and $s_2$. 
 The speakers operate indepdendent of one another.  
@@ -33,5 +46,9 @@ The distance-contribution relationship is \emph{linear}. We don't need this to b
 If we had a measurement of the distance between each microphone and each speaker, 
 we would tell exactly what the contribution of each of $s_1$ and $s_2$ is to each recorded observation. 
 If we know the exact contribution of a source to an observation, we can look at both observations and recover each source in full.
+}
 
+\pause 
 This is what ICA tries to solve, except that it does not have any knowledge about the spatial setting. It is blind.
+
+\end{frame}
