@@ -571,9 +571,8 @@ In linear PCA, we've relied on \textit{Eig} giving us normalized eigenvectors $\
 
 Recall, that PCA solves the eigenvalue problem
 
-\begin{equation} 
-%\label{eq:cov}
-\vec C_{\phi} = \frac{1}{p} \sum_{\alpha=1}^{p} \vec{\phi}_{(\vec{x}^{(\alpha)})} \vec{\phi}^{\top}_{(\vec{x}^{(\alpha)})}
+\begin{equation}
+\vec C_{\phi} \, \vec e = \lambda \vec e
 \end{equation}
 
 At the solution, $\vec e^\top \vec e = 1$. $\vec e$ are normalized eigenvectors to use as PCs.
