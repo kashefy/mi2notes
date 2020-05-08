@@ -1,36 +1,108 @@
 \subsection{Density Transformation and Conservation of Probability}
 
-Let $X_1$ and $X_2$ be jointly continuous random variables with 
+\begin{frame}
+\slidesonly{
+\begin{center}
+	\huge \subsecname
+\end{center}
+}
+\end{frame}
+
+\subsubsection{Setting}
+
+\begin{frame}%\frametitle{\subsubsecname}
+
+\slidesonly{\underline{Setting}: }Let $X_1$ and $X_2$ be jointly continuous random variables with 
 density function $f_{X_1, X_2}$:
 
-$$
+\svspace{-3mm}
+
+\begin{equation}
 f_{X_1, X_2}(x_1, x_2) = f(\vec x) \qquad \vec x \in \Omega \subset \R^2
-$$
+\end{equation}
+
+\pause
 
 and let $\vec u = \vec u(\vec x) = ( u_1(\vec x), u_2(\vec x)) = ( u_1(x_1, x_2), u_2(x_1, x_2)) $ be a one-to-one mapping/transformation.
 
-%\begin{figure}
-%\centering
-\includegraphics[width=0.7\textwidth]{img/u.pdf}
-%\caption*{$\vec{\psi} \in \mathcal{F} = \overline{\operatorname{span} \vec{\phi}(\mathbb{R}^N)}$}
-%\end{figure}
+\svspace{-3mm}
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{img/xu_mapping}
+\notesonly{\captionof{figure}{Transformation (mapping)}}
+\end{center}
+
+\svspace{-3mm}
+
+\question{What requirement should this mapping fulfill?}
+
+\pause
+
+\notesonly{-conservation of probability. The probability of the event $(x_1,x_2)$ should equal the probability of its counterpart in $(u_1,u_2)$ and vice-versa.}
+
+\svspace{-3mm}
+
+\begin{equation}
+P_{u_i}({u}_i) d {u}_i 
+= P_{x_i} ({x}_i) d {x}_i
+\end{equation}
+
+\end{frame}
+
+\begin{frame}{Conservation of probability}
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{img/u}
+\notesonly{\captionof{figure}{Conservation of probability}}
+\end{center}
 
 The area of the small rectangle in $\Omega$ is $A = dx_1\, dx_2$.\\
 
-The goal is to show that in order for probability to be conserved, the areas on both spaces have to be equal. 
-We will therefore demonstrate that:
-$$
+\end{frame}
+
+
+\begin{frame}{Conservation of probability}
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{img/u}
+\notesonly{\captionof{figure}{Conservation of probability}}
+\end{center}
+
+The area of the small rectangle in $\Omega$ is $A = dx_1\, dx_2$\notesonly{.\\
+The goal is to show that in order for probability to be conserved}, the areas on both spaces have to be equal.
+
+\pause
+
+This implies the following equality:
+\begin{equation}
 \int_{\Omega} f(\vec{x}) \mathbf{d}\vec{x}
 =\int_{u(\Omega)} f({\vec x(\vec u)}) \frac{1}{\left|\det \frac{\partial \vec{u}(\vec{x})}{\partial \vec{x}} \right|} \mathbf{d}\vec{u}.
-$$
+\end{equation}
+
+\end{frame}
+
+\begin{frame}
+
+\slidesonly{
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{img/u}
+\notesonly{\captionof{figure}{Conservation of probability}}
+\end{center}
+}
+
+
 
 \begin{itemize}
 \item Because $dx_1$ and $dx_2$ are \emph{infinitesimally small} we can consider the mapping 
-$\vec u$ to act as a linear transformation, resulting in a different shape in $u(\Omega)$. 
+$\vec u$ to act as a \emph{linear transformation}, resulting in a different shape in $u(\Omega)$. 
 \item The shape of the shaded area in $u(\Omega)$ is \emph{approximately} a parallelogram.
 \item We will compute the ratio of the areas between the two transforms.
 \item If we want to go back from $u(\Omega)$ to $\Omega$ we only need $\frac{1}{\text{ratio}}$.
 \end{itemize}
+
+\end{frame} 
+
 
 \underline{Important:}
 Approximating the above as a linear transformation (i.e. a small rectangle turns into a parallelogram) only holds because for very small $d\vec x$.
