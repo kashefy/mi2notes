@@ -100,7 +100,7 @@ It's direct input are the $\phi$'s. Therefore,
 
 \pause
 
-- No, Centering $\vec X$ does not guranatee it stays centered after the transformation.
+- No, Centering $\vec X$ does not guarantee it stays centered after the transformation.
 Therefore, there is no need to center $\vec X$ beforehand.
 
 Example:
@@ -184,7 +184,7 @@ Eq.\ref{eq:ephi} tells us that we can describe $\vec e$ in terms of the transfor
 }
 
 \notesonly{
-Substituting Eq.\ref{eq:cov} and Eq.\ref{eq:ephi} into the eignevalue problem Eq.\ref{eq:eig}:
+Substituting Eq.\ref{eq:cov} and Eq.\ref{eq:ephi} into the eigenvalue problem Eq.\ref{eq:eig}:
 }
 \slidesonly{
 Express the eigenvalue problem in terms of $\phi$'s:
@@ -218,7 +218,7 @@ a^{(\beta)} \vec{\phi}^{(\alpha)}
 \sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}
 \end{equation}
 
-We are one step closer to not needing the eplxicit mapping $\phi$.
+We are one step closer to not needing the explicit mapping $\phi$.
 
 \end{frame}
 
@@ -243,7 +243,7 @@ We are one step closer to not needing the eplxicit mapping $\phi$.
 }
 
 \notesonly{
-Recall from \sectionref{sec:nonlin} that we not even be able compute $\vec{\phi}_{(\vec{x})}$ but we now see it is possible to avoid the transformation altogether by exploiting the kernel trick (cf. Eq.\ref{eq:trick}) by substituing 
+Recall from \sectionref{sec:nonlin} that we not even be able compute $\vec{\phi}_{(\vec{x})}$ but we now see it is possible to avoid the transformation altogether by exploiting the kernel trick (cf. Eq.\ref{eq:trick}) by substituting 
 $ K_{\alpha \beta} $ for
 $
 \vec{\phi}^{\top}_{(\vec{x}^{(\alpha)})}
@@ -347,7 +347,7 @@ We end up with this formulation of the eigenvalue problem:
 
 \end{frame}
 
-\begin{frame}{Side-note: Arriving at the matrx notation}
+\begin{frame}{Side-note: Arriving at the matrix notation}
 
 \notesonly{Side note: Going from \eqref{eq:eigK} to the matrix notation:\\}
 
@@ -757,7 +757,7 @@ u_k(\vec \phi_{(\vec x)}) &= \sum^{p}_{\beta=1} a^{(\beta)}
 &}= \sum_{\beta=1}^{p} a_k^{(\beta)} K_{\beta, \vec x}
 \end{align}
 
-\notesonly{Note that }$\vec x$ can be a sample that was used in computing the PCs or a completly new ``test'' point.
+\notesonly{Note that }$\vec x$ can be a sample that was used in computing the PCs or a completely new ``test'' point.
 }
 \end{frame}
 
@@ -772,7 +772,7 @@ u_k(\vec \phi_{(\vec x)}) &= \sum^{p}_{\beta=1} a^{(\beta)}
 }
 
 Since we never had the transformation $\phi$ to begin with. 
-It is not psssible to simply project a sample from PC space back into the original $N$-dimensional input space. 
+It is not possible to simply project a sample from PC space back into the original $N$-dimensional input space. 
 Algorithms exist that \emph{approximate} a ``pre-image'' of some new observation.
 
 \end{frame}
