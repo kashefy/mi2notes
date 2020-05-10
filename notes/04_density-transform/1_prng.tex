@@ -17,7 +17,7 @@
 \underline{Outline:}
 
 Before we tackle ICA itself, we first look at the more basic principle of \emph{density transformation} and 
-the \emph{convservation of probability}.\\
+the \emph{conservation of probability}.\\
 We start with more specific cases of applying density transformations, 
 namely \emph{pseudo random number generators} (PRNG) and what the inverse of \emph{cumulative distribution functions (cdf)} can be used for.\\
 Finally we discuss how to generalize this in order to transform one probability density function (pdf) into another.
@@ -25,7 +25,7 @@ Finally we discuss how to generalize this in order to transform one probability 
 
 \slidesonly{
 First we need to cover the basic principle of \emph{density transformation} and 
-the \emph{convservation of probability}. We start with specific cases:
+the \emph{conservation of probability}. We start with specific cases:
 
 \begin{enumerate}
 \item pseudo random number generators
@@ -68,8 +68,8 @@ Then generalize this to transform one probability density function (pdf) into an
 \question{How can we sample from the uniform distribution $\in \lbrack0, 1)$?}
 
 \begin{itemize}
-\item create a sequence, preferrably an aperiodic one,
-\item maintain a minimal pattern, also no subsequences,
+\item create a sequence, preferably an aperiodic one,
+\item maintain a minimal pattern, also no sub-sequences,
 \item keep elements in the range of $\lbrack0, 1)$
 \end{itemize}
 
@@ -77,10 +77,10 @@ Then generalize this to transform one probability density function (pdf) into an
 
 \svspace{5mm}
 
-Pseudorandom is essentially deterministic, but determinism has its advantages:
+Pseudo-random is essentially deterministic, but determinism has its advantages:
 \begin{enumerate}
-	\item \emph{reproducible} sequneces
-	\item efficiency; the starting element or ``seed'' and length of the sequence is suffcient to represent the entire sequnece.
+	\item \emph{reproducible} sequences
+	\item efficiency; the starting element or ``seed'' and length of the sequence is sufficient to represent the entire sequence.
 \end{enumerate}
 
 \end{frame}
@@ -116,7 +116,7 @@ Let's see the LCG in action.
 
 \begin{frame}
 
-Although finicky and requiring careful parameterization, LCG gives us something for drawing from a uniform distribution. 
+Although finicky and requiring careful parametrization, LCG gives us something for drawing from a uniform distribution. 
 \svspace{5mm}
 Next, we look at how to draw samples of a random variable $X$ with a desired pdf $p_X(x)$. 
 using uniformly sampled values $\tilde z \in [0,1]$.
