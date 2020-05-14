@@ -1,5 +1,7 @@
 
-\section{The ICA problem:}
+\section{The ICA problem}
+
+\begin{frame}{\secname}
 
 Let $\vec s = (s_1, s_2,...,s_N)^\top$ denote the concatenation of $N$ \underline{independent sources} 
 and $\vec x \in \R^N$ describe our observations. $\vec x$ relates to $\vec s$ through a 
@@ -25,8 +27,12 @@ Again with individual elements and with $N=2$:
 	\end{array} \right)
 \end{equation}
 
-We refer to $\vec A$ as the \emph{mixing matrix} and \eqref{eq:ica} as the \emph{ICA problem}, 
+We refer to $\vec A$ as the \emph{mixing matrix} and \notesonly{\eqref{eq:ica}}\slidesonly{the above} as the \emph{ICA problem}, 
 which is recovering $\vec s$ from only observing $\vec x$.
+
+\end{frame}
+
+\begin{frame}{\secname}
 
 The ICA problem can be solved by finding the \emph{unmixing matrix} $\vec W$ such that 
 \begin{equation}
@@ -34,6 +40,13 @@ The ICA problem can be solved by finding the \emph{unmixing matrix} $\vec W$ suc
 \end{equation}
 
 But since we don't have the original mixing matrix $\vec A$ we employ methods of ICA for finding an unmixing matrix $\vec W$ which yields an estimate of the sources, namely $\vec {\hat s}$. 
+
+\begin{equation}
+\hat{\vec s} = \vec W \cdot \vec x = \vec A^{-1} \cdot \vec x
+\end{equation}
+
+In the case of $N=2$:
+
 \begin{equation}
  \left( \begin{array}{ll}
 			\hat s_1 \\ \hat s_2
@@ -48,18 +61,26 @@ But since we don't have the original mixing matrix $\vec A$ we employ methods of
 	\end{array} \right)
 \end{equation}
 
-We will discuss several methods for solving the ICA problem:
+\end{frame}
+
+\begin{frame}{Different methods for solving the ICA problem}
+
+\notesonly{We will discuss several methods for solving the ICA problem:}
 
 \begin{itemize}
 \item Methods that maximize the \emph{mutual information} between the observations $\vec x$ and the estimated sources $\vec {\hat s}$ (e.g. Infomax)
 \item Methods for maximizing the \emph{non-gaussianity} of $\vec {\hat s}$ (e.g. Kurtosis-based ICA, FastICA)
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}{Infomax - Overview}
+
 We first will look into some key concepts employed by the \emph{Infomax} method.
 
 \clearpage
 
-\underline{Outline for \emph{Infomax} ICA:}
+\underline{Outline for \emph{Infomax} ICA}:
 \begin{itemize}
     \item Uncorrelatedness
     \item \emph{statistical independence}
@@ -75,27 +96,33 @@ We first will look into some key concepts employed by the \emph{Infomax} method.
     \item practical aspects
 \end{itemize}
 
-\subsection{Uncorrelatedness:}
+\end{frame}
+
+\subsection{Uncorrelatedness}
+
+\begin{frame}{\subsecname}
 
 Correlation measures the linear relationship between two random variables.
 \begin{center}
-\includegraphics[width=0.4\textwidth]{img/section2_fig3.pdf}
+\includegraphics[width=0.6\textwidth]{img/section2_fig3.pdf}
+\notesonly{\captionof{figure}{Correlation and uncorrelatedness}}
 \end{center}
 
 If no such correlation exists between two random scalar variables $x_1$ and $x_2$, i.e.
 
-\begin{equation}
+\begin{align}
 \label{eq:uncorr}
-\mathrm{Cov}(x_1, x_2) = \E  \lbrack x_1  x_2 \rbrack - \E  \lbrack x_1 \rbrack \E \lbrack x_2 \rbrack  = 0
-\end{equation}
-
-\begin{equation}
-\E  \lbrack x_1  x_2 \rbrack = \E  \lbrack x_1 \rbrack \E \lbrack x_2 \rbrack
-\end{equation}
+\mathrm{Cov}(x_1, x_2) = \E  \lbrack x_1  x_2 \rbrack - \E  \lbrack x_1 \rbrack \E \lbrack x_2 \rbrack  &= 0\\
+\E  \lbrack x_1  x_2 \rbrack &= \E  \lbrack x_1 \rbrack \, \E \lbrack x_2 \rbrack
+\end{align}
 
 The two variables are \emph{uncorrelated}.
 
-\subsection{Statistical independence:}
+\end{frame}
+
+\subsection{Statistical independence}
+
+\begin{frame}{\subsecname}
 
 Independence is a much stronger property than decorrelatedness. 
 
@@ -105,6 +132,12 @@ Consider the following two random scalar variables $x$ and $y$:
 \end{center}
 
 Knowing anything about $x$ reveals absolutely nothing about $y$, and vice-versa. This is because both variables are \emph{independent}. 
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\only<1>{
 Independence requires that the joint probability $p_{X,Y}(x,y)$ factorizes into the product of 
 the marginal probabilities $p_X(x)$ and  $p_Y(y)$:
 
@@ -114,14 +147,20 @@ p_{X,Y}(x,y) = p_X(x) p_Y(y)
 \end{equation}
 
 From this follows:
+}
+\only<1,2>{
 
 \begin{equation}
 \label{eq:statindepexp}
 \E  \lbrack \, g(x) h(y) \, \rbrack = \E \lbrack g(x) \rbrack \, \E \lbrack h(y) \rbrack  \,,
 \end{equation}
 
-where $g(x)$ and $h(y)$ are absolutely integrable functions of $x$ and $y$, respectively. 
-This can be shown with the use of \eqref{eq:statindep}:
+where $g(x)$ and $h(y)$ are absolutely integrable functions of $x$ and $y$, respectively.
+}
+\only<2>{
+
+
+This can be shown with\notesonly{ the use of \eqref{eq:statindep}}:
 
 \begin{align}
 \E  \lbrack \, g(x) h(y) \, \rbrack &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} g(x) \, h(y) \, p_{X,Y}(x,y) \, dx \, dy \\
@@ -129,6 +168,11 @@ This can be shown with the use of \eqref{eq:statindep}:
 &= \int_{-\infty}^{\infty}  g(x) \, p_X(x) dx\, \int_{-\infty}^{\infty} h(y) \, p_Y(y) dy
 \,.
 \end{align}
+}
+
+\end{frame}
+
+\begin{frame}{Uncorrelatedness vs. Statistical independence}
 
 If $x$ and $y$ are independent, they are also uncorrelated, but the same cannot always be said the other way around.
 
@@ -147,6 +191,8 @@ $\E \lbrack x^2 \, y^2 \rbrack
 \ne \frac{1}{4} = \E \lbrack x^2 \rbrack \, \E \lbrack y^2 \rbrack \;,$
 
 we see that the requirement for independence in \eqref{eq:statindepexp} is violated. The variables are therefore uncorrelated but not independent.
+
+\end{frame}
 
 \clearpage
 
