@@ -1,8 +1,54 @@
+\section{A brief primer on information theory}
+
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+    \begin{center}
+    Key measures from information theory which play a role in Infomax ICA
+    \end{center}
+\end{frame}
+}
+
 \subsection{Entropy}
+
+\begin{frame}{\subsecname}
 
 Entropy is a measure of uncertainty. It measures the average amount of information conveyed by a message.
 
-\textbf{Definition:} 
+\pause
+
+\slidesonly{
+
+\svspace{3mm}
+
+\begin{minipage}{.99\textwidth}
+\begin{minipage}{0.3\textwidth}
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{img/meme_entropy1}
+	\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{img/meme_entropy2}
+	\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{img/meme_entropy_none}
+	\end{center}
+	\end{minipage}
+\end{minipage}
+}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Entropy} 
 The entropy $H(X)$ of a discrete random variable $X$ is defined by:
 
 \begin{equation}
@@ -10,21 +56,30 @@ The entropy $H(X)$ of a discrete random variable $X$ is defined by:
 H(X) := - \sum_{x \in \mathcal X} p_X(x)\,\log p_X(x)
 \end{equation}
 
-Imagine flipping a biased coin which reveals tails most of the time. 
-We will no longer be ``surprised'' if we flip the coin again and see it show tails again. 
+\end{block}
+
+Imagine flipping a biased coin which reveals \text{tails} most of the time. 
+We will no longer be ``surprised'', if we flip the coin again and see it show \text{tails} \textbf{again}.\\
+
 There is no information gained from flipping the coin another time. There is no uncertainty left.
 
-However if it were an unbiased coin, we would be an uncertain and ``surprised'' by the outcome every time.
+However, if it were an unbiased coin, we would be equally uncertain of the outcome every time.
+
+\end{frame}
+
+\begin{frame}{Entropy for continuous variables}
 
 We do not have an equivalent measure for continuous random variables. 
 However we can resort to the \emph{differential entropy} $h(X)$ of a \textbf{continuous} variable $X$
-\footnote{if interested, see Haykin Ch 10.2 for the relation betweenn $H(X)$ and $h(X)$.}:
+\footnote{if interested, \citealp[see][Ch~10.2]{haykin1994neural} for the relation betweenn $H(X)$ and $h(X)$.}:
 
 \begin{equation}
 \label{eq:entropydiff}
 h(X) := - \int_{-\infty}^{\infty} p_X(x)\,\log p_X(x) \, dx 
 = - \E \lbrack \log p_X(x) \rbrack
 \end{equation}
+
+\end{frame}
 
 %\exercise{Joint Entropy}
 
@@ -38,31 +93,119 @@ h(X) := - \int_{-\infty}^{\infty} p_X(x)\,\log p_X(x) \, dx
 
 \subsection{Conditional Entropy}
 
-Conditional entropy measures entropy of a random variable after one has observed the event of another variable.
+\begin{frame}{\subsecname}
+
+Conditional entropy measures entropy of a random variable \textbf{after} one has observed the event of another variable.
 In the case of a system with input $X$ and output $Y$.
+
+\end{frame}
+
+\begin{frame}{\subsecname}
 
 \textbf{Definition:} 
 The conditional entropy of $H(Y|X)$ of a pair of discrete random variables $(X,Y)$ with a joint pdf $p_{X,Y}(x,y)$ is defined as:
 
-\begin{align}
+\begin{equation}
 \label{eq:entropycond}
+H(Y|X) = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x,y)\,\log \frac{p_{X,Y}(x,y)}{p_X(x)}
+\end{equation}
+
+\question{Where does the definition come from?}
+
+\end{frame}
+
+\begin{frame}{\subsecname: deriving its definition}
+
+\begin{align}
+%\label{eq:entropycond}
 H(Y|X) 
 &= \sum_{x \in \mathcal{X}} p_X(x) H(Y|X=x) \\
 &= -\sum_{x \in \mathcal{X}} p_X(x) \sum_{y \in \mathcal{Y}} p(y|x)\,\log p(y|x) \\
 &= -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_X(x) p(y|x)\,\log p(y|x) \\
 &= -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x,y)\,\log p(y|x) \\
 &= -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x,y)\,\log \frac{p_{X,Y}(x,y)}{p_X(x)} \\
-&= -\E_{p_{X,Y}(x,y)} \lbrack \, \log p(Y|X) \, \rbrack \\
+&= -\E_{p_{X,Y}(x,y)} \lbrack \, \log p(Y|X) \, \rbrack
 \end{align}
 
-$H(Y|X)$ represents the amount of uncertainty remaining about a system's output $Y$ after the 
-system's input $X$ has been observed. 
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\question{What does conditional entropy tell us?}
+
+-$H(Y|X)$ represents the amount of uncertainty remaining about a system's output $Y$ \textbf{after} the 
+system's input $X$ has been observed.
+
+\pause
+
+\question{What does this mean?} 
+
+\pause
+
 \emph{
 $H(Y|X)$ is whatever entropy the output [$Y$] has that did not come from the input [$X$]
 }
-\footnote{
-Bell, A. J., \& Sejnowski, T. J. (1995). An information-maximization approach to blind separation and blind deconvolution. Neural computation, 7(6), 1129-1159.
+\only<3>{
+\footnote{\cite{bell1995information}}
 }.
+
+\question{And what does that mean?}
+
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\slidesonly{
+\emph{
+$H(Y|X)$ is whatever entropy the output [$Y$] has that did not come from the input [$X$]
+} - \citeauthor{bell1995information}
+}
+
+\pause
+
+\slidesonly{
+\svspace{-5mm}
+\begin{center}
+	\includegraphics[width=0.6\textwidth]{img/aldisain_Plasma_TV}
+\end{center}
+}
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\slidesonly{
+\emph{
+$H(Y|X)$ is whatever entropy the output [$Y$] has that did not come from the input [$X$]
+} - \citeauthor{bell1995information}
+}
+
+\pause
+
+%\svspace{-5mm}
+\begin{center}
+\slidesonly{
+	\includegraphics<1>[width=0.55\textwidth]{img/aldisain_Plasma_TV}
+	\includegraphics<2>[width=0.35\textwidth]{img/Wooden-TV_off}
+	\includegraphics<3>[width=0.35\textwidth]{img/Wooden-TV_on}
+	\includegraphics<4>[width=0.35\textwidth]{img/Wooden-TV_noise}
+}
+	\includegraphics<5>[width=0.35\textwidth]{img/Wooden-TV_on}
+	\includegraphics<6>[width=0.35\textwidth]{img/Wooden-TV_noise}
+\end{center}
+
+\pause
+
+\svspace{-3mm}
+
+\question{Do $X$ and $Y$ have to have an input-output relationship to talk about conditional entropy?}
+
+\notesonly{- No, this is not necessary. An input-output relationship is just a clear and intuitive way to describe dependency betweem the two variables.}
+
+\end{frame}
+
+\begin{frame}{\subsecname}
 
 For the continuous case, we measure the conditional differential entropy $h(Y|X)$ which is defined as:
 
@@ -71,7 +214,11 @@ h(Y|X) = -\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} p_{X,Y}(x,y)\,\log  p_
 \label{eq:diffentropycondcontinuous}
 \end{equation}
 
+\end{frame}
+
 \subsection{Relative Entropy or Kullback-Leibler (KL) divergence}
+
+\begin{frame}{\subsecname}
 
 A measure for how a much one probability distribution differs from a reference distribution. 
 It does not qualify as a distance metric, as it is not symmetric, but it still satisfies other useful metric properties (e.g. non-negative).
@@ -96,12 +243,30 @@ D_{KL}\lbrack\,p\, ||\, q\,\rbrack
 
 for the continuous case.
 
+\end{frame}
+
 \clearpage 
-Let's start putting things into the context of ICA:
 
-Recalling the factorization in \eqref{eq:facts} which is based on the assumption that such facotrization can be found by minimizing 
+\begin{frame}{Putting things into the context of ICA}
+\notesonly{Let's start putting things into the context of ICA:}
+
+\slidesonly{
+\begin{center}
+	\includegraphics[width=0.6\textwidth]{img/meme_puzzle2}
+\end{center}
+}
+
+\end{frame}
+
+\begin{frame}{Putting things into the context of ICA}
+\only<1>{
+Recalling the factorization \notesonly{in \eqref{eq:facts} which is based on the assumption that }\slidesonly{\begin{equation}
+%\label{eq:facts}
+\widehat{P}_{\vec s}(\widehat{\vec s}) = \prod_{i=1}^{N} \widehat{P}_{s_i}(\widehat{s_i})  \,.
+\end{equation}}such facotrization can be found by minimizing 
 the KL-divergence between the joint distribution of the reconstructed sources and the product of their marginal distributions, specifically:
-
+}
+\only<1,2>{
 \begin{equation}
 \label{eq:klmin}
 	\dkl[P_{\vec{s}}(\widehat{\vec{s}}),\widehat{P}_{\vec{s}}(\widehat{\vec{s}})] = 
@@ -110,16 +275,36 @@ the KL-divergence between the joint distribution of the reconstructed sources an
 			\prod_{i = 1}^N \widehat{P}_{s_i}(\widehat{s}_i) }
 		\eqexcl \min_{\vec{W}}
 \end{equation}
+}
+\only<2>{
 
-In spite of this being an apparent approach for blind source separation, it requires a paramtereized density estimate which is computationally costly.
+In spite of this being an apparent approach for blind source separation, it requires a paramtereized density estimate which would make this approach computationally costly.
+}
+\only<3>{
+\slidesonly{
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{img/meme_anotherway}
+\end{center}
+}
+
+} 
+\end{frame}
 
 \subsection{Mutual Information}
 
-The entropy $H(X)$ reprsents our uncertainty about the system's input $X$ 
-and the conditional entropy $H(X|Y)$ represents such \textbf{after} observing its output $Y$.
+\begin{frame}{\subsecname}
 
-Thus, the difference between them represents the uncertainty about $X$ \textbf{that is resolved} after observing $Y$. 
-This is referred to as the mutual information $I(X,Y)$ between the random variables $X$ and $Y$:
+\begin{itemize}
+\item The entropy $H(X)$ reprsents our uncertainty about $X$ 
+and 
+\item the conditional entropy $H(X|Y)$ represents such \textbf{after} observing $Y$.
+\end{itemize}
+
+Therefore, the \textbf{difference} between them represents the uncertainty about $X$ \textbf{that is resolved} after observing $Y$.
+
+\pause
+\notesonly{
+This is referred to as t}\slidesonly{T}he mutual information $I(X,Y)$ between the random variables $X$ and $Y$:
 
 %\begin{align}
 %\label{eq:mutualdiscrete}
@@ -136,6 +321,8 @@ I(X,Y)
 &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} p_{X,Y}(x,y) \, \log \left(\frac{p_X(x|y)}{p_X(x)}\right) dx \, dy \\
 \end{align}
 
+\pause
+
 and with $p_{X,Y} = p_X(x)\,p_Y(y)$ we get:
 
 \begin{align}
@@ -144,7 +331,14 @@ I(X,Y)
 &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} p_{X,Y}(x,y) \, \log \left(\frac{p_{X,Y}(x,y)}{p_X(x) p_Y(y)}\right) dx \, dy
 \end{align}
 
-for the continuous case in addition to the following properties:
+for the continuous case.
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+Identifying propeties of mutual information:
+
 \begin{align}
 \label{eq:mutualcontprops}
 I(X,Y) &= h(X) - h(X|Y)\\
@@ -154,16 +348,31 @@ I(X,Y) &= h(X) - h(X|Y)\\
 \end{align}
 
 Note that 
-$I(X_1,X_2)=0$ if the the random variables are statistically independent. But we won't make much use of this special case equality in ICA.
+$I(X,Y)=0$ if the the random variables are statistically independent. However, we won't actually make much use of this special equality case in ICA.
+
+\end{frame}
 
 
 \newpage
 
 \subsection{Relationship between the KL-Divergence and Mutual Information}
 
-Not really another approach. This is just to show how to arrive at the same expression as in the previous approach.
+\begin{frame}{\subsecname}
 
-Recall the definition of the mutual information between input and output variables from \eqref{eq:mutualcont2}:
+\slidesonly{
+\begin{equation}
+\label{eq:klmin}
+	\dkl[P_{\vec{s}}(\widehat{\vec{s}}),\widehat{P}_{\vec{s}}(\widehat{\vec{s}})] = 
+    \int d \, \widehat{\vec{s}} \; P_{\vec{s}}(\widehat{\vec{s}})
+		\ln \frac{P_{\vec{s}}(\widehat{\vec{s}})}{
+			\prod_{i = 1}^N \widehat{P}_{s_i}(\widehat{s}_i) }
+		\eqexcl \min_{\vec{W}}
+\end{equation}
+}
+
+This is just to show how to arrive at the same optimization problem\notesonly{ as in \eqref{eq:klmin}} through mutual information.
+
+Recall\notesonly{ the definition of the mutual information between two variables \eqref{eq:mutualcont2}:}
 
 \begin{equation*}
 I(X,Y) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} p_{X,Y}(x,y) \, \log \left(\frac{p_{X,Y}(x,y)}{p_X(x) p_Y(y)}\right) dx \, dy
@@ -175,6 +384,8 @@ and the definition for the KL divergence from \eqref{eq:klcont}:
 D_{KL}\lbrack\,p\, ||\, q\,\rbrack 
 &= \int_{-\infty}^{\infty} p(x) \log \left( \frac{p(x)}{q(x)} \right) dx.
 \end{align*}
+
+\pause
 
 We can deduce that:
 $$
@@ -195,5 +406,7 @@ the product of the pdfs $p_X(x)$ and $p_Y(y)$. A special case of this is what we
 between the pdf of a random vector $\widehat {\vec s}$ of length $N$ and the marginal probability density functions for $N$ elements 
 $\widehat{s_i}$\footnote{A much smoother walkthrough for this can be found in 
 Haykin Ch. 10.5}
+
+\end{frame}
 
 \clearpage

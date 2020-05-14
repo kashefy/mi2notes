@@ -172,33 +172,90 @@ This can be shown with\notesonly{ the use of \eqref{eq:statindep}}:
 
 \end{frame}
 
-\begin{frame}{Uncorrelatedness vs. Statistical independence}
+\begin{frame}{Uncorrelatedness vs. statistical independence}
 
 If $x$ and $y$ are independent, they are also uncorrelated, but the same cannot always be said the other way around.
 
-Example\footnote{Example obtained from (Hyv\"arinen, A., \& Oja, E. (2000). Independent component analysis: algorithms and applications. Neural networks, 13(4-5), 411-430.)}:
+\pause
+
+\slidesonly{
+\begin{center}
+\includegraphics[width=0.4\textwidth]{img/meme_stronger}
+\end{center}
+}
+
+\end{frame}
+
+\begin{frame}{Uncorrelatedness vs. statistical independence}
+
+
+Example\footnote{\notesonly{Example obtained} from (Hyv\"arinen, A., \& Oja, E. (2000). Independent component analysis: algorithms and applications. Neural networks, 13(4-5), 411-430.)}:
 
 Assume $x$ and $y$ are discrete valued and follow a distribution that the pair are with probability 1/4 equal to any of the following
-values: (0,1),(0,-1),(1,0),(-1,0). Then $x$ and $y$ are uncorrelated. This is simple to calculate:
+values: (0,1),(0,-1),(1,0),(-1,0). 
 
+\question{Are $x$ and $y$ are uncorrelated?}
+
+\pause
+
+-We check:
 $\E \lbrack x \rbrack = \frac{1}{4} \cdot (0 + 0 + 1 + (-1)) = 0$\\[2mm]
 $\E \lbrack y \rbrack = \frac{1}{4} \cdot (1 + (-1) + 0 + 0) = 0$\\
 
-On the other hand, if we calculate $\E  \lbrack \, g(x) h(y) \, \rbrack$ with $g(x)=x^2$ and $g(y)=y^2$:\\
+\notesonly{
+- Yes they are uncorrelated.}
+\slidesonly{
+\begin{center}
+\includegraphics[width=0.4\textwidth]{img/meme_yesuncorrelated}
+\end{center}
+}
+
+\end{frame}
+
+\begin{frame}{Uncorrelatedness vs. statistical independence}
+
+Assume $x$ and $y$ are discrete valued and follow a distribution that the pair are with probability 1/4 equal to any of the following
+values: (0,1),(0,-1),(1,0),(-1,0). 
+
+\question{Are $x$ and $y$ are statistically independent?}
+
+\pause
+
+\notesonly{On the other hand, if }we calculate $\E  \lbrack \, g(x) h(y) \, \rbrack$ with $g(x)=x^2$ and $g(y)=y^2$:\\
+
+\svspace{3mm}
 
 $\E \lbrack x^2 \, y^2 \rbrack 
 = \frac{1}{4} \cdot \lbrack (0\cdot1) + (0\cdot1) + (1\cdot0) + (1\cdot0) \rbrack = 0 
 \ne \frac{1}{4} = \E \lbrack x^2 \rbrack \, \E \lbrack y^2 \rbrack \;,$
 
-we see that the requirement for independence in \eqref{eq:statindepexp} is violated. The variables are therefore uncorrelated but not independent.
+\pause
+
+we see that the requirement for independence \notesonly{as in \eqref{eq:statindepexp} }is violated. \notesonly{The variables are uncorrelated but \underline{not} independent.}
+
+\slidesonly{
+\begin{center}
+\includegraphics[width=0.35\textwidth]{img/meme_butnotindep}
+\end{center}
+}
 
 \end{frame}
 
 \clearpage
 
+\begin{frame}
+
 \question{How does statistical independence fit into ICA?}
 
+\pause
+
 - The solution to the ICA problem yields a distribution of the estimated source $\widehat{P}_{\vec s}(\widehat{\vec s})$ that is closest to the factorizing density:
+
+\begin{equation}
+\widehat{P}_{s_1, s_2,\ldots,s_N}({\widehat s_1, \widehat s_2,\ldots,\widehat s_N}) = \widehat{P}_{s_1}(\widehat{s_1}) \cdot \widehat{P}_{s_2}(\widehat{s_2}) \cdot \, \ldots \, \cdot \widehat{P}_{s_N}(\widehat{s_N})
+\end{equation}
+
+\pause
 
 \begin{equation}
 \label{eq:facts}
@@ -207,7 +264,7 @@ we see that the requirement for independence in \eqref{eq:statindepexp} is viola
 
 To clarify the notation here:\\
 \begin{itemize}
-\vspace{-5mm}
+%\vspace{-5mm}
 %\renewcommand\labelitemi{--}
 \setlength\itemsep{0.1em}
 \item $\vec s$ describes the independent sources which we do not have.
@@ -215,3 +272,4 @@ To clarify the notation here:\\
 \item $\widehat{P}_{\vec s}(\widehat{\vec s})$ is our estimate of the pdf of $\vec s$ which we have approximated using $\widehat{\vec s}$. 
 \end{itemize}
 
+\end{frame}
