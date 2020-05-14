@@ -1,14 +1,24 @@
 \section{Density Transformation}
 
-\begin{frame}{\secname}
-
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+    
+    \begin{center}
+    Sampling from your favorite distribution.
+    \end{center}
+    
+    \pause
+    
 \slidesonly{
 \begin{center}
 	\includegraphics[width=0.3\textwidth]{img/meme_wheresica}
 \end{center}
 }
-
 \end{frame}
+}
 
 \begin{frame}{\secname}
 
@@ -34,7 +44,7 @@ the \emph{conservation of probability}. We start with specific cases:
 
 \pause 
 
-Then generalize this to transform one probability density function (pdf) into another.
+Then generalize this to transform one probability density function (pdf) into another. We will make direct use of density transformation in \emph{Infomax ICA}.
 
 \pause
 
@@ -54,10 +64,13 @@ Then generalize this to transform one probability density function (pdf) into an
 
 \begin{frame}\frametitle{Random Number Generators}
 
+\pause
 
+\slidesonly{
 \begin{center}
 	\includegraphics[width=0.3\textwidth]{img/meme_onlypseudo}
 \end{center}
+}
 
 \end{frame}
 
@@ -103,7 +116,7 @@ a \in \mathcal{M}&\; \text{is the multiplier,} \\
 b \in \mathcal{M}&\; \text{is the increment.}
 \end{align*}
 
-Then $u_i = \frac{y_i}{m} \approx \,\mathcal{U} \in \lbrack0, 1)$.
+Then $u_t = \frac{y_t}{m} \approx \,\mathcal{U} \in \lbrack0, 1)$.
 
 \pause
 
