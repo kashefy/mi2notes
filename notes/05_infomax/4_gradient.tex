@@ -1,0 +1,117 @@
+
+
+\subsection{Learning by Gradient Ascent (i.e. hill climbing)}
+Model parameters can be optimized by stepwise adjustment along the direction of the gradient of the cost function. 
+
+\begin{figure}[h]
+  \centering
+  \begin{tabular}[c c]{c c}
+   \includegraphics[width=5cm]{img/section2_fig17}
+  &\raisebox{2cm}{$\Delta \mathrm{w}_{ij} = \underbrace{ \eta }_{
+    \substack{ \text{learning} \\ \text{rate}} }
+  \frac{\partial E^T}{\partial \mathrm{w}_{ij}}$}
+  \end{tabular}  
+  %\caption{Gradient ascent using the training cost}
+  \label{fig:gradientDescent}
+\end{figure}
+\noindent Taking partial derivatives of the training cost in \eqref{eq:trainingCost} w.r.t. the model parameters $w_{ij}$ yields
+\begin{equation}
+	\frac{\partial E^T}{\partial \mathrm{w}_{ij}}
+	= \underbrace{
+    \frac{1}{p} \sum\limits_{\alpha = 1}^p 
+		\sum\limits_{l = 1}^N \frac{\partial}{\partial \mathrm{w}_{ij}}
+		\Bigg\{ \ln \widehat{f}_l^{'} \Bigg( \sum\limits_{k = 1}^N 
+		\mathrm{w}_{lk} \mathrm{x}_k^{(\alpha)} \Bigg) \Bigg\}
+        }_{ =
+			\frac{1}{p} \sum\limits_{\alpha = 1}^p 
+			\frac{ \widehat{f}_i^{''} \Big( \sum\limits_{k = 1}^N 
+				\mathrm{w}_{ik} \mathrm{x}_k^{(\alpha)} \Big)
+			}{\widehat{f}_i^{'} \Big( \sum\limits_{k = 1}^N 
+			\mathrm{w}_{ik} \mathrm{x}_k^{(\alpha)} \Big)}
+			\cdot \mathrm{x}_j^{(\alpha)} }
+		+ \underbrace{ \frac{\partial}{\partial w_{ij}}
+			\big( \ln |\det \vec{W}\,| \big) }_{
+				\big( \vec{W}^{-1} \big)_{ji} }
+\end{equation}
+with an individual cost $e^{(\alpha)}$ for each observation $\mathrm{x}^{(\alpha)}$:
+\begin{equation}
+	e^{(\alpha)} = \ln |\det \vec{W}\,| + \sum\limits_{l = 1}^N \ln
+		\widehat{f}_l^{'} \Bigg( \sum\limits_{k = 1}^N 
+		\mathrm{w}_{lk} \mathrm{x}_k^{(\alpha)} \Bigg)
+\end{equation}
+\begin{equation}
+	\frac{\partial e^{(\alpha)}}{\partial \mathrm{w}_{ij}}
+	= \underbrace{ \big( \vec{W}^{-1} \big)_{ji} }_{
+		\substack{ \text{costly} \\ \text{computation}} }
+		+ \underbrace{  
+			\frac{ \widehat{f}_i^{''} \bigg( \sum\limits_{k = 1}^N 
+				\mathrm{w}_{ik} \mathrm{x}_k^{(\alpha)} \bigg)
+			}{\widehat{f}_i^{'} \bigg( \sum\limits_{k = 1}^N 
+			\mathrm{w}_{ik} \mathrm{x}_k^{(\alpha)} \bigg)}
+			 }_{ \coloneqq \varphi_i^{(\alpha)} }
+		\cdot \mathrm{x}_j^{(\alpha)}
+\end{equation}
+this can be used for \emph{batch-learning}:
+\begin{equation}
+	\Delta \mathrm{w}_{ij}
+	= \frac{\eta}{p} \sum\limits_{\alpha = 1}^p 
+	\frac{\partial e^{(\alpha)}}{\partial \mathrm{w}_{ij}}
+\end{equation}
+or using \emph{on-line-learning} by updating $w_{ij}$ with each individual cost $e^{(\alpha)}$ as follows:
+\begin{algorithm}[ht]
+  \DontPrintSemicolon
+  $t \leftarrow 1$\;
+  random initialization of weights $w_{ij}$\;
+  \Begin{
+    $\eta_t = \frac{\eta_0}{t}$\;
+    select next data point $\vec{x}^{(\alpha)}$\;
+    change all  $\mathrm{w}_{ij}$ according to:
+    $\Delta \mathrm{w}_{ij}^{(t)} = \eta_t \frac{\partial e_t^{(\alpha)}}{\partial
+	\mathrm{w}_{ij}} $\;
+    $t \leftarrow t + 1$}
+%\caption{On-line learning for ICA}
+\label{alg:onlineGD}
+\end{algorithm}
+
+\clearpage
+
+\subsection{Natural Gradient Learning}
+The natural gradient allows for an efficient \& fast learning rule (no matrix inversions
+  necessary!) to do steepest ascent under normalized step size (cf. lecture slides 2.2.1 for details)
+
+Linear transformations: $d \vec{W}, \vec{W}$
+\begin{figure}[h]
+  \centering
+\includegraphics[width=10cm]{img/section2_fig18}  
+  %\caption{Illustration of gradient descent in transformed coordinate system}
+  \label{fig:NatGrad}
+\end{figure}
+
+
+% -----------------------------------------------------------------------------
+\newpage
+
+%\subsection{Choice of $\widehat{f}_i$:}
+The true distribution is typically unknown, 
+but likely to have a probability density with one maximum (i.e. peaky function)
+$\leadsto$ cdf of this unknown source distribution will be roughly sigmoidal
+%\\\\
+Typical choice to resemble the cdf of such a peaky function:
+\begin{equation} \tag{logistic function}
+	\widehat{f}_{(y)} = \frac{1}{1 + \exp(-y)}
+\end{equation}
+\begin{equation}
+	\frac{\widehat{f}_{(y)}^{''}}{\widehat{f}_{(y)}^{'}}
+	= 1 - 2 \widehat{f}_{(y)}
+\end{equation}
+Observation: ICA is fairly robust against false choice of $\widehat{f}$.
+
+\begin{itemize}
+	\itR however: if $\widehat{f}_i$ deviates too strongly from its true
+		shape, the fixed point may become unstable
+	\itR if in doubt (and enough training data is available)
+	\begin{itemize}
+		\itl make a parametrized ansatz for $\widehat{f}_i$
+		\itl estimate parameters in addition to $\vec{W}$
+	\end{itemize}
+\end{itemize}

@@ -1,0 +1,107 @@
+\section{Empirical Risk Minimization}
+Consider the following perceptron network with $N$ inputs and $N$ outputs:
+\begin{figure}[ht]
+\centering
+\includegraphics[width=6cm]{img/section2_fig16}
+%\caption{$N-N$ perceptron network}
+\end{figure}
+where
+$$
+\widehat{u}_i := \underbrace{
+	\widehat{f}_i 
+	\Big( \sum_{j=1}^{N} \mathrm{w}_{ij} 
+		\mathrm{x}_j 
+	\Big) }_{
+	\substack{
+		\text{often a} \\
+		\text{sigmoid function}\\
+		\text{or\;} \tanh}
+	}
+$$
+and observations:
+$$
+\vec{x}^{(\alpha)} \in \mathbb{R}^N, 
+		\quad \alpha = 1, \ldots, p
+$$
+The weights $w_{ij}$ will be determined through inductive learning.\\
+Deriving the cost function for this network to find the Infomax solution:
+\begin{equation}
+\label{eq:conservationvec}
+	P_{\vec{u}} (\widehat{\vec{u}}) d \widehat{\vec{u}}
+		= P_{\vec{x}}(\vec{x}) d \vec{x}
+\end{equation}
+\begin{align}
+\label{eq:uxj}
+	P_{\vec{u}} (\widehat{\vec{u}}) 
+	& = \left| \det \frac{d \vec{x}}{d \widehat{\vec{u}}} \right|
+		P_{\vec{x}}(\vec{x}) \\
+	& = \frac{P_{\vec{x}}(\vec{x})}{ \left| \det
+		\frac{d \widehat{\vec{u}}}{d \vec{x}} \right|}\\
+    & = \frac{P_{\vec{x}}(\vec{x})}{|\det \vec{J}\,|}
+\end{align}
+with elements of the Jacobian $\vec J$ given as
+\begin{align}
+\label{eq:jacobelement}
+ J_{ij}=
+ \frac{\partial \widehat{u}_i}{\partial \mathrm{x}_j}
+	& = \frac{\partial}{\partial \mathrm{x}_j} 
+		\widehat{f}_i \bigg( \sum\limits_{k = 1}^N \mathrm{w}_{ik} 
+		\mathrm{x}_k \bigg) \\
+	& = \mathrm{w}_{ij} \widehat{f}_i^{'} \bigg( \sum\limits_{k = 1}^N 
+		\mathrm{w}_{ik} \mathrm{x}_k \bigg).
+\end{align}
+We therefore obtain for the value of the Jacobian determinant
+\begin{equation} \label{eq:functionalDeterminant}
+|\det \vec {J}\,| = 
+	\Big| \det \frac{\partial \widehat{\vec{u}}}{\partial \vec{x}} \Big|
+	= |\det \vec{W}\, | \prod\limits_{l = 1}^N  \widehat{f}_l^{'} \Bigg( 
+		\sum\limits_{k = 1}^N \mathrm{w}_{lk} \mathrm{x}_k \Bigg).
+\end{equation}
+
+\clearpage
+
+Inserting \eqref{eq:conservationvec} and \eqref{eq:uxj} into the Infomax cost function from \eqref{eq:infomax} gives 
+\begin{eqnarray}
+H & = & -\int d \widehat{\vec{u}} P_{\vec{u}} (\widehat{\vec{u}})
+  \ln P_{\vec{u}} (\widehat{\vec{u}}) \\
+& = &  
+-\int d \vec{x} P_{\vec{x}} (\vec{x}) \ln \frac{P_{\vec{x}}(\vec{x})}{|\det \vec{J}\,|} \\
+& = & 
+\underbrace{
+    -\int d \vec{x} P_{\vec{x}} (\vec{x}) \ln P_{\vec{x}}(\vec{x})
+}_{ \text{constant w.r.t. } \vec W } 
+    + \int d \vec{x} P_{\vec{x}} (\vec{x}) \ln |\det \vec{J}\,|
+\end{eqnarray}
+and with \eqref{eq:functionalDeterminant} we can formulate the cost 
+in terms that explicitly depend on $\vec W$ and its components:
+\begin{equation}
+	H = const. \, + \; \ln |\det \vec{W}\,| \underbrace{\int d \vec{x} P_{\vec{x}} (\vec{x})}_{=\,1}
+		+ \int d \vec{x} P_{\vec{x}} (\vec{x}) \sum\limits_{l = 1}^N
+			\ln \widehat{f}_l^{'} \Bigg( \sum\limits_{k = 1}^N 
+			\mathrm{w}_{lk} \mathrm{x}_k \Bigg).
+\end{equation}
+This enables us to define the generlization cost $E^G$ for model selection:
+\begin{equation} \tag{generalization cost}
+	E^G = \ln |\det \vec W\,| + \int d \vec{x} P_{\vec{x}} (\vec{x})
+		\Bigg\{ \sum\limits_{l = 1}^N \ln
+			\widehat{f}_l^{'} \Bigg( \sum\limits_{k = 1}^N 
+			\mathrm{w}_{lk} \mathrm{x}_k \Bigg)
+		\Bigg\}
+\end{equation}
+The \emph{principle of empirical risk minimization} (in our particular case maximization) allows
+\begin{center}
+mathematical expectation $E^G \longrightarrow$ empirical average $E^T$
+\end{center}
+the \emph{training cost}
+\begin{equation} \label{eq:trainingCost}
+	E^T = \ln |\det \vec{W}\,| + \frac{1}{p} \sum\limits_{\alpha = 1}^p
+		\sum\limits_{l = 1}^N \ln \widehat{f}_l^{'} \Bigg( 
+		\sum\limits_{k = 1}^N \mathrm{w}_{lk} 
+		\mathrm{x}_k^{(\alpha)} \Bigg)
+\end{equation}
+can be used for model selection using empirical data 
+\begin{equation}
+E^T \eqexcl \max
+\end{equation}
+
+\newpage
