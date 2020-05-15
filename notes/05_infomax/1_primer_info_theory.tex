@@ -220,8 +220,7 @@ h(Y|X) = -\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} p_{X,Y}(x,y)\,\log  p_
 
 \begin{frame}{\subsecname}
 
-A measure for how a much one probability distribution differs from a reference distribution. 
-It does not qualify as a distance metric, as it is not symmetric, but it still satisfies other useful metric properties (e.g. non-negative).
+A measure for how much one probability distribution differs from a reference distribution. 
 
 \textbf{Definition:} 
 The relative entropy or Kullback-Leibler divergence between two pdfs $p(x)$ and $q(x)$ is defined as
@@ -244,6 +243,31 @@ D_{KL}\lbrack\,p\, ||\, q\,\rbrack
 for the continuous case.
 
 \end{frame}
+
+\begin{frame}{\subsecname}
+
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{img/kl_normal}
+	
+	\pause
+	
+	\includegraphics[width=0.8\textwidth]{img/kl_uniform_normal}
+	\notesonly{
+	\captionof{figure}{Measure the KL divergence between two pdfs.}
+	}
+\end{center}
+
+\pause 
+
+The KL divergence does not qualify as a distance metric, as it is not symmetric, but it still satisfies other useful metric propertie:
+\begin{enumerate}
+\item non-negative
+\item $D_{KL}\lbrack\,p\, ||\, q\,\rbrack = 0$ iff. $p = q$.
+\end{enumerate}
+
+
+\end{frame}
+
 
 \clearpage 
 
