@@ -1,4 +1,18 @@
 \section{Empirical Risk Minimization}
+
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+    \begin{center}
+    Minimize the cost function using training data.
+    \end{center}
+\end{frame}
+}
+
+\begin{frame}{Our model for solving the ICA problem}
+
 Consider the following perceptron network with $N$ inputs and $N$ outputs:
 \begin{figure}[ht]
 \centering
@@ -6,7 +20,7 @@ Consider the following perceptron network with $N$ inputs and $N$ outputs:
 %\caption{$N-N$ perceptron network}
 \end{figure}
 where
-$$
+\begin{equation}
 \widehat{u}_i := \underbrace{
 	\widehat{f}_i 
 	\Big( \sum_{j=1}^{N} \mathrm{w}_{ij} 
@@ -17,13 +31,16 @@ $$
 		\text{sigmoid function}\\
 		\text{or\;} \tanh}
 	}
-$$
+\end{equation}
 and observations:
-$$
+\begin{equation}
 \vec{x}^{(\alpha)} \in \mathbb{R}^N, 
 		\quad \alpha = 1, \ldots, p
-$$
-The weights $w_{ij}$ will be determined through inductive learning.\\
+\end{equation}
+The weights $w_{ij}$ will be determined through inductive learning.
+
+\end{frame}
+
 Deriving the cost function for this network to find the Infomax solution:
 \begin{equation}
 \label{eq:conservationvec}
