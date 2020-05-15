@@ -386,10 +386,13 @@ $I(X,Y)=0$ if the the random variables are statistically independent. However, w
 \slidesonly{
 \begin{equation}
 \label{eq:klmin}
-	\dkl[P_{\vec{s}}(\widehat{\vec{s}}),\widehat{P}_{\vec{s}}(\widehat{\vec{s}})] = 
-    \int d \, \widehat{\vec{s}} \; P_{\vec{s}}(\widehat{\vec{s}})
-		\ln \frac{P_{\vec{s}}(\widehat{\vec{s}})}{
-			\prod_{i = 1}^N \widehat{P}_{s_i}(\widehat{s}_i) }
+	\dkl\lbrack{\color{blue}P_{\vec{s}}(\widehat{\vec{s}})},{\color{red}\widehat{P}_{\vec{s}}(\widehat{\vec{s}})}\rbrack = 
+    \int d \, \widehat{\vec{s}} \; {\color{blue}P_{\vec{s}}(\widehat{\vec{s}})}
+		\ln \frac{{\color{blue}P_{\vec{s}}(\widehat{\vec{s}})}}{
+			{\color{red}
+			\prod_{i = 1}^N \widehat{P}_{s_i}(\widehat{s}_i) 
+			}
+			}
 		\eqexcl \min_{\vec{W}}
 \end{equation}
 }
@@ -399,38 +402,66 @@ This is just to show how to arrive at the same optimization problem\notesonly{ a
 Recall\notesonly{ the definition of the mutual information between two variables \eqref{eq:mutualcont2}:}
 
 \begin{equation*}
-I(X,Y) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} p_{X,Y}(x,y) \, \log \left(\frac{p_{X,Y}(x,y)}{p_X(x) p_Y(y)}\right) dx \, dy
+I(X,Y) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} {\color{blue}p_{X,Y}(x,y)} \, \log \left(\frac{{\color{blue}p_{X,Y}(x,y)}}{{\color{red}p_X(x) p_Y(y)}}\right) dx \, dy
 \end{equation*}
 
-and the definition for the KL divergence from \eqref{eq:klcont}:
+\notesonly{and the definition for the KL divergence from \eqref{eq:klcont}}
 
+\slidesonly{
 \begin{align*}
-D_{KL}\lbrack\,p\, ||\, q\,\rbrack 
+\dkl\lbrack\,p\, ||\, q\,\rbrack 
 &= \int_{-\infty}^{\infty} p(x) \log \left( \frac{p(x)}{q(x)} \right) dx.
 \end{align*}
+}
 
 \pause
 
 We can deduce that:
-$$
-I(X,Y) = D_{KL} \lbrack \, p_{X,Y}(x,y) \, || \, p_X(x) p_Y(y) \, \rbrack
-$$
+\begin{equation}
+I(X,Y) = D_{KL} \lbrack \, {\color{blue}p_{X,Y}(x,y)} \, || \, {\color{red}p_X(x) p_Y(y)} \, \rbrack
+\end{equation}
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\slidesonly{
+\begin{equation}
+I(X,Y) = D_{KL} \lbrack \, {\color{blue}p_{X,Y}(x,y)} \, || \, {\color{red}p_X(x) p_Y(y)} \, \rbrack
+\end{equation}
+}
 
 Although $I(X,Y) = I(Y,X)$ the same cannot be said about switching the arguments of the KL-divergence.
 
-$
-D_{KL} \lbrack \, p_{X,Y}(x,y) \, || \, p_X(x) p_Y(y) \, \rbrack \ne 
-D_{KL} \lbrack \, p_X(x) p_Y(y) \, || \, p_{X,Y}(x,y)\, \rbrack
-$
+\begin{equation}
+D_{KL} \lbrack \, {\color{blue}p_{X,Y}(x,y)} \, || \, {\color{red}p_X(x) p_Y(y)} \, \rbrack \ne 
+D_{KL} \lbrack \, {\color{red}p_X(x) p_Y(y)} \, || \, {\color{blue}p_{X,Y}(x,y)}\, \rbrack
+\end{equation}
 
-They are only equal when both of them are equal to zero, which is satisfied iff $p_{X,Y}(x,y) = p_X(x) p_Y(y)$.
+The above is only equal if both of them are equal to zero, which is satisfied iff $p_{X,Y}(x,y) = p_X(x) p_Y(y)$.
 
+\notesonly{
 This tells us that the mutual information $I(X,Y)$ is equivalent to the KL-divergence between the joint distribution $p_{X,Y}(x,y)$ and 
 the product of the pdfs $p_X(x)$ and $p_Y(y)$. A special case of this is what we saw in the first approach, namely the KL-divergence 
 between the pdf of a random vector $\widehat {\vec s}$ of length $N$ and the marginal probability density functions for $N$ elements 
 $\widehat{s_i}$\footnote{A much smoother walkthrough for this can be found in 
 Haykin Ch. 10.5}
+}
+\slidesonly{
+Takeaway:\\
+\begin{equation}
+\label{eq:klmin}
+	\dkl\lbrack{\color{blue}P_{\vec{s}}(\widehat{\vec{s}})},{\color{red}\widehat{P}_{\vec{s}}(\widehat{\vec{s}})}\rbrack = 
+    \int d \, \widehat{\vec{s}} \; {\color{blue}P_{\vec{s}}(\widehat{\vec{s}})}
+		\ln \frac{{\color{blue}P_{\vec{s}}(\widehat{\vec{s}})}}{
+			{\color{red}
+			\prod_{i = 1}^N \widehat{P}_{s_i}(\widehat{s}_i) 
+			}
+			}
+		\eqexcl \min_{\vec{W}}
+\end{equation}
+has an equivalent optimization in terms of mutual information.
+}
 
 \end{frame}
 
-\clearpage
