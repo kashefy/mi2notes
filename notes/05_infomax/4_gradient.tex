@@ -1,6 +1,22 @@
 
 
-\subsection{Learning by Gradient Ascent (i.e. hill climbing)}
+\subsection{Learning by Gradient Ascent}
+
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+    \begin{center}
+    i.e. hill climbing
+    \end{center}
+\end{frame}
+}
+\notesonly{
+Gradient Ascent, i.e. hill climbing
+}
+
+\begin{frame}{\secname}
 Model parameters can be optimized by stepwise adjustment along the direction of the gradient of the cost function. 
 
 \begin{figure}[h]
@@ -14,7 +30,28 @@ Model parameters can be optimized by stepwise adjustment along the direction of 
   %\caption{Gradient ascent using the training cost}
   \label{fig:gradientDescent}
 \end{figure}
-\noindent Taking partial derivatives of the training cost in \eqref{eq:trainingCost} w.r.t. the model parameters $w_{ij}$ yields
+
+\end{frame}
+
+\begin{frame}{\secname}
+
+\slidesonly{
+\begin{equation} \label{eq:trainingCost}
+	E^T = \ln |\det \vec{W}\,| + \frac{1}{p} \sum\limits_{\alpha = 1}^p
+		\sum\limits_{l = 1}^N \ln \widehat{f}_l^{'} \Bigg( 
+		\sum\limits_{k = 1}^N \mathrm{w}_{lk} 
+		\mathrm{x}_k^{(\alpha)} \Bigg)
+\end{equation}
+
+\begin{equation}
+\Delta \mathrm{w}_{ij} = 
+%\underbrace{ \eta }_{
+    %\substack{ \text{learning} \\ \text{rate}} }
+  \frac{\partial E^T}{\partial \mathrm{w}_{ij}}
+ \end{equation}
+}
+
+\noindent Taking partial derivatives of the training cost\notesonly{ in \eqref{eq:trainingCost}} w.r.t. the model parameters $w_{ij}$ yields
 \begin{equation}
 	\frac{\partial E^T}{\partial \mathrm{w}_{ij}}
 	= \underbrace{
@@ -33,7 +70,12 @@ Model parameters can be optimized by stepwise adjustment along the direction of 
 			\big( \ln |\det \vec{W}\,| \big) }_{
 				\big( \vec{W}^{-1} \big)_{ji} }
 \end{equation}
-with an individual cost $e^{(\alpha)}$ for each observation $\mathrm{x}^{(\alpha)}$:
+
+\end{frame}
+
+\begin{frame}{Scope of learning: batch learning}
+
+with an individual cost $e^{(\alpha)}$ for each observation $\vec{x}^{(\alpha)}$:
 \begin{equation}
 	e^{(\alpha)} = \ln |\det \vec{W}\,| + \sum\limits_{l = 1}^N \ln
 		\widehat{f}_l^{'} \Bigg( \sum\limits_{k = 1}^N 
@@ -57,8 +99,15 @@ this can be used for \emph{batch-learning}:
 	= \frac{\eta}{p} \sum\limits_{\alpha = 1}^p 
 	\frac{\partial e^{(\alpha)}}{\partial \mathrm{w}_{ij}}
 \end{equation}
+
+\end{frame}
+
+\begin{frame}{Scope of learning: online learning}
+
 or using \emph{on-line-learning} by updating $w_{ij}$ with each individual cost $e^{(\alpha)}$ as follows:
-\begin{algorithm}[ht]
+
+\slidesonly{
+\begin{algorithm}[H]
   \DontPrintSemicolon
   $t \leftarrow 1$\;
   random initialization of weights $w_{ij}$\;
@@ -72,10 +121,33 @@ or using \emph{on-line-learning} by updating $w_{ij}$ with each individual cost 
 %\caption{On-line learning for ICA}
 \label{alg:onlineGD}
 \end{algorithm}
+}
+\notesonly{
+\begin{algorithm}[h]
+  \DontPrintSemicolon
+  $t \leftarrow 1$\;
+  random initialization of weights $w_{ij}$\;
+  \Begin{
+    $\eta_t = \frac{\eta_0}{t}$\;
+    select next data point $\vec{x}^{(\alpha)}$\;
+    change all  $\mathrm{w}_{ij}$ according to:
+    $\Delta \mathrm{w}_{ij}^{(t)} = \eta_t \frac{\partial e_t^{(\alpha)}}{\partial
+	\mathrm{w}_{ij}} $\;
+    $t \leftarrow t + 1$}
+%\caption{On-line learning for ICA}
+\label{alg:onlineGD}
+\end{algorithm}
+}
 
-\clearpage
+\end{frame}
+
+%\clearpage
+
 
 \subsection{Natural Gradient Learning}
+
+\begin{frame}{\subsecname}
+
 The natural gradient allows for an efficient \& fast learning rule (no matrix inversions
   necessary!) to do steepest ascent under normalized step size (cf. lecture slides 2.2.1 for details)
 
@@ -86,6 +158,8 @@ Linear transformations: $d \vec{W}, \vec{W}$
   %\caption{Illustration of gradient descent in transformed coordinate system}
   \label{fig:NatGrad}
 \end{figure}
+
+\end{frame}
 
 
 % -----------------------------------------------------------------------------
