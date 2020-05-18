@@ -6,9 +6,13 @@
         \secname
     \end{center}
     \begin{center}
-    Key measures from information theory which play a role in Infomax ICA
+    Key measures from information theory which play a role in formulating an optimization objective for Infomax ICA
     \end{center}
 \end{frame}
+}
+
+\notesonly{
+Here we go over several measures from information theory which play a role in formulating an optimization objective for Infomax ICA
 }
 
 \subsection{Entropy}
@@ -58,8 +62,8 @@ H(X) := - \sum_{x \in \mathcal X} p_X(x)\,\log p_X(x)
 
 \end{block}
 
-Imagine flipping a biased coin which reveals \text{tails} most of the time. 
-We will no longer be ``surprised'', if we flip the coin again and see it show \text{tails} \textbf{again}.\\
+Imagine flipping a biased coin which reveals \textit{tails} most of the time. 
+We will no longer be ``surprised'', if we flip the coin again and see it show \textit{tails} \textbf{again}.\\
 
 There is no information gained from flipping the coin another time. There is no uncertainty left.
 
@@ -96,11 +100,14 @@ h(X) := - \int_{-\infty}^{\infty} p_X(x)\,\log p_X(x) \, dx
 \begin{frame}{\subsecname}
 
 Conditional entropy measures entropy of a random variable \textbf{after} one has observed the event of another variable.
-In the case of a system with input $X$ and output $Y$.
 
 \end{frame}
 
 \begin{frame}{\subsecname}
+
+In the case of a system with input $X$ and output $Y$.\\
+
+\svspace{3mm}
 
 \textbf{Definition:} 
 The conditional entropy of $H(Y|X)$ of a pair of discrete random variables $(X,Y)$ with a joint pdf $p_{X,Y}(x,y)$ is defined as:
@@ -143,7 +150,7 @@ system's input $X$ has been observed.
 \pause
 
 \emph{
-$H(Y|X)$ is whatever entropy the output [$Y$] has that did not come from the input [$X$]
+$H(Y|X)$ is whatever entropy the output $Y$ has that did not come from the input $X$
 }
 \only<3>{
 \footnote{\cite{bell1995information}}
@@ -158,26 +165,7 @@ $H(Y|X)$ is whatever entropy the output [$Y$] has that did not come from the inp
 
 \slidesonly{
 \emph{
-$H(Y|X)$ is whatever entropy the output [$Y$] has that did not come from the input [$X$]
-} - \citeauthor{bell1995information}
-}
-
-\pause
-
-\slidesonly{
-\svspace{-5mm}
-\begin{center}
-	\includegraphics[width=0.6\textwidth]{img/aldisain_Plasma_TV}
-\end{center}
-}
-
-\end{frame}
-
-\begin{frame}{\subsecname}
-
-\slidesonly{
-\emph{
-$H(Y|X)$ is whatever entropy the output [$Y$] has that did not come from the input [$X$]
+$H(Y|X)$ is whatever entropy the output $Y$ has that did not come from the input $X$
 } - \citeauthor{bell1995information}
 }
 
@@ -186,26 +174,35 @@ $H(Y|X)$ is whatever entropy the output [$Y$] has that did not come from the inp
 %\svspace{-5mm}
 \begin{center}
 \slidesonly{
-	\includegraphics<1>[width=0.55\textwidth]{img/aldisain_Plasma_TV}
-	\includegraphics<2>[width=0.35\textwidth]{img/Wooden-TV_off}
-	\includegraphics<3>[width=0.35\textwidth]{img/Wooden-TV_on}
-	\includegraphics<4>[width=0.35\textwidth]{img/Wooden-TV_noise}
+	\includegraphics<2>[width=0.55\textwidth]{img/aldisain_Plasma_TV}
+	\includegraphics<3>[width=0.35\textwidth]{img/Wooden-TV_off}
+	\includegraphics<4>[width=0.35\textwidth]{img/Wooden-TV_on}
+	\includegraphics<5>[width=0.35\textwidth]{img/Wooden-TV_noise}
 }
-	\includegraphics<5>[width=0.35\textwidth]{img/Wooden-TV_on}
-	\includegraphics<6>[width=0.35\textwidth]{img/Wooden-TV_noise}
+	\includegraphics<6,8>[width=0.35\textwidth]{img/Wooden-TV_on}
+	\includegraphics<7,8>[width=0.35\textwidth]{img/Wooden-TV_noise}
 \end{center}
 
 \pause
 
 \svspace{-3mm}
 
+\visible<8>{
+
 \question{Do $X$ and $Y$ have to have an input-output relationship to talk about conditional entropy?}
 
-\notesonly{- No, this is not necessary. An input-output relationship is just a clear and intuitive way to describe dependency betweem the two variables.}
+\notesonly{- No, this is not necessary. An input-output relationship is just a clear and intuitive way to describe dependency between the two variables.}
+
+}
 
 \end{frame}
 
 \begin{frame}{\subsecname}
+
+\slidesonly{
+Same as with entropy
+\svspace{5mm}
+}
 
 For the continuous case, we measure the conditional differential entropy $h(Y|X)$ which is defined as:
 
@@ -236,7 +233,7 @@ The relative entropy or Kullback-Leibler divergence between two pdfs $p(x)$ and 
 
 \begin{align}
 \label{eq:klcont}
-D_{KL}\lbrack\,p\, ||\, q\,\rbrack 
+\dkl\lbrack\,p\, ||\, q\,\rbrack 
 &= \int_{-\infty}^{\infty} p(x) \log \left( \frac{p(x)}{q(x)} \right) dx
 \end{align}
 
@@ -284,13 +281,23 @@ The KL divergence does not qualify as a distance metric, as it is not symmetric,
 
 \begin{frame}{Putting things into the context of ICA}
 \only<1>{
+
+\slidesonly{
+$$
+\widehat{\vec {s}} = \vec W \cdot \vec x
+$$
+}
+
 Recalling the factorization \notesonly{in \eqref{eq:facts} which is based on the assumption that }\slidesonly{\begin{equation}
 %\label{eq:facts}
 \widehat{P}_{\vec s}(\widehat{\vec s}) = \prod_{i=1}^{N} \widehat{P}_{s_i}(\widehat{s_i})  \,.
-\end{equation}}such facotrization can be found by minimizing 
-the KL-divergence between the joint distribution of the reconstructed sources and the product of their marginal distributions, specifically:
+\end{equation}}
+
+\notesonly{We want to }\slidesonly{$\Rightarrow$ }formulate an objective for ICA which targets our prior assumption \slidesonly{of independence}\notesonly{that the individual sources are independent from one another.}
+
+\notesonly{The KL-divergence gives us a measure for comparing two distributions. Therefore, we can formulate the objective as }the KL divergence between the joint distribution of the sources and the product of the marginals, specifically:
 }
-\only<1,2>{
+\only<1->{
 \begin{equation}
 \label{eq:klmin}
 	\dkl\lbrack P_{\vec{s}}(\widehat{\vec{s}}),\widehat{P}_{\vec{s}}(\widehat{\vec{s}})\rbrack = 
@@ -300,14 +307,14 @@ the KL-divergence between the joint distribution of the reconstructed sources an
 		\eqexcl \min_{\vec{W}}
 \end{equation}
 }
-\only<2>{
+\only<2->{
 
-In spite of this being an apparent approach for blind source separation, it requires a paramtereized density estimate which would make this approach computationally costly.
+In spite of this being a justified approach for blind source separation, it requires a paramtereized density estimate which would make this approach computationally costly.
 }
 \only<3>{
 \slidesonly{
 \begin{center}
-	\includegraphics[width=0.4\textwidth]{img/meme_anotherway}
+	\includegraphics[width=0.35\textwidth]{img/meme_anotherway}
 \end{center}
 }
 
@@ -319,16 +326,43 @@ In spite of this being an apparent approach for blind source separation, it requ
 \begin{frame}{\subsecname}
 
 \begin{itemize}
-\item The entropy $H(X)$ reprsents our uncertainty about $X$ 
+\item (differential) entropy $H(X)$ represents our uncertainty about $X$ 
 and 
-\item the conditional entropy $H(X|Y)$ represents such \textbf{after} observing $Y$.
+\item the conditional (differential) entropy $h(X|Y)$ represents such \textbf{after} observing $Y$.
 \end{itemize}
 
-Therefore, the \textbf{difference} between them represents the uncertainty about $X$ \textbf{that is resolved} after observing $Y$.
+Therefore, the \textbf{difference} between them represents the uncertainty about $X$ \textbf{that is resolved} after observing $Y$,
 
 \pause
-\notesonly{
-This is referred to as t}\slidesonly{T}he mutual information $I(X,Y)$ between the random variables $X$ and $Y$:
+
+which gives us the \emph{mutual information} $I(X,Y)$ between the random variables $X$ and $Y$:
+
+\begin{equation}
+I(X,Y) = h(X) - h(X|Y)
+\end{equation}
+
+for the continuous case.
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+Properties of mutual information:
+
+\begin{align}
+\label{eq:mutualcontprops}
+I(X,Y) &= h(X) - h(X|Y)\\
+&= h(Y) - h(Y|X)\\
+%&= h(X) + h(Y) - h(X,Y) \\
+&= I(Y,X) \\
+&\ge 0
+\end{align}
+
+\end{frame}
+
+\subsubsection{Further interpretation for the mutual information}
+
+\begin{frame}{\subsubsecname}
 
 %\begin{align}
 %\label{eq:mutualdiscrete}
@@ -338,6 +372,7 @@ This is referred to as t}\slidesonly{T}he mutual information $I(X,Y)$ between th
 %\end{align}
 
 %for the discrete case. And
+\notesonly{Substituting the definitions for $h(X)$ and $h(X|Y)$:}
 
 \begin{align}
 \label{eq:mutualcont1}
@@ -347,7 +382,7 @@ I(X,Y)
 
 \pause
 
-and with $p_{X,Y} = p_X(x)\,p_Y(y)$ we get:
+and with the \emph{product rule} $p_{X,Y} = p_X(x|y)\,p_Y(y)$ we get:
 
 \begin{align}
 \label{eq:mutualcont2}
@@ -359,22 +394,7 @@ for the continuous case.
 
 \end{frame}
 
-\begin{frame}{\subsecname}
 
-Identifying propeties of mutual information:
-
-\begin{align}
-\label{eq:mutualcontprops}
-I(X,Y) &= h(X) - h(X|Y)\\
-&= h(Y) - h(Y|X)\\
-%&= h(X) + h(Y) - h(X,Y) 
-&= I(Y,X) \ge 0
-\end{align}
-
-Note that 
-$I(X,Y)=0$ if the the random variables are statistically independent. However, we won't actually make much use of this special equality case in ICA.
-
-\end{frame}
 
 
 \newpage
@@ -383,19 +403,7 @@ $I(X,Y)=0$ if the the random variables are statistically independent. However, w
 
 \begin{frame}{\subsecname}
 
-\slidesonly{
-\begin{equation}
-\label{eq:klmin}
-	\dkl\lbrack{\color{blue}P_{\vec{s}}(\widehat{\vec{s}})},{\color{red}\widehat{P}_{\vec{s}}(\widehat{\vec{s}})}\rbrack = 
-    \int d \, \widehat{\vec{s}} \; {\color{blue}P_{\vec{s}}(\widehat{\vec{s}})}
-		\ln \frac{{\color{blue}P_{\vec{s}}(\widehat{\vec{s}})}}{
-			{\color{red}
-			\prod_{i = 1}^N \widehat{P}_{s_i}(\widehat{s}_i) 
-			}
-			}
-		\eqexcl \min_{\vec{W}}
-\end{equation}
-}
+
 
 This is just to show how to arrive at the same optimization problem\notesonly{ as in \eqref{eq:klmin}} through mutual information.
 

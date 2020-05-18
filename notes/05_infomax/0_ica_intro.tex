@@ -12,7 +12,7 @@ and $\vec x \in \R^N$ describe our observations. $\vec x$ relates to $\vec s$ th
 \vec x = \vec A \, \vec s
 \end{equation}
 
-Again with individual elements and with $N=2$:
+\notesonly{Again with individual elements and }with $N=2$:
 \begin{equation}
  \left( \begin{array}{ll}
 			x_1 \\ x_2
@@ -76,15 +76,17 @@ In the case of $N=2$:
 
 \begin{frame}{Infomax - Overview}
 
-We first will look into some key concepts employed by the \emph{Infomax} method.
 
 \clearpage
 
 \underline{Outline for \emph{Infomax} ICA}:
 \begin{itemize}
-    \item Uncorrelatedness
-    \item \emph{statistical independence}
-    \item A primer on Information theory
+	\item \notesonly{We first look into some }key concepts:
+    \begin{itemize}
+		\item Uncorrelatedness
+		\item \emph{statistical independence}
+    \end{itemize}
+    \item A primer on information theory
     \begin{itemize}
         \item Entropy
         \item Conditional Entropy
@@ -104,19 +106,21 @@ We first will look into some key concepts employed by the \emph{Infomax} method.
 
 Correlation measures the linear relationship between two random variables.
 \begin{center}
-\includegraphics[width=0.6\textwidth]{img/section2_fig3.pdf}
+\includegraphics[width=0.7\textwidth]{img/section2_fig3.pdf}
 \notesonly{\captionof{figure}{Correlation and uncorrelatedness}}
 \end{center}
 
-If no such correlation exists between two random scalar variables $x_1$ and $x_2$, i.e.
+If no such correlation exists between two random scalar variables $X_1$ and $X_2$. That is, if
+
+\svspace{-3mm}
 
 \begin{align}
 \label{eq:uncorr}
-\mathrm{Cov}(x_1, x_2) = \E  \lbrack x_1  x_2 \rbrack - \E  \lbrack x_1 \rbrack \E \lbrack x_2 \rbrack  &= 0\\
-\E  \lbrack x_1  x_2 \rbrack &= \E  \lbrack x_1 \rbrack \, \E \lbrack x_2 \rbrack
+\mathrm{Cov}(X_1, X_2) = \E  \lbrack X_1  X_2 \rbrack - \E  \lbrack X_1 \rbrack \, \E \lbrack X_2 \rbrack  &= 0\\
+\E  \lbrack X_1  X_2 \rbrack &= \E  \lbrack X_1 \rbrack \, \E \lbrack X_2 \rbrack
 \end{align}
 
-The two variables are \emph{uncorrelated}.
+$\Rightarrow$ The two variables are \emph{uncorrelated}.
 
 \end{frame}
 
@@ -124,14 +128,12 @@ The two variables are \emph{uncorrelated}.
 
 \begin{frame}{\subsecname}
 
-Independence is a much stronger property than decorrelatedness. 
-
-Consider the following two random scalar variables $x$ and $y$:
+Consider the following two random scalar variables $X$ and $Y$:
 \begin{center}
 \includegraphics[width=0.4\textwidth]{img/uniform_fixed.png}
 \end{center}
 
-Knowing anything about $x$ reveals absolutely nothing about $y$, and vice-versa. This is because both variables are \emph{independent}. 
+Knowing anything about $X$ reveals absolutely nothing about $Y$, and vice-versa. This is because both variables are \emph{independent}. 
 
 \end{frame}
 
@@ -155,7 +157,7 @@ From this follows:
 \E  \lbrack \, g(x) h(y) \, \rbrack = \E \lbrack g(x) \rbrack \, \E \lbrack h(y) \rbrack  \,,
 \end{equation}
 
-where $g(x)$ and $h(y)$ are absolutely integrable functions of $x$ and $y$, respectively.
+where $g(x)$ and $h(y)$ are absolutely integrable functions of $Y$ and $Y$.
 }
 \only<2>{
 
@@ -174,9 +176,9 @@ This can be shown with\notesonly{ the use of \eqref{eq:statindep}}:
 
 \begin{frame}{Uncorrelatedness vs. statistical independence}
 
-If $x$ and $y$ are independent, they are also uncorrelated, but the same cannot always be said the other way around.
-
-\pause
+\notesonly{
+Independence is a much stronger property than decorrelatedness. 
+}
 
 \slidesonly{
 \begin{center}
@@ -184,59 +186,81 @@ If $x$ and $y$ are independent, they are also uncorrelated, but the same cannot 
 \end{center}
 }
 
+\pause
+
+If $X$ and $Y$ are independent, they are also uncorrelated, but the same cannot always be said the other way around.
+
+
+
 \end{frame}
 
 \begin{frame}{Uncorrelatedness vs. statistical independence}
 
-
+\only<1>{
 Example\footnote{\notesonly{Example obtained} from (Hyv\"arinen, A., \& Oja, E. (2000). Independent component analysis: algorithms and applications. Neural networks, 13(4-5), 411-430.)}:
 
-Assume $x$ and $y$ are discrete valued and follow a distribution that the pair are with probability 1/4 equal to any of the following
+Assume $X$ and $Y$ are discrete valued and follow a distribution that the pair are with probability 1/4 equal to any of the following
 values: (0,1),(0,-1),(1,0),(-1,0). 
+}
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{img/example_decorr_notindep}
+	\notesonly{\captionof{figure}{Example for decorrelatedness vs. Independence}}
+\end{center}
 
-\question{Are $x$ and $y$ are uncorrelated?}
+\only<2-4>{
+\question{Are $X$ and $Y$ uncorrelated?}
 
-\pause
+}
+\only<3-4>{
 
--We check:
-$\E \lbrack x \rbrack = \frac{1}{4} \cdot (0 + 0 + 1 + (-1)) = 0$\\[2mm]
-$\E \lbrack y \rbrack = \frac{1}{4} \cdot (1 + (-1) + 0 + 0) = 0$\\
+-We check:\\
+
+$\E \lbrack X \rbrack = \frac{1}{4} \cdot (0 + 0 + 1 + (-1)) = 0$\\[2mm]
+$\E \lbrack Y \rbrack = \frac{1}{4} \cdot (1 + (-1) + 0 + 0) = 0$\\
+}
 
 \notesonly{
-- Yes they are uncorrelated.}
+- Yes they are uncorrelated.
+}
+
+\only<4>{
 \slidesonly{
-\begin{center}
-\includegraphics[width=0.4\textwidth]{img/meme_yesuncorrelated}
-\end{center}
+\placeimage{11}{5}{img/meme_yesuncorrelated}{width=3.5cm}
+}
 }
 
 \end{frame}
 
 \begin{frame}{Uncorrelatedness vs. statistical independence}
 
-Assume $x$ and $y$ are discrete valued and follow a distribution that the pair are with probability 1/4 equal to any of the following
-values: (0,1),(0,-1),(1,0),(-1,0). 
+\slidesonly{
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{img/example_decorr_notindep}
+	\notesonly{\captionof{figure}{Example for decorrelatedness vs. Independence}}
+\end{center}
+}
 
-\question{Are $x$ and $y$ are statistically independent?}
+\only<1-3>{
+\question{Are $X$ and $Y$ statistically independent?}
 
-\pause
+}
+\only<2-3>{
 
-\notesonly{On the other hand, if }we calculate $\E  \lbrack \, g(x) h(y) \, \rbrack$ with $g(x)=x^2$ and $g(y)=y^2$:\\
-
-\svspace{3mm}
-
+\notesonly{-As }we calculate $\E  \lbrack \, g(x) h(y) \, \rbrack$ with, e.g., $g(x)=x^2$ and $h(y)=y^2$:\\
 $\E \lbrack x^2 \, y^2 \rbrack 
 = \frac{1}{4} \cdot \lbrack (0\cdot1) + (0\cdot1) + (1\cdot0) + (1\cdot0) \rbrack = 0 
 \ne \frac{1}{4} = \E \lbrack x^2 \rbrack \, \E \lbrack y^2 \rbrack \;,$
 
-\pause
+\notesonly{we see that }the requirement for independence \notesonly{as in \eqref{eq:statindepexp} }is violated. \notesonly{The variables are uncorrelated but \underline{not} independent.}
+}
 
-we see that the requirement for independence \notesonly{as in \eqref{eq:statindepexp} }is violated. \notesonly{The variables are uncorrelated but \underline{not} independent.}
 
+
+
+\only<3>{
 \slidesonly{
-\begin{center}
-\includegraphics[width=0.35\textwidth]{img/meme_butnotindep}
-\end{center}
+\placeimage{10.5}{5}{img/meme_butnotindep}{width=4.cm}
+}
 }
 
 \end{frame}
@@ -252,7 +276,7 @@ we see that the requirement for independence \notesonly{as in \eqref{eq:statinde
 - The solution to the ICA problem yields a distribution of the estimated source $\widehat{P}_{\vec s}(\widehat{\vec s})$ that is closest to the factorizing density:
 
 \begin{equation}
-\widehat{P}_{s_1, s_2,\ldots,s_N}({\widehat s_1, \widehat s_2,\ldots,\widehat s_N}) = \widehat{P}_{s_1}(\widehat{s_1}) \cdot \widehat{P}_{s_2}(\widehat{s_2}) \cdot \, \ldots \, \cdot \widehat{P}_{s_N}(\widehat{s_N})
+\widehat{P}_{s_1, s_2,\ldots,s_N}({\widehat s_1, \widehat s_2,\ldots,\widehat s_N}) = \widehat{P}_{s_1}(\widehat{s_1}) \cdot \widehat{P}_{s_2}(\widehat{s_2}) \cdot \, \ldots \, \cdot \widehat{P}_{s_N}(\widehat{s}_N)
 \end{equation}
 
 \pause
@@ -269,7 +293,7 @@ To clarify the notation here:\\
 \setlength\itemsep{0.1em}
 \item $\vec s$ describes the independent sources which we do not have.
 \item $\widehat{\vec s}$ are the reconstructed sources which we obtain via some unmixing matrix $\vec W$.
-\item $\widehat{P}_{\vec s}(\widehat{\vec s})$ is our estimate of the pdf of $\vec s$ which we have approximated using $\widehat{\vec s}$. 
+\item $\widehat{P}_{\vec s}(\widehat{\vec s})$ is our estimate of the pdf of $\vec s$ which we have approximated using the reconstructions $\widehat{\vec s}$. 
 \end{itemize}
 
 \end{frame}
