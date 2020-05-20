@@ -269,10 +269,9 @@ Maximizing $I(Y,X)$ boils down to maximizing the (differential) entropy of the o
   \dkl 
   & = \int d \, \widehat{\vec{s}} P_{\vec{s}}(\widehat{\vec{s}}) \ln \frac{P_{\vec{s}}(\widehat{\vec{s}})}{\prod_i \widehat{P}_{s_i}(\widehat{s}_i)} \slidesonly{\hspace{35mm}}\\
 \notesonly{  \intertext{Using the factorization in \eqref{eq:facts}:}}
-  \pause
+\visible<2->{
   & = \int d \, \widehat{\vec{s}} P_{\vec{s}}(\widehat{\vec{s}}) \ln \frac{P_{\vec{s}}(\widehat{\vec{s}})}{\widehat{P}_{\vec{s}}(\widehat{\vec{s}})}
-\slidesonly{\\
-  \pause}
+\slidesonly{\\}
 \notesonly{  \intertext{Applying the density transformation:} }
   %& = &  \int d \, \widehat{\vec{s}} P_{\vec{s}}(\widehat{\vec{s}}) \ln 
   %\frac
@@ -289,8 +288,9 @@ Maximizing $I(Y,X)$ boils down to maximizing the (differential) entropy of the o
     \Big|  \frac{d \widehat{\vec u}}{d \widehat{\vec s}} \Big|
   \widehat{P}_{\vec u}(\widehat{\vec u}) 
   }
-\slidesonly{\\
-  \pause}
+}
+\visible<3->{
+\slidesonly{\\}
 \notesonly{  \intertext{The same factorization in \eqref{eq:facts} equally applies to the transformed variables $\vec u$:} }
   & = \int d \widehat{\vec{u}} P_{\vec{u}} (\widehat{\vec{u}}) 
   \ln 
@@ -313,6 +313,7 @@ Maximizing $I(Y,X)$ boils down to maximizing the (differential) entropy of the o
 	  }^{\substack{\text{const.\;}\notesonly{ a \\\text{\;see \eqref{eq:dtufs}}}}}} 
 	  \bigg)
 	  }_{\text{constant}}
+}
 \end{align}
 \slidesonly{
 \endgroup

@@ -1,6 +1,6 @@
 
 
-\subsection{Learning by Gradient Ascent}
+\section{Learning by Gradient Ascent}
 
 \mode<presentation>{
 \begin{frame} 
@@ -45,9 +45,7 @@ Model parameters can be optimized by stepwise adjustment along the direction of 
 
 \begin{equation}
 \Delta \mathrm{w}_{ij} = 
-%\underbrace{ \eta }_{
-    %\substack{ \text{learning} \\ \text{rate}} }
-  \frac{\partial E^T}{\partial \mathrm{w}_{ij}}
+\eta~\frac{\partial E^T}{\partial \mathrm{w}_{ij}}
  \end{equation}
 }
 
@@ -152,10 +150,6 @@ or using \emph{on-line-learning} by updating $w_{ij}$ with each individual cost 
 
 \begin{frame}{\subsecname}
 
-\notesonly{
-The justification for natural gradient\footnote{For a proper explanation and justification for the natural gradient, \citep{amari1998natural}} vs. standard gradient:
-} 
-
 \only<1->{
 The standard gradient\notesonly{ operates on the notion that }\slidesonly{: }the shortest distance between two points is a straight line.\\ 
 }
@@ -200,7 +194,7 @@ still prone to overshooting.
 }
 }
 \only<2->{
-The natural gradient enables \emph{comparable learning steps over time}.
+The natural gradient enables \emph{comparable learning steps over time}\footnote{For a more detailed explanation and justification for the natural gradient, see \citep{amari1998natural}}.
 It allows for a more stable, therefore efficient, and faster learning rule (no matrix inversion for $\vec W$ in Infomax'
   necessary) to do steepest ascent under normalized step size.%\notesonly{ (cf. lecture slides 2.2.1 for details)}
   
