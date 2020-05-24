@@ -1,0 +1,179 @@
+\section{Introduction}
+
+\definecolor{darkgreen}{rgb}{0,0.6,0}
+
+\mode<presentation>{
+\begin{frame}
+        \only<1,2>{
+        \frametitle{What \underline{not} to expect from this course}} 
+        \only<3->{\frametitle{Then what \underline{can} we expect from this course?}}
+    %\vspace{10mm}
+    \only<2>{
+    \begin{center}
+    %Not your typical data science course
+	\includegraphics[width=5cm]{img/meme_mi2}
+    \end{center}
+    }
+    \only<3->{
+    \begin{center}
+        breadth of topics, not necessarily state of the art\\
+        theoretical aspects of the learning algorithms
+    \end{center}
+    }
+    \only<4->{
+    \begin{center}
+    implementing the algorithms - programming exercises.
+    \end{center}
+    }
+    \only<5>{
+    \begin{center}
+    %Not your typical data science course
+	\includegraphics[width=5.5cm]{img/meme_programming}
+    \end{center}
+    }
+    
+\end{frame}
+}
+
+\subsection{Learning Paradigms}
+
+\subsubsection{Supervised learning}
+
+\begin{frame}{\subsecname:~\subsubsecname}
+
+We are given data that is made up of tuples.
+
+Supervised methods try to fit a function that maps $\vec x$ to some attribute $\vec y$ (labels/ground truth).
+
+\begin{center}
+	\includegraphics[height=3cm]{img/tigerente}
+	\captionof*{figure}{example image recognition}
+\end{center}
+
+Supervised learning would fit a function that maps image pixels to recognizing the object in the image\\
+from a set of possible objects (e.g. cat, dog, tiger, duck, frog, bird).
+    
+\end{frame}
+
+\subsubsection{Unsupervised learning}
+
+\begin{frame}{\subsecname: \subsubsecname}
+
+We are given data that is made up of observations\pause~\textbf{only}. No other information.
+
+\mode<presentation>{
+\begin{center}
+	\includegraphics[width=4cm]{img/meme_nolabels}
+\end{center}
+}
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+\svspace{-5mm}
+
+\question{What can we do when we only have observations?}
+
+\pause
+
+\mode<presentation>{
+\only<2>{
+\vspace{-5mm}
+\begin{center}
+	\includegraphics[width=5cm]{img/meme_ai}
+\end{center}
+}
+}
+
+\pause
+
+\mode<article>
+Unsupervised learning tries to 
+\mode<all>
+find interesting directions and/or structure in the data using only observations $\vec x \in \R^N$.
+
+\begin{center}
+	\includegraphics[width=9cm]{img/mi2}
+\end{center}
+
+``interesting'' and  ``structure'' is expressed through the objective model.
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+\underline{Data}:
+
+A dataset of observations:
+\begin{equation}
+\label{eq:observations}
+\vec X = 
+\left(
+\begin{array}{cccccc}
+\Big| & \Big| & & \Big| & & \Big| \\[3mm]
+\vec x^{(1)} & \vec x^{(2)} & \cdots & \vec x^{(\alpha)} & \cdots & \vec x^{(p)}\\[2mm]
+\Big| & \Big| & & \Big| & & \Big|
+\end{array}
+\right) \in \R^{N \times p}
+\end{equation}
+\notesonly{
+where $p$ denotes the number of observations (i.e. size of the dataset) and $N$ denotes the number of dimensions.}
+\slidesonly{
+where 
+\begin{itemize}
+\item[] $p$ \corresponds\, no. of observations (often \iid)
+\item[] $N$ \corresponds\, no. of dimensions
+\end{itemize}
+}
+\notesonly{
+The samples are often assumed to be \iid, but algorithms for handling sequential data also exist.
+
+Example: $\vec x$ could represent user ratings, pixel values in images.
+}
+\end{frame}
+
+\begin{frame}{Objective model}
+
+%\svspace{-5mm}
+\mode<article>{
+\underline{Objective model}:
+An unsupervised learning algorithm is used to capture structure or directions in the data. This can be achieved by finding:
+}
+\begin{itemize}
+\item the underlying distribution $P(\vec x)$ that generated this data (e.g. density estimation),
+\item $\vec u := \vec f(\vec x)$, where $\vec u$ is a measure of 
+\begin{itemize}
+\item possible structure such as clustering or grouping in the data ($\vec u \in {0,\ldots,K-1}$), \\
+
+\svspace{-5mm}
+
+\begin{center}
+	\includegraphics[trim=260 0 140 0,clip, width=2cm]{img/mi2}
+	\notesonly{\captionof{figure}{grouping of data}
+	}
+\end{center}
+
+\svspace{-15mm}
+
+and/or\\
+
+\vspace{7mm}
+
+\item possible directions in the data, by finding another continuous space for describing this data. \\
+
+Example: dimensionality reduction or an embedding space, $\vec u \in \R^M$ with $M < N$.
+
+
+\svspace{-5mm}
+
+\begin{center}
+	\includegraphics[trim=0 0 400 0,clip, width=2cm]{img/mi2}
+	\notesonly{\captionof{figure}{dimensionality reduction}
+	}
+\end{center}
+
+\end{itemize}
+\end{itemize}
+
+\end{frame}

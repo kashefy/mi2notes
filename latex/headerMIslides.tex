@@ -28,6 +28,27 @@
 \tikzset{myrect/.style={rectangle, fill=#1!20, draw=#1!75, text=black}}
 \tikzstyle{axes}=[]
 
+% sticky note
+\usepackage{xparse}
+\usetikzlibrary{shadows}
+\definecolor{myyellow}{RGB}{242,226,149}
+\NewDocumentCommand\StickyNote{O{6cm}mO{6cm}}{%
+\begin{tikzpicture}
+\node[
+drop shadow={
+  shadow xshift=2pt,
+  shadow yshift=-4pt
+},
+inner xsep=7pt,
+fill=myyellow,
+xslant=0.05,
+yslant=-0.05,
+inner ysep=10pt
+]
+{\parbox[t][#1][c]{#3}{#2}};
+\end{tikzpicture}%
+}
+
 % from tex.stackexchange useful to align substacks
 
 \makeatletter
@@ -73,7 +94,7 @@
 \setbeamertemplate{navigation symbols}{}
 \usefonttheme[onlymath]{serif}
 
-\title[MI 1 Tutorial]{Machine Intelligence 2 Tutorial}
+\title[MI 2 Tutorial]{Machine Intelligence 2 Tutorial}
 \institute[www.ni.tu-berlin.de]{Fachgebiet Neuronale Informationsverarbeitung (NI)}
 \author[Kashef]{Youssef Kashef}
 \date{SoSe 20}
@@ -93,7 +114,10 @@
 
 \newcommand{\question}[2]{%
 	\vspace{4mm}%
-	{Q\thesheetno.\arabic{question}: ~ \textit{#1}%
+	{Q:~\textit{#1}
+	%Omit question number from slides because pause and similar will increment anyway
+	% makes more sense to keep the numbering in the notes version but not so much for the slides
+	%\thesheetno.\arabic{question}: ~ \textit{#1}%
 	}\\[5mm]%
 	\addtocounter{question}{1}%
 }
@@ -103,3 +127,6 @@
 \newcommand{\notesonly}[1]{}
 
 \newcommand{\inparaenum}{\enumerate}
+
+% vertical space for slides only
+\newcommand{\svspace}[1]{\slidesonly{\vspace{#1}}}
