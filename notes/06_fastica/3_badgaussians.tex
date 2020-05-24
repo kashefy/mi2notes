@@ -1,11 +1,8 @@
+\subsection{Gaussians are bad for ICA}
 
+\subsubsection{A more formal argument for why Gaussians are bad for ICA}
 
-\begin{frame}
-\slidesonly{
-\frametitle{Gaussians are bad for ICA}
-}
-\newpage
-\textbf{A more formal argument for why Gaussians are bad for ICA}:
+\begin{frame}{\subsecname}
 
 Recall that the joint density of independent sources is a factorizing density:
 
@@ -14,7 +11,7 @@ Recall that the joint density of independent sources is a factorizing density:
 P_{\vec s}(\vec s) = \prod_{i=1}^{N} P_{s_i}(s_i)  \,.
 \end{equation}
 
-If we assumed gaussian distributed sources, the following factorization becomes possible:
+If we assumed gaussian distributed sources, the following factorization becomes possible (e.g. $N=2$):
 
 \begin{equation}
 	\label{eq:factsgauss}
@@ -36,27 +33,27 @@ If we assumed gaussian distributed sources, the following factorization becomes 
 \end{equation}
 \end{frame}
 
-\begin{frame}
-\slidesonly{
-\frametitle{Gaussians are bad for ICA}
-}
-\slidesonly{\textbf{A more formal argument (cont'd):}}
+\begin{frame}{\subsecname (cont'd)}
 
-Now consider applying an orthognal mixing matrix that is \textbf{known}. 
-\slidesonly{(orthogonal from whitening the $\vec x$)\\
+%\slidesonly{\textbf{A more formal argument (cont'd):}}
+
+Now consider applying an orthognal mixing matrix $\widetilde{\vec A}$ that is \textbf{known}. 
+\slidesonly{(orthogonal because we whitened the data $\vec x$)\\
 Consequently:
 }
 \notesonly{We've seen how whitening takes an ICA problem with any valid\footnote{invertible} mixing matrix $A$ 
 and reformulates it into a new problem with an orthogonal mixing matrix $\widetilde{\vec A}$.
 The following holds for such an orthogonal mixing matrix $\widetilde{\vec A}$:
 }
-$$
+\begin{equation}
 \widetilde{\vec A}^\top = \widetilde{\vec A}^{-1} \Leftrightarrow \widetilde{\vec A}^{-1}\widetilde{\vec A}=\vec I_N \qquad \text{and} \qquad |\det \widetilde{\vec A}| = |\det \widetilde{\vec A}^\top| = 1
-$$
+\end{equation}
 
-$$
+\begin{equation}
 \vec s = \widetilde{\vec A}^{-1} \vec{x} = \widetilde{\vec A}^\top \vec x
-$$
+\end{equation}
+
+\pause
 
 \notesonly{
 We are now interested in the joint density $P_x(\vec x)$ of the mixtures $x_1$ and $x_2$.
@@ -84,7 +81,7 @@ Therefore,
 }
 \end{frame}
 
-\begin{frame}
+\begin{frame}{\subsecname~(cont'd)}
 \slidesonly{
 Orthogonal mixing matrix $\widetilde{\vec A}$ implies:
 $$
@@ -132,13 +129,12 @@ $$}
 \end{align}
 \end{frame}
 
+\notesonly{
 We see that the factorization in \eqref{eq:gaussxfact} describes the pdf for the mixtures $\vec x$ identically to the pdf of the original sources. 
 The original and mixed distributions are identical. The mixing matrix did not change this. Therefore, it would be impossible to find its corresponding unmixing matrix to undo the rotation.
-
-\begin{frame}
-\slidesonly{
-\frametitle{Gaussians are bad for ICA}
 }
+
+\begin{frame}{\subsecname~(cont'd)}
 
 \notesonly{
 Mixing two independent Gaussians leads to a joint mixed distribution that is equal to that of the original sources.
@@ -152,11 +148,24 @@ A mixture of sources where at most one is Gaussian, is still fine. It only becom
 
 
 \slidesonly{
+\begin{minipage}{0.65\textwidth}
+
+\svspace{5mm}
+
 \begin{itemize}
-\item Mixing two independent Gaussians leads to a joint mixed distribution that is equal to that of the original sources.
+\item Mixing 2 independent Gaussians leads to a joint mixed distribution ${P}_{\vec x}(\vec x)$ that is effectively equal to the joint distribution of the original sources ${P}_{\vec s}(\vec s)$.
+\pause
 \item No surprise: \emph{uncorrelated jointly Gaussian variables are necessarily independent.}
+\pause
 \item One Gaussian + other distributions is fine.
 \item Two ore more Gaussians. No way.
 \end{itemize}
+\end{minipage}
+}
+
+\slidesonly{
+\only<4>{
+	\placeimage{10.5}{6}{img/meme_icagaussian}{width=4cm}%
+}
 }
 \end{frame}

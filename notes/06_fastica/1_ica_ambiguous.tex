@@ -1,6 +1,6 @@
 
 \section{Ambiguities in ICA and limitations}
-\begin{frame}
+\begin{frame}{\secname}
 
 Sources can be recovered up to:
 \begin{itemize}
@@ -20,21 +20,35 @@ Sources can be recovered up to:
 
 \end{frame}
 
-
-
+\notesonly{
 ICA cannot resolve if the mixing matrix is $\vec A$ or a permuatated and/or scaled version of $\vec A$.
 It can \textbf{also} not resolve if the independent sources are $\vec s$ or a permutated and/or scaled version of $\vec s$.
+}
+
+\begin{frame}{\secname}
 
 Permutations and scaling are not an issue for ICA because permutation and scaling do not interfere with statistical independence.
 
-$$
+\begin{equation}
 P_{s_1, s_2}(\widehat {\vec s}) \eqexcl  P_{s_1} (\widehat{s}_1) \cdot P_{s_2} (\widehat{s}_2)
-$$
+\end{equation}
 
-\begin{frame}
+\slidesonly{
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{img/meme_doesnotinterfere}%
+\end{center}
+}
+
+\end{frame}
+
+\notesonly{
+We can verify that ambiuities to scale and permutation do not interfere with statistical independence.
+}
+
+\begin{frame}{Verification}
 Permutations of sources
 {\footnotesize
-\begin{equation*}
+\begin{equation}
 	\arraycolsep=1.4pt%\def\arraystretch{2.2}
 	\begin{array}{ccc}
 	\left( \begin{array}{ll}
@@ -65,13 +79,13 @@ Permutations of sources
 	&& 
 	P_{s_2} (\widehat{s}_2) \cdot P_{s_1} (\widehat{s}_1)
 	\end{array}
-\end{equation*}
+\end{equation}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Scaling of source amplitudes:
 
 {\footnotesize
-\begin{equation*}
+\begin{equation}
 	\begin{array}{ccc}
 	\arraycolsep=1.4pt
 	\left( \begin{array}{ll}
@@ -103,33 +117,48 @@ Scaling of source amplitudes:
 	&& 
 	aP_{s_1} (a\widehat{s}_1) \cdot bP_{s_2} (b\, \widehat{s}_2)
 	\end{array}
-\end{equation*}
+\end{equation}
 }
 \end{frame}
+
 \subsection{Implications of the ambiguities}
 
-\begin{frame}
+\begin{frame}{\subsecname}
 
 We can assume:
-$$
-\E \lbrack \, \vec s \, \rbrack = 0
-$$
+\begin{equation}
+\E \lbrack \, \vec s \, \rbrack = \vec 0
+\end{equation}
 
-Removing the mean from $\vec x$ does not change $\vec A$:
+Substracting the mean from $\vec x$ does not change $\vec A$:
 
-$$
+\begin{equation}
 \vec x - \E \lbrack \, \vec x \, \rbrack = \vec A \left( \vec s - \E \lbrack \, \vec s \, \rbrack \right)
-$$
+\end{equation}
 
 \notesonly{Note that} $\E \lbrack \, \vec s \, \rbrack$ and $\E \lbrack \, \vec x \, \rbrack$ are not necessarily equal.
-\pause
+
+\end{frame}
+
+\begin{frame}{\subsecname}
 
 We can also assume:
-$$
+\begin{equation}
 \mathrm{Cov}(\vec s) = \E \lbrack \, \vec s \, \vec s^\top \rbrack = \vec I_N
-$$
+\end{equation}
 
 Any scaling in $\mathrm{Cov}(\widehat{\vec s})$ can be assumed to come from $\vec A$ and can be undone.
+
+\pause
+
+\begin{align}
+\label{eq:expxina}
+\vec \Sigma_x = \mathrm{Cov}(\vec x) &=  \E \lbrack \, \vec x \, \vec x^\top \rbrack\\
+&=  \E \lbrack \, \vec A\,\vec s \, \left( \vec A\,\vec s \right)^\top \rbrack\\
+&=  \E \lbrack \, \vec A\; \underbrace{\;\vec s \, \vec s^\top}_{= \vec I_N} \vec A^\top \rbrack\\
+\label{eq:sigmax}
+&=  \vec A\, \vec A^\top
+\end{align}
 
 \end{frame}
 

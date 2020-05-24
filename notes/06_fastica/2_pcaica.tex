@@ -1,19 +1,27 @@
 \subsection{Whitening in the context of ICA}
 
-\begin{frame}
-
-\begin{align}
-\label{eq:expxina}
-\vec \Sigma_x = \mathrm{Cov}(\vec x) &=  \E \lbrack \, \vec x \, \vec x^\top \rbrack\\
-&=  \E \lbrack \, \vec A\,\vec s \, \left( \vec A\,\vec s \right)^\top \rbrack\\
-&=  \E \lbrack \, \vec A\; \underbrace{\;\vec s \, \vec s^\top}_{= \vec I_N} \vec A^\top \rbrack\\
-\label{eq:sigmax}
-&=  \vec A\, \vec A^\top
-\end{align}
-
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \subsecname
+    \end{center}
+    \begin{center}
+    Bringing PCA into the mix.
+    How PCA solves half of the ICA problem.
+    \end{center}
 \end{frame}
+}
 
-\begin{frame}
+\begin{frame}{\subsecname}
+
+\slidesonly{
+We've established that
+\begin{equation}
+\vec \Sigma_x =  \vec A\, \vec A^\top
+\end{equation}
+}
+
+\pause
 
 \notesonly{
 If we were to apply \emph{Singular Value Decomposition} on the symmetric matrix $\Sigma_x$:
@@ -38,40 +46,73 @@ We define the two following transformation $\vec Q$ and $\widetilde{\vec A}$:
 \widetilde{\vec A} := \vec Q \, \vec A 
 \end{equation}
 
-Which yields a new ICA problem:
+Which yields\only<3>{ a new ICA problem}:
 \begin{equation}
 \vec u = \vec Q\, \vec x = \vec Q\,\vec A \, \vec s = \widetilde{\vec A} \, \vec s
 \end{equation}
+
+\end{frame}
+
+\begin{frame}{A new ICA problem}
+
+\slidesonly{
+\begin{equation}
+\vec u := \vec Q\, \vec x = \vec Q\,\vec A \, \vec s = \widetilde{\vec A} \, \vec s
+\end{equation}
+}
 
 \question{What is so special about the new mixing matrix $\widetilde{\vec A}$?} \\
 
 \notesonly{-$\widetilde{\vec A}$ is orthogonal (i.e. $\widetilde{\vec A}\, \widetilde{\vec A}^\top = \widetilde{\vec A}^\top \widetilde{\vec A} = \widetilde{\vec A}^{-1} \widetilde{\vec A} = \vec I_N$).
  We will see the implications of this in how it reduces the number of free parameters for solving the new ICA problem.
- }
-\end{frame}
+}
 
-\begin{frame}
+\pause
 
 \slidesonly{
-$$
-\vec Q := \vec D^{-\frac{1}{2}} \vec U^\top
-$$
-$$
-\vec \Sigma_x = \E \lbrack\, \vec x \, \vec x^\top \rbrack = \vec U \, \vec D \, \vec U^{\top}
-$$
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{img/meme_newalwaysbetter}%
+\end{center}
+}
+
+\end{frame}
+
+\begin{frame}{A new ICA problem}
+
+\slidesonly{
+\vspace{-14mm}
+\hspace{8.0cm}
+\StickyNote[1.7cm]{
+	\begingroup
+	\scriptsize
+	%\begin{equation}
+		%\widehat{P}_{u_i} (\widehat{u}_i) =
+		 %\frac{1}{\big| \widehat{f}_i^{'} (\widehat{s}_i) \big|} 
+		 %\widehat{P}_{s_i}(\widehat{s}_i)
+	%\end{equation}
+	\begin{equation}
+		\vec Q := \vec D^{-\frac{1}{2}} \vec U^\top
+	\end{equation}
+\vspace{-2mm}
+	\begin{equation}
+	\vec \Sigma_x = \E \lbrack\, \vec x \, \vec x^\top \rbrack = \vec U \, \vec D \, \vec U^{\top}
+	\end{equation}
+	\endgroup
+}[3.3cm] % width
+\vspace{-22mm}
 }
 
 \begin{align}
 \E \lbrack\, \vec u \, \vec u^\top \rbrack
-&\mystackrel{\vec u = \vec Q\, \vec x}{\vec u = \vec Q\, \vec x}
+&\mystackrel{\vec u := \vec Q\, \vec x}{\vec u = \vec Q\, \vec x}
  \E \lbrack\, \vec Q \, \vec x  \left( \vec Q \, \vec x\right)^\top \rbrack\\
 &\mystackrel{\vec u = \vec Q\, \vec x}{}\E \lbrack\, \vec Q \, \vec x \; \vec x^\top \vec Q^\top \rbrack\\
-&\mystackrel{\vec u = \vec Q\, \vec x}{} \E \lbrack\, \vec Q \, \vec \Sigma_{X} \, \vec Q^\top \rbrack\\
+&\mystackrel{\vec u = \vec Q\, \vec x}{} \E \lbrack\, \vec Q \, \vec \Sigma_{x} \, \vec Q^\top \rbrack\\
 &\mystackrel{\vec u = \vec Q\, \vec x}{} \vec Q \, \vec \Sigma_{x} \, \vec Q^\top\\
 &\mystackrel{\vec u = \vec Q\, \vec x}{}
 \left( \vec D^{-\frac{1}{2}} \vec U^\top \right)
 \left( \vec U \, \vec D \, \vec U^\top \right)
-\left( \vec D^{-\frac{1}{2}} \vec U^\top \right)
+\left( \vec D^{-\frac{1}{2}} \vec U^\top \right)^\top
 \end{align}
 
 \end{frame}
@@ -83,7 +124,7 @@ $$
 &\mystackrel{\vec u = \vec Q\, \vec x}{}
 \left( \vec D^{-\frac{1}{2}} \vec U^\top \right)
 \left( \vec U \, \vec D \, \vec U^\top \right)
-\left( \vec D^{-\frac{1}{2}} \vec U^\top \right)
+\left( \vec D^{-\frac{1}{2}} \vec U^\top \right)^\top
 \end{align}
 }
 
@@ -98,38 +139,49 @@ From $\vec U^\top\vec U = \vec I_N$ and $\vec D^\top = \vec D$ follows:
 \underbrace{\left( \vec U^\top \,  \vec U \right)}_{= \vec I_N}
 \,
 \left(\vec D^{-\frac{1}{2}} \right)^\top \\
-&= \vec D^\top
+&= \vec D^{\top}
 \, 
 \underbrace{\vec D^{-\frac{1}{2}}  \, 
-\left(\vec D^{-\frac{1}{2}} \right)^\top}_{=\vec D^{-1}} = \vec I_N
+\left(\vec D^{-\frac{1}{2}} \right)^{\cancel{\top}}}_{=\vec D^{-1}} = {\color{blue}\vec I_N}
 \end{align}
 
 
 Recall 
 \notesonly{from \eqref{eq:sigmax}:}
-$$
+\begin{equation}
 \vec \Sigma_x =  \E \lbrack \, \vec x \, \vec x^\top \rbrack
 =  \vec A\, \vec A^\top
-$$
+\end{equation}
 Therefore:
-$$
+\begin{equation}
 \E \lbrack \, \vec u \, \vec u^\top \rbrack
-= \widetilde {\vec A}\, \widetilde {\vec A}^\top = \vec I_N
-$$
+= \widetilde {\vec A}\, \widetilde {\vec A}^\top = {\color{blue}\vec I_N}
+\end{equation}
 
 \notesonly{
 The new mixing matrix}
 $\widetilde{\vec A}$ is orthonormal.\\
-The space of solutions is restricted to $\vec W$ that are orthogonal. 
-The can speed up convergence of ICA. 
-The number of free parameters 
-\notesonly{
-for solving the new ICA problem 
-$\vec u = \widetilde{\vec A}\, \vec s$ 
-is reduced from $N^2$ to $N(N-1)/2$
-}
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
 \slidesonly{
-$N^2 \rightarrow N(N-1)/2$
+
+What makes $\widetilde{\vec A}$ so special is that it is orthonormal.
+}
+
+\pause
+
+\svspace{5mm}
+
+The space of solutions restricted to finding unmixing matrices that are also orthogonal.
+This restriction can speed up convergence of ICA. 
+The number of free parameters for solving the new ICA problem 
+$\vec u = \widetilde{\vec A}\, \vec s$
+is reduced\notesonly{ from $N^2$ to $N(N-1)/2$
+}\slidesonly{:\\
+$$N^2 \rightarrow N(N-1)/2$$
 }
 \end{frame}
 
@@ -153,27 +205,32 @@ $
 
 \item What's so special about $\vec u$?
 $ \qquad \qquad \qquad \qquad
-\vec \Sigma_u = \vec I_N
+\E \lbrack \, \vec u \, \vec u^\top \rbrack = \vec I_N
 $
+
+\pause
 
 \item ...So?
 
-- new ICA problem: $\vec u := \widetilde{\vec A}\, \vec s$\\
-- $\widetilde{\vec A}$ is orthogonal\\
-- unmixing the new problem involves only ``half'' the number of weights.
+\pause
+
+\begin{itemize}
+\item[-] new ICA problem: $\vec u := \widetilde{\vec A}\, \vec s$\\
+\item[-] $\widetilde{\vec A}$ is orthogonal\\
+\item[-] unmixing the new problem involves only ``half'' the number of weights.
+\end{itemize}
 
 \question{What is the transformation $\vec D^{-\frac{1}{2}} \vec U^\top$ called?}
+
+\notesonly{- It's a whitening transformation. The same we know from PCA.}
 
 \end{itemize}
 }
 
 \end{frame}
 
-
-\section{Summary so far:}
-
 \slidesonly{
-\begin{frame}
+\begin{frame}{Summary so far}
 \begin{enumerate}
 \item Initial ICA Problem: $\vec x = \vec A\, \vec s$
 \item New ICA Problem: $\vec u := \widetilde{\vec A}\, \vec s$,\\
