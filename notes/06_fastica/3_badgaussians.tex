@@ -1,8 +1,20 @@
 \subsection{Gaussians are bad for ICA}
 
-\subsubsection{A more formal argument for why Gaussians are bad for ICA}
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \subsecname
+    \end{center}
+    \begin{center}
+    \includegraphics[width=0.4\textwidth]{./img/meme_breakingicabadgaussian}\\
+    And \textbf{white}ning won't help either.
+    \end{center}
+\end{frame}
+}
 
-\begin{frame}{\subsecname}
+\subsubsection{A formal argument for why Gaussians are bad for ICA}
+
+\begin{frame}{\subsubsecname}
 
 Recall that the joint density of independent sources is a factorizing density:
 
@@ -33,7 +45,7 @@ If we assumed gaussian distributed sources, the following factorization becomes 
 \end{equation}
 \end{frame}
 
-\begin{frame}{\subsecname (cont'd)}
+\begin{frame}{\subsecname~(cont'd)}
 
 %\slidesonly{\textbf{A more formal argument (cont'd):}}
 
@@ -153,19 +165,27 @@ A mixture of sources where, at most, one is Gaussian, can still be separated by 
 \svspace{5mm}
 
 \begin{itemize}
-\item Mixing two independent Gaussians leads to a joint mixed distribution ${P}_{\vec x}(\vec x)$ that is effectively equal to the joint distribution of the original sources ${P}_{\vec s}(\vec s)$.
+\item Mixing two independent Gaussians leads to a joint mixed distribution ${P}_{\vec x}(\vec x)$ that is effectively equal to the joint distribution of the original sources ${P}_{\vec s}(\vec s)$.\\
+
 \pause
+
 \item No surprise: \emph{uncorrelated jointly Gaussian variables are necessarily independent.}
 \pause
-\item One Gaussian + other distributions is fine.
+
+\pause 
+
+\item One Gaussian + other distribution(s) is fine.
 \item Two ore more Gaussians. No way.
 \end{itemize}
 \end{minipage}
 }
 
 \slidesonly{
-\only<4>{
+\only<2>{
 	\placeimage{10.5}{6}{img/meme_icagaussian}{width=4cm}%
+}
+\only<4>{
+	\placeimage{10.5}{6}{img/meme_nomoregaussians}{width=4cm}%
 }
 }
 \end{frame}

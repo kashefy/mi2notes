@@ -14,18 +14,30 @@
 \begin{frame}{Maximizing nongaussianity}
 
 \begin{block}{Intuition from the Central Limit Theorem}
-\emph{The distribution of the sum of independent random variables is ''more Gaussian'' than the original distributions of the random variables.}\\\vspace{2mm}
+\emph{The distribution of the sum of independent random variables is ``more Gaussian'' than the original distributions of the random variables.}\\\vspace{2mm}
 Searching for the direction of maximum deviation from a Gaussian distribution may recover the original sources.
 \end{block}
+
+\begin{center}
+    \includegraphics<2>[width=0.8\textwidth]{./img/clt_uniform_0}
+    \includegraphics<3>[width=0.8\textwidth]{./img/clt_uniform_1}
+    \includegraphics<4>[width=0.8\textwidth]{./img/clt_uniform_2}
+    \includegraphics<5>[width=0.8\textwidth]{./img/clt_uniform_3}
+    \includegraphics<6>[width=0.8\textwidth]{./img/clt_uniform_4}
+    \notesonly{
+    \captionof{figure}{The sum of independent random variables is ``more Gaussian'' than the original distributions.}
+    }
+\end{center}
+    
 \end{frame}
-
-
 
 \begin{frame}{The setting}
 
-\textbf{The setting:}\\
+\notesonly{\textbf{The setting:}\\}
 
-Two statistically independent sources with $\langle s_i s_j \rangle = \delta_{ij} \quad \Leftrightarrow \quad \langle \vec s \, \vec s^\top \rangle = \vec I_N$
+Two statistically independent sources with
+\begin{equation}\langle s_i s_j \rangle = \delta_{ij} \quad \forall i,j=1,\ldots,N \quad \Leftrightarrow \quad \langle \vec s \, \vec s^\top \rangle = \vec I_N
+\end{equation}
 \notesonly{
 The sources are mixed using a mixing matrix $\vec A$ resulting in observations $\vec x$:
 }
@@ -72,7 +84,7 @@ one of the independent sources in $\vec s$.
 This can be accomplished with a vector containing a single non-zero element:
 }
 
-\begin{equation*}
+\begin{equation}
 	\vec{z}_{\text{opt.}} = \left( \begin{array}{c}
 			0 \\ \pm 1 
 		\end{array} \right)
@@ -80,7 +92,7 @@ This can be accomplished with a vector containing a single non-zero element:
 	\vec{z}_{\text{opt.}} = \left( \begin{array}{c}
 			\pm 1 \\ 0 
 		\end{array} \right)
-\end{equation*}
+\end{equation}
 
 \end{frame}
 
@@ -91,6 +103,38 @@ The role of $\vec z_i$ is to route either $s_1$ or $s_2$ to $\widehat{\vec s}_i$
 We cannot have both independent sources contribute to $\widehat{s}_i$, only one can. Therefore, we only need a single non-zero component for $\vec z_i$.
 Wether $s_1$ is scaled by any factor before reaching $\widehat{s}_i$ does not make it more or less independent of $s_2$. Choosing $1$ for the non-zero component is therefore sufficient.
 Finally, negating the source by multiplying it by $(-1)$ also has no consequences on the independence criterion.
+}
+
+
+%\begin{frame}
+%\question{Does maximizing nongaussianity deliver independent components?}
+%\slidesonly{
+
+%\begin{equation}
+%\widehat s_i = \vec z_i^{\top} \vec s = z_1 s_1 + z_2 s_2
+%\end{equation}
+
+%\begin{equation*}
+	%\vec{z}_{\text{opt.}} = \left( \begin{array}{c}
+			%0 \\ \pm 1 
+		%\end{array} \right)
+	%\quad \text{ or }\quad 
+	%\vec{z}_{\text{opt.}} = \left( \begin{array}{c}
+			%\pm 1 \\ 0 
+		%\end{array} \right)
+%\end{equation*}
+
+%$\vec z_i$ ensures independent $\widehat s_i$
+
+
+
+%\begin{equation}
+%\widehat s_i = \vec w_i^\top \vec x
+%\end{equation}
+
+%$\vec w_i$ finds less gaussian $\widehat s_i$
+
+\notesonly{
 
 We won't actually try and find $\vec z_i$ because we don't have $\vec s$ to apply them to. We use the requirements for $\vec z_i$ by finding a $\vec w_i$ that satisfies these requirements through:
 \begin{equation}
@@ -99,49 +143,32 @@ We won't actually try and find $\vec z_i$ because we don't have $\vec s$ to appl
 \end{equation}
 }
 
-\begin{frame}
-\question{Does maximizing nongaussianity deliver independent components?}
-\slidesonly{
+%Maximizing nongaussianity is ensured to keep $\widehat s_i$ independent.
 
-\begin{equation}
-\widehat s_i = \vec z_i^{\top} \vec s = z_1 s_1 + z_2 s_2
-\end{equation}
-
-\begin{equation*}
-	\vec{z}_{\text{opt.}} = \left( \begin{array}{c}
-			0 \\ \pm 1 
-		\end{array} \right)
-	\quad \text{ or }\quad 
-	\vec{z}_{\text{opt.}} = \left( \begin{array}{c}
-			\pm 1 \\ 0 
-		\end{array} \right)
-\end{equation*}
-
-$\vec z_i$ ensures independent $\widehat s_i$
-
-\begin{equation}
-\widehat s_i = \vec w_i^\top \vec x
-\end{equation}
-
-$\vec w_i$ finds less gaussian $\widehat s_i$
-
-\begin{equation}
-\vec z_i =  \vec A^\top \vec w_i
-\end{equation}
-
-Maximizing nongaussianity is ensured to keep $\widehat s_i$ independent.
-
-}
-\end{frame}
+%}
+%\end{frame}
 \notesonly{
 - By (1) maximizing the nongaussianity of $\vec w_i^\top \vec x$ and (2) having $\vec z_i = \vec A^\top \vec w_i$ yield independent components and (3) knowing that 
 $\widehat s_i = \vec w_i^\top \vec x = \vec z_i^{\top} \vec s$, we conclude that maximizing $\vec w_i^\top \vec x$ gives us one independent component.
 }
 \newpage
 
+\mode<presentation>{
+\begin{frame}
+
+    \begin{center}
+    Deciding on a measure for nongaussianity
+    \end{center}    
+    \begin{center}
+    \includegraphics[width=0.4\textwidth]{./img/meme_thismuchgaussian}
+    \end{center}
+
+\end{frame}
+}
+
 \section{Kurtosis as a measure for nongaussianity}
 
-\begin{frame}
+\begin{frame}{\secname}
 
 \notesonly{
 Kurtosis represents the fourth-order cumulant\footnote{
@@ -175,7 +202,7 @@ This simplifies the expression of higher-order moments such as kurtosis which is
 
 \begin{frame}
 
-\question{What does kurtosis measure?}\\
+\question{How do we interpret the kurtosis measure?}\\
 
 \begin{tabular}[h]{c c c c}
 &

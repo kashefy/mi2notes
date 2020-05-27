@@ -73,6 +73,8 @@ Which yields\only<3>{ a new ICA problem}:
 \begin{center}
 	\includegraphics[width=0.4\textwidth]{img/meme_newalwaysbetter}%
 \end{center}
+
+- $\widetilde{\vec A}$ is orthogonal. Not necessarily the case for the original mixing matrix $\vec A$.
 }
 
 \end{frame}
@@ -183,6 +185,7 @@ is reduced\notesonly{ from $N^2$ to $N(N-1)/2$
 }\slidesonly{:\\
 $$N^2 \rightarrow N(N-1)/2$$
 }
+
 \end{frame}
 
 \begin{frame}
@@ -217,7 +220,7 @@ $
 \begin{itemize}
 \item[-] new ICA problem: $\vec u := \widetilde{\vec A}\, \vec s$\\
 \item[-] $\widetilde{\vec A}$ is orthogonal\\
-\item[-] unmixing the new problem involves only ``half'' the number of weights.
+\item[-] unmixing the new problem involves only ``half'' the number of free parameters.
 \end{itemize}
 
 \question{What is the transformation $\vec D^{-\frac{1}{2}} \vec U^\top$ called?}
@@ -226,6 +229,91 @@ $
 
 \end{itemize}
 }
+
+\end{frame}
+
+\subsubsection{Whitening solves half of the ICA problem}
+
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+
+Unmixing the new problem involves only ``half'' the number of free parameters.
+$$N^2 \rightarrow N(N-1)/2$$
+}
+
+\pause
+
+\svspace{-5mm}
+
+\question{Does this mean that $\vec W$ is no longer $N \times N$?}
+
+-No $\vec W$ is still $N \times N$, but we no longer have to search for each component individually.
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+Example with $N=2$ uniformly distributed sources $s_1, s_2$:
+
+ \begin{center}
+  \begin{minipage}{0.29\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_original_sources} 
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.29\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_mixtures_centered} 
+  \end{minipage}\\
+  
+  \begin{minipage}{0.29\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_mixtures_decorrelated} 
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.29\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_mixtures_whitened} 
+  \end{minipage}
+  \notesonly{
+  \captionof{figure}{Example with $N=2$ uniformly distributed sources $s_1, s_2$}
+  }
+\end{center}
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+Example with $N=2$ uniformly distributed sources $s_1, s_2$:
+
+ \begin{center}
+  \begin{minipage}{0.25\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_original_sources} 
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.25\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_mixtures_whitened} 
+  \end{minipage}
+\end{center}
+}
+
+ICA on whitened mixtures is about ``rotating it back''.
+
+2D data can be rotated by an angle $\theta$ using:
+
+\begin{align}
+  \vec{x}_{\theta} & = 
+  \begin{pmatrix}
+	\cos(\theta) & -\sin(\theta) \\
+	\sin(\theta) & \cos(\theta)
+  \end{pmatrix}
+  \vec{x} \qquad \text{with} \quad \theta = 0, \, \ldots\, , 2\pi
+\end{align}
+
+\pause
+
+Find the right rotation for \textcolor{blue}{2}D data involves a \textcolor{red}{single} free parameter.
+\begin{equation}
+\# \text{free parameters} = \textcolor{blue}{N} \cdot (\textcolor{blue}{N}-1)/2 = \textcolor{blue}{2} \cdot (\textcolor{blue}{2}-1)/2 = \textcolor{red}{1}
+\end{equation}
 
 \end{frame}
 
@@ -240,7 +328,7 @@ where $\vec u = \vec D^{-\frac{1}{2}} \vec U^\top \vec x$ and $\vec \Sigma_u = \
 \item $\vec D$ and $\vec U$ can be obtained via PCA on $\vec x$.
 \item Applying ICA on whitened data reduces the number of free parameters.
 \item PCA simplifies the ICA problem.
-\item ICA on whitened data is about ``rotating'' it back.
+\item ICA on whitened data is about ``rotating it back''.
 \end{enumerate}
 
 \end{frame}
