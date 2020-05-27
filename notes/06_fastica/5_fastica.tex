@@ -1,3 +1,15 @@
+\subsection{Negentropy}
+
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \subsecname
+    \end{center}
+    \begin{center}
+    A more robust alternative to Kurtosis-based ICA
+    \end{center}
+\end{frame}
+}
 
 Negentropy $J(\widehat{s})$ of the reconstructed sources $\widehat{\vec s}$ is defined as:
 
@@ -39,7 +51,7 @@ The properties that make negentropy suitable:
 }
 
 \begin{itemize}
-  \itR theoretically well motivated measure. Considered in some cases the optimzal estimator for nongaussianity.
+  \itR theoretically well motivated measure. Considered in some cases the optimal estimator for nongaussianity.
   \itR non-negative
   \itR scale-invariant: $J(\alpha \widehat{s}) = J(\widehat{s}), \ \ \forall \alpha \ne 0$ (cf. exercise sheet)
   \itR \textbf{Problem:} requires estimation of density $p(\widehat{s})$
@@ -49,9 +61,9 @@ The properties that make negentropy suitable:
 
 \end{frame}
 
-\subsection{Approximations of negentropy}
+\subsubsection{Approximations of negentropy}
 
-\begin{frame}
+\begin{frame}{\subsubsecname}
 
 \notesonly{
 Estimating negentropy using the definition in \eqref{eq:negentropy} is computationally costly. It would require estimating the density of the random variable. We therefore resort to simpler approximations for negentropy. Such as the following use of cumulants:
@@ -63,7 +75,7 @@ J(\hat{s}) \approx \frac{1}{12} \langle (\hat{s})^3 \rangle^2 + \frac{1}{48} (\k
 \end{equation}
 
 \notesonly{
-For symmetric distributions the first term in the approximation in \eqref{eq:negentropyapprox} is effectivley zero, which makes the approximation equivalent to the square of the kurtosis. The approximation would therefore from the same sensitvity to outliers.
+For symmetric distributions the first term in the approximation in \eqref{eq:negentropyapprox} is effectivley zero, which makes the approximation equivalent to the square of the kurtosis. The approximation would therefore from the same sensitivity to outliers.
 }
 
 \slidesonly{
@@ -79,10 +91,12 @@ The approximation is modified using
 \end{frame}
 
 \clearpage
-\begin{frame}{Common contrast functions}
+
+\subsubsection{Contrast functions}
+
+\begin{frame}{\subsubsecname}
  
  \notesonly{
-\textbf{Common contrast functions} 
 
 The contrast function can be chosen depending on the assumed shape of the source densities.
 
@@ -112,7 +126,7 @@ The contrast function can be chosen depending on the assumed shape of the source
 
 \begin{frame}
 \slidesonly{
-\frametitle{Common contrast functions:}
+\frametitle{Common contrast functions}
 }
 \slidesonly{
 	\smaller
@@ -150,12 +164,12 @@ The contrast function can be chosen depending on the assumed shape of the source
 \end{frame}
 
 \begin{frame}
-cf. lecture slides for optmization of negentropy using contrast functions.
+cf. lecture slides for optimization of negentropy using contrast functions.
 \end{frame}
 
 \begin{frame}
 \question{How do we evaluate ICA?}\\
 
--cf. https://research.ics.aalto.fi/ica/icasso/
+- Visualization methods\footnote{If interested cf. https://research.ics.aalto.fi/ica/icasso/}
 \end{frame}
 

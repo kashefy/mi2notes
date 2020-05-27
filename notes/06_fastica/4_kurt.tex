@@ -99,7 +99,7 @@ This can be accomplished with a vector containing a single non-zero element:
 \notesonly{
 Recall that ICA cannot resolve scale or permutation of the sources and thirdly it cannot resolve the sign. 
 This is not an issue. 
-The role of $\vec z_i$ is to route either $s_1$ or $s_2$ to $\widehat{\vec s}_i$. This covers the ambiguitiy in terms of permutation. 
+The role of $\vec z_i$ is to route either $s_1$ or $s_2$ to $\widehat{\vec s}_i$. This covers the ambiguity in terms of permutation. 
 We cannot have both independent sources contribute to $\widehat{s}_i$, only one can. Therefore, we only need a single non-zero component for $\vec z_i$.
 Wether $s_1$ is scaled by any factor before reaching $\widehat{s}_i$ does not make it more or less independent of $s_2$. Choosing $1$ for the non-zero component is therefore sufficient.
 Finally, negating the source by multiplying it by $(-1)$ also has no consequences on the independence criterion.
@@ -166,13 +166,13 @@ $\widehat s_i = \vec w_i^\top \vec x = \vec z_i^{\top} \vec s$, we conclude that
 \end{frame}
 }
 
-\section{Kurtosis as a measure for nongaussianity}
+\subsection{Kurtosis as a measure for nongaussianity}
 
-\begin{frame}{\secname}
+\begin{frame}{\subsecname}
 
 \notesonly{
 Kurtosis represents the fourth-order cumulant\footnote{
-Cumulants allow us to express the i-th moment in terms of a cumulative sum of the moments preceeding it. 
+Cumulants allow us to express the i-th moment in terms of a cumulative sum of the moments preceding it. 
 This simplifies the expression of higher-order moments such as kurtosis which is the fourth-order moment.
 } of a random variable.
 }
@@ -239,11 +239,13 @@ Kurtosis, just like other higher-order cumulants are sensitive to outliers, in t
 
 \subsection{kurtosis-based ICA}
 
-\begin{frame}
+\begin{frame}{\subsecname}
 
+\notesonly{
 Two statistically independent sources with
 
 $\langle s_i s_j \rangle = \delta_{ij} \quad \Leftrightarrow \quad \langle \vec s \, \vec s^\top \rangle = \vec I_N$ (any scaling can be attributed to $\vec A$)
+}
 
 \begin{equation*}
 \widehat{s}_i \quad 
@@ -252,21 +254,34 @@ $\langle s_i s_j \rangle = \delta_{ij} \quad \Leftrightarrow \quad \langle \vec 
 =  \quad \vec{z}^\top \vec{s} \quad 
 = \quad z_1 s_1 + z_2 s_2
 \end{equation*}
+
 \vspace{1mm}
-We want the covariance of our reconstructions to match that of the original sources.
+We want the covariance of our reconstructions $\widehat{\vec s}$ to match that of the original sources $\vec s$.
 \begin{equation*}
 \langle \widehat{\vec s} \, \widehat{\vec s}^\top \rangle \eqexcl \langle \vec s \, \vec s^\top \rangle = \vec I_N
 \end{equation*}
 This implies,
-\begin{align*}
+\begin{align}
 \var(\widehat{s}_i)
  \; &= \; \langle \big( z_1 s_1 + z_2 s_2 \big)^2 \rangle_{P_{\vec s}}\\
  \; &= \; \langle z_1^2 \, s_1^2 \rangle \;+\; 2 \, \langle z_1\, s_1\, z_2 \, s_2 \rangle \;+\; \langle z_2^2 \, s_2^2 \rangle \\
  \; &= \; z_1^2 \, \langle s_1^2 \rangle \;+\; 2 \, z_1\, z_2 \, \underbrace{\langle  s_1\,  s_2 \rangle}_{= 0} \;+\; z_2^2 \, \langle  s_2^2 \rangle \\
  \; &= \; z_1^2 \, \langle s_1^2 \rangle \;+\; z_2^2 \,\langle s_2^2 \rangle \\
  \; &= \; z_1^2 + z_2^2 \eqexcl 1
-\end{align*}
-Making the constraint of unit variance for $\widehat{s}_i$ is to match the variance assumed for the orgiinal sources $s_1$ and $s_2$. This implies that solutions for $\vec z$ are constrained to lie on a unit circle.
+\end{align}
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\slidesonly{
+$$
+\var(\widehat{s}_i)
+ \; = \; z_1^2 + z_2^2 \eqexcl 1
+ $$
+}
+
+Making the constraint of unit variance for $\widehat{s}_i$ is to match the variance assumed for the original sources $s_1$ and $s_2$. This implies that solutions for $\vec z$ are constrained to lie on a unit circle.
 \vspace{1mm}
 \begin{align*}
 \kurt(\widehat{s})  \;\; &= \;\; \kurt(z_1 s_1 + z_2 s_2) \;\; \\ &= \;\; \kurt(z_1 s_1) + \kurt(z_2 s_2) \; = \; z_1^4 \kurt(s_1) + z_2^4 \kurt(s_2)
@@ -332,9 +347,9 @@ reduce to only ensuring that $\vec b$ is kept at unit length.
 
 \end{frame}
 
-\subsection{Kurtosis-based ICA: the gradient algorithm}
+\subsubsection{Kurtosis-based ICA: the gradient algorithm}
 
-\begin{frame}
+\begin{frame}{\subsubsecname}
 
 \notesonly{
 $| \kurt{(\vec{b}^\top \vec{u})} |$ can be maximized by moving $\vec b$ 
@@ -371,10 +386,8 @@ We can now describe an implementation of the Kurtosis-based gradient algorithm i
 
 \end{frame}
 
-\begin{frame}
-\slidesonly{
-\frametitle{Kurtosis-based ICA: the gradient algorithm}
-}
+\begin{frame}{\subsubsecname}
+
 \begin{block}{I. batch learning:}
 	Initialization: random vector $\vec{b}$ of unit length
 	\begin{eqnarray*}
@@ -480,47 +493,55 @@ Below is a realization of this faster fixed-point iteration alternative of the K
 \end{block}
 \end{frame}
 
-\slidesonly{
-\begin{frame}
-\frametitle{Summary so far:}
-\begin{enumerate}
-\item \textcolor{gray}{
-Initial ICA Problem: $\vec x = \vec A\, \vec s$
-}
-\item \textcolor{gray}{
-New ICA Problem: $\vec u = \widetilde{\vec A}\, \vec s$,\\
-where $\vec u = \vec D^{-\frac{1}{2}} \vec U^\top \vec x$ and $\vec \Sigma_u = \vec I_N$.
-}
-\item \textcolor{gray}{
-$\vec u$ is the \emph{whitened} version of $\vec x$.
-}
-\item \textcolor{gray}{
-$\vec D$ and $\vec U$ can be obtained via PCA on $\vec x$.
-}
-\item \textcolor{gray}{
-Applying ICA on whitened data reduced the number of free parameters.
-}
-\item \textcolor{gray}{
-PCA simplifies the ICA problem.
-}
-\item Ambiguities in ICA
-\item Why are Gaussians bad for ICA?
-\item ICA by maximizing nongaussianity
-\item Kurtosis-based ICA
+%\slidesonly{
+%\begin{frame}
+%\frametitle{Summary so far:}
+%\begin{enumerate}
+%\item \textcolor{gray}{
+%Initial ICA Problem: $\vec x = \vec A\, \vec s$
+%}
+%\item \textcolor{gray}{
+%New ICA Problem: $\vec u = \widetilde{\vec A}\, \vec s$,\\
+%where $\vec u = \vec D^{-\frac{1}{2}} \vec U^\top \vec x$ and $\vec \Sigma_u = \vec I_N$.
+%}
+%\item \textcolor{gray}{
+%$\vec u$ is the \emph{whitened} version of $\vec x$.
+%}
+%\item \textcolor{gray}{
+%$\vec D$ and $\vec U$ can be obtained via PCA on $\vec x$.
+%}
+%\item \textcolor{gray}{
+%Applying ICA on whitened data reduced the number of free parameters.
+%}
+%\item \textcolor{gray}{
+%PCA simplifies the ICA problem.
+%}
+%\item Ambiguities in ICA
+%\item Why are Gaussians bad for ICA?
+%\item ICA by maximizing nongaussianity
+%\item Kurtosis-based ICA
 
-\end{enumerate}
-
-
-\textbf{Next: Can we do better than kurtosis-based ICA?}
+%\end{enumerate}
 
 
-\end{frame}
-}
+
+%\end{frame}
+%}
 \notesonly{
 Next, we will look for an alternative that mitigates the sensitivity to outliers which kurtosis-based ICA is prone to.
 }
 
 \begin{frame}
+
+\slidesonly{
+
+\textbf{Next: Can we do better than kurtosis-based ICA?}
+
+\vspace{5mm}
+
+\pause 
+}
+
 Kurtosis is easy to compute but can be \emph{sensitive to outliers}. 
 This is a usual problem with higher-order statistics. 
 \begin{block}{Example}
@@ -530,8 +551,17 @@ This is a usual problem with higher-order statistics.
   \itl contribution to kurtosis: $ \geq 10^4/1000 -3 = 7$
 \end{itemize}
 \end{block}
+
+\pause
+
+\slidesonly{
+$\Rightarrow\;\;$ a more robust measure for nongaussianity\\
+}
+\notesonly{We therefore turn to an alternate measure for nongaussianity, namely }\emph{negentropy} \notesonly{for brevity }(not the same as negative entropy $-H(\cdot)$).\\
+
+%\svspace{5mm}
+\notesonly{
+Negentropy of the reconstructed source $\widehat{\vec s}$ measures the difference between the differential entropy of $\widehat{\vec s}$ and the differential entropy of a Gaussian distribution with the same variance as $\widehat{\vec s}$.
+}
+
 \end{frame}
-
-We therefore turn to an alternate measure for nongaussianity, namely \emph{negentropy} for brevity (not the same as negative entropy $-H(\cdot)$). Negentropy of the reconstructed source $\widehat{\vec s}$ measures the difference between the differential entropy of $\widehat{\vec s}$ and the differential entropy of a Gaussian distribution with the same variance as $\widehat{\vec s}$.
-
-
