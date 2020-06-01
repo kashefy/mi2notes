@@ -10,12 +10,19 @@
     \end{center}
 \end{frame}
 }
+\notesonly{
 
 Negentropy $J(\widehat{s})$ of the reconstructed sources $\widehat{\vec s}$ is defined as:
 
 \begin{equation}
-\label{eq:negentropy}
-	J(\widehat{s}) \coloneqq H(\widehat{s})_\normal - H(\widehat{s})
+	J(\widehat{s}) \coloneqq \underbrace{ H(\widehat{s})_\normal}_{
+			\substack{ 	\text{entropy of a Gaussian} \\
+					\text{distribution with} \\
+					\text{same variance}}}
+		- \underbrace{ H(\widehat{s}) }_{
+			\substack{	\text{entropy of the true} \\
+					\text{distribution} \\
+					\text{(variance } \sigma^2 \text{)} }}
 \end{equation}
 
 where
@@ -24,6 +31,7 @@ where
 \label{eq:diffentropyshat}
 H(\widehat{s}) := - \int p(\widehat{s}) \log p(\widehat{s}) d\widehat{s}
 \end{equation}
+}
 
 \begin{frame} 
 \frametitle{Negentropy}
@@ -33,7 +41,7 @@ H(\hat{s}) := - \int p(\hat{s}) \log p(\hat{s}) d\hat{s} \qquad \qquad \text{(di
 $$
 
 \begin{block}{Definition of negentropy}
-\begin{equation*}
+\begin{equation}
 	J(\widehat{s}) \coloneqq \underbrace{ H(\widehat{s})_\normal}_{
 			\substack{ 	\text{entropy of a Gaussian} \\
 					\text{distribution with} \\
@@ -42,7 +50,7 @@ $$
 			\substack{	\text{entropy of the true} \\
 					\text{distribution} \\
 					\text{(variance } \sigma^2 \text{)} }}
-\end{equation*}
+\end{equation}
 \end{block}
 }
 
@@ -57,7 +65,31 @@ The properties that make negentropy suitable:
   \itR \textbf{Problem:} requires estimation of density $p(\widehat{s})$
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}
+\frametitle{Optimizing negentropy}
+
+\slidesonly{
+\begin{equation}
+	J(\widehat{s}) \coloneqq \underbrace{ H(\widehat{s})_\normal}_{
+			\substack{ 	\text{entropy of a Gaussian} \\
+					\text{distribution with} \\
+					\text{same variance}}}
+		- \underbrace{ H(\widehat{s}) }_{
+			\substack{	\text{entropy of the true} \\
+					\text{distribution} \\
+					\text{(variance } \sigma^2 \text{)} }}
+\end{equation}
+}
+
 \question{Should we minimize or maximize negentropy?}
+
+\slidesonly{
+\begin{center}
+	\includegraphics[width=0.25\textwidth]{img/meme_maxormin}%
+\end{center}
+}
 
 \end{frame}
 
@@ -164,7 +196,10 @@ The contrast function can be chosen depending on the assumed shape of the source
 \end{frame}
 
 \begin{frame}
-cf. lecture slides for optimization of negentropy using contrast functions.
+\begin{itemize}
+\item[] cf. lecture slides for optimization of negentropy using contrast functions.
+\item[] Hyv\"arinen, Karhunen \& Oja, Independent Component Analysis, Wiley, 2001
+\end{itemize}
 \end{frame}
 
 \begin{frame}

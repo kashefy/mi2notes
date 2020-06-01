@@ -466,6 +466,37 @@ A fixed-point iteration algorithm provides an alternative to make the learning f
 }
 \end{frame}
 
+\subsubsection{Fixed-point iteration}
+
+\begin{frame}{\subsubsecname}
+
+\begin{itemize}
+\item A fixed point: $x=g(x)=g(g(\ldots g(x)\ldots))$\\
+
+Example:
+\begin{align}
+    g(x) &= x^{2} - 3x + 4\\
+    g(2) &= 2^{2} - 3\cdot 2 + 4 = 4 - 6 + 4 = 2
+\end{align}
+
+\item Fixed point iteration:
+\begin{equation}
+x^{(t+1)} = g(x^{(t)}), t=0,1,2,\ldots
+\end{equation}
+\end{itemize}
+
+\begin{center}
+    \includegraphics[height=3.5cm]{img/fixed_point_iter_cos} 
+    \mode<article>{
+    \captionof{figure}{
+    Fixed point iteration example
+    }
+    \label{fig:fixedpointcos}
+    } 
+\end{center}
+
+\end{frame}
+
 \begin{frame}
 
 \notesonly{
