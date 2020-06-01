@@ -1,28 +1,4 @@
-
-\footnote{credit to Timm Lochmann for the content on MCMC}
-
-\begin{frame}
-\underline{Outline}
-\begin{itemize}
-\item Problems with how we've been optimizing so far
- \begin{itemize}
- \item Exploration vs. Exploitation
- \item What about discrete optimization?
- \end{itemize}
- \item Simulated annealing
- \begin{itemize}
- \item How does $\beta$ modulate $W$
- \item The stationary distribution $P_{(\vec s)}$?
- \item How does $\beta$ modulate $P_{(\vec s)}$?
- \end{itemize}
- \item MCMC
- \item Mean-field annealing
- \begin{itemize}
-     \item derivation and algorith - use slides
-     \item variational approach for further reading
- \end{itemize}
-\end{itemize}
-\end{frame}
+\section{Problems with how we've been optimizing so far}
 
 \section{Exploration vs. Exploitation}
 \begin{frame}
@@ -455,7 +431,8 @@ posterior distribution) of a rnadom variable analytically but where it is easy t
 sample from the conditional distribution (and finally the joint
 distribution). Using samples from such a posterior distribution, one
 can estimate many summaries of interest without explicitly knowing the
-joint distribution.
+joint distribution\footnote{credit to Dr. Timm Lochmann for the content on MCMC}.
+
 }
 
 \slidesonly{
