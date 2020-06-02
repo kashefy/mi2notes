@@ -12,7 +12,7 @@ Find the arguments the optimize $E$.
 \end{block}
 }
 \notesonly{
-So far we've been concerned with optimization problems with real valued arguments. The free paramters form a continuous space. The direction of the principle components in PCA and the unmixing matrix we are trying to find in ICA are real-valued arguments to their respective problems.
+So far we've been concerned with optimization problems with real valued arguments. The free parameters form a continuous space. The direction of the principle components in PCA and the unmixing matrix we are trying to find in ICA are real-valued arguments to their respective problems.
 Gradient-based solutions are well suited for real-valued arguments as we tune the weights to minimize to optimize the cost function.
 
 But what if the problem we are trying to optimize operate on discrete arguments. This could be the case if we were tackling a problem such as K-Means clustering. K-Means clustering involves finding arguments with which to assign an observation to one of multiple clusters. The cost function that measures the quality of the assignments is continuous but a the arguments we optimize over, which effectively assign each observation to one cluster instead of another cluster, are discrete variables. Below is an example of such an assignment:
@@ -20,20 +20,33 @@ But what if the problem we are trying to optimize operate on discrete arguments.
 
 }
 
+\only<1>{
+
 \begin{figure}[ht]
   \centering
   \includegraphics[height=3.5cm]{img/clustering.pdf}
   \caption{Clustering involves discrete-valued arguments.}
   \label{fig:clustering}
 \end{figure}
+}
+
+\only<2>{
+
+\begin{center}
+  \includegraphics[height=3.5cm]{img/cyberscooty-switch_1-5}
+  \notesonly{\captionof{figure}{A combinatorial problem}}
+\end{center}
+}
+
 
 \end{frame}
-\newpage
-\begin{frame}
-\slidesonly{\frametitle{Formalization of the discrete optimization problem}}
-\notesonly{
-\textbf{Formalization of the discrete optimization problem:}
-}
+
+%\newpage
+
+\subsection{Formalization of the discrete optimization problem}
+
+\begin{frame}{\subsecname}
+
 \begin{block}{Setting} 
 \begin{itemize}
  \item discrete variables $s_i, \ i = 1, \ldots, N\quad$ (e.g. $s_i \in \{+1, -1\}$  \notesonly{``binary units''} or $s_i \in \mathbb N$) 
@@ -43,7 +56,7 @@ But what if the problem we are trying to optimize operate on discrete arguments.
 \end{itemize}
 \end{block}
 
-We will now focus on \textbf{minization} problems.
+We will focus on \textbf{minimization} problems.
 
 \begin{block}{Goal: find state $\vec{s}^*$, such that:} 
 \begin{equation*}
@@ -56,8 +69,10 @@ Consequently,
 \end{block}
 \end{frame}
 
-\begin{frame}
-\frametitle{Efficient strategies for discrete optimization}
+\subsubsection{Strategies for discrete optimization}
+
+\begin{frame}{\subsubsecname}
+
 \notesonly{
 We want to find the best configuration of a discrete system (e.g.\
 state of interacting binary units). Evaluating full search space works only for
@@ -71,9 +86,12 @@ multiple local minima.
 \item Evolutionary and genetic algorithms (GA) have been
   motivated by \emph{biological} phenomena of adaptation through
   \emph{mutation} and \emph{selection}.
+
+\vspace{5mm}
+  
 \item GA and Monte-Carlo-Markov-Chain methods based on a \emph{proposal} and
   \emph{acceptance} strategy ($\rightarrow$ Metropolis) can be interpreted
-  as "learning via trial and error". \emph{Simulated annealing} falls within MCMC.
+  as ``learning via trial and error''. \emph{Simulated annealing} falls within MCMC.
 \end{itemize}
 \end{frame}
 
