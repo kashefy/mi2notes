@@ -1,0 +1,47 @@
+\subsection{Special case: ``soft'' K-means with Euclidean distances}
+% --------------------------------------------------------------------------
+\begin{frame}[shrink=18]% \frametitle{Special case: ``soft'' K-means with Euclidean distances}
+\begin{figure}[!th]
+\footnotesize
+\removelatexerror
+\begin{algorithm}[H]
+  \DontPrintSemicolon
+  \textbf{Initialization:}\;
+ - choose (maximum) number $M$ of partitions\; 
+- choose initial ($\beta_0$) and final ($\beta_f$) values of the noise parameter\;
+- initialize prototypes:  $\vec{w}_q = \frac{1}{p} 
+\sum\limits_{\alpha} \vec{x}^{(\alpha)} + \vec{\eta}_q$ (small random vector)\;
+- choose annealing factor $\eta$, convergence criterion $\theta$\;
+- $\beta \leftarrow \beta_0$\;
+  \While{$\beta < \beta_f$ (annealing)}{
+\Repeat( EM){$\big| \vec{w}_q^{\mathrm{new}} - \vec{w}_q^{\mathrm{old}} \big| < \theta$ for all $q$}{
+compute assignment probabilities: 
+$ \big< m_q^{(\alpha)} \big>_Q = \frac{ \exp \big\{ -\frac{\beta}{2}
+	\big( \vec{x}^{(\alpha)} - \vec{w}_q^{\mathrm{old}} \big)^2 \big\} }{
+	\sum\limits_r \exp \big\{ -\frac{\beta}{2}
+	\big( \vec{x}^{(\alpha)} - \vec{w}_r^{\mathrm{old}} \big)^2 \big\}}
+	\hspace{0.1cm} \quad \forall \hspace{0.1cm} \alpha, q
+$\;
+\vspace{0.2cm}
+compute new prototypes: \hspace{1.5cm} 
+$ \vec{w}_q^{\mathrm{new}} \hspace{0.2cm}= \frac{\sum\limits_{\alpha} \big< 
+	m_q^{(\alpha)} \big>_Q \vec{x}^{(\alpha)} }{
+		\sum\limits_{\alpha} \big< m_q^{(\alpha)} \big>_Q}
+		\hspace{0.1cm} \quad \forall \hspace{0.1cm} q
+$
+
+}  
+$\beta \leftarrow \eta \beta$
+}
+\label{alg:softKmeansEuclidean}
+\caption{Soft K-means clustering for Euclidean distances}
+\end{algorithm}
+\end{figure}
+\begin{block}{Interpretation}
+\begin{itemize}
+     \itl probabilistic cluster assignments.
+	\itl natural extension of K-means clustering to the case of ``soft'' assignments
+\end{itemize}
+\end{block}
+\end{frame}
+% --------------------------------------------------------------------------

@@ -1,6 +1,9 @@
 
 \begin{frame}[t] 
 \slidesonly{\frametitle{The mean-field approximation for pairwise clustering}}
+
+\svspace{-3mm}
+
 \begin{block}{assignment noise $\rightarrow$ Gibbs distribution}
 $$
 	P_{ \big( \big\{ m_q^{(\alpha)} \big\} \big) }
@@ -171,21 +174,21 @@ $$
 \end{block}
 \end{frame}
 
-\begin{frame}
-\frametitle{Soft clustering}
+\subsection{Soft clustering}
+
+\begin{frame}{\subsecname}
+
 \notesonly{
 We have so far considered the case of assigning each data point to exactly \textbf{one} cluster. This is enforced by having used a binary definition for 
 the assignments variables $m_q^{(\alpha)}$. This ``hard'' assignment is relaxed leading to a so-called ``soft'' or ``fuzzy'' assignment. 
 }
-Eadh data point $\vec x^{(\alpha)}$ is assigned to \textbf{all} clusters simultaneously but with different strengths:
+Each data point $\vec x^{(\alpha)}$ is assigned to \textbf{all} clusters simultaneously but with different strengths:
 The definition of the assignment variable for some point $\alpha$ becomes:
 \begin{equation}
 \label{eq:assignvarsoft}
 \big< m_q^{(\alpha)} \big> \in [0, 1]
 \end{equation}
-
 such that
-
 \begin{equation}
 \label{eq:assignvarsoftnormalize}
 \sum_{q=1}^{M}\big< m_q^{(\alpha)} \big> = 1.
@@ -203,9 +206,12 @@ The purpose of defining the assignment probabilities as ``expectations'' $\big< 
 \end{figure}
 \end{frame}
 
+\notesonly{
+
 Going back to mean-field approximation:
 
 The approximation is achieved by minimizing the KL-divergence between the distribution $P$ and $Q$. 
+}
 
 \begin{frame}[t] \slidesonly{\frametitle{Minimization of the KL-divergence}}
 \begin{block}{Mean Field equation (c.f. section on Stochastic Optimization for how to arrive at this result)}

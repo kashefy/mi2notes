@@ -1,7 +1,21 @@
-\begin{frame}
-\section{On-line K-means}
+\subsection{On-line K-means}
 
-We now look at a variant of K-means that partitions the data in an \emph{online} fashion. This allows the clustering to:
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \subsecname
+    \end{center}
+    \begin{center}
+		Only use single data point at every iteration.
+    \end{center}
+\end{frame}
+}
+
+\begin{frame}{\subsecname}
+
+\notesonly{We now look at a variant of K-means that partitions the data in an \emph{online} fashion. 
+%This allows the clustering to:
+}
 
 \begin{figure}[!th]
 \footnotesize
@@ -28,7 +42,7 @@ We now look at a variant of K-means that partitions the data in an \emph{online}
 
 % --------------------------------------------------------------------------
 \begin{frame}
-\frametitle{Further differences between batch and online K-means:}
+\frametitle{Differences between batch and online K-means:}
 
 Online K-means...
 \begin{enumerate}
@@ -70,13 +84,23 @@ Online K-means...
 \begin{figure}[h!]
   \centering
 \includegraphics[height=3cm]{img/section4_fig4} 
-  \caption{Decaying learning rate schedule to satisfy Robbins-Monro conditions.}
+  \notesonly{\caption{Decaying learning rate schedule to satisfy Robbins-Monro conditions.}}
   \label{fig:annealingScheduleKMeans2}
 \end{figure}
 \end{enumerate}
 
-A compromise between batch and online K-means is \emph{mini-batch K-means}.
-One would modify online K-means to operate on a small subset/mini-batch of the data at a time.
+A compromise\slidesonly{:}\notesonly{ between batch and online K-means is }\emph{mini-batch K-means}.
+\notesonly{One would modify online K-means to operate on a small subset/mini-batch of the data at a time.
+}
+
+\end{frame}
+
+\begin{frame}{A local minimum of clustering}
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{img/K-means_convergence_to_a_local_minimum_2rows}
+\notesonly{\captionof{figure}Example of K-means finding a solution that is a local minumum. Each plot is a snapshot of the prototypes at some iteration of the algorithm.}
+\end{center}
 
 \end{frame}
 

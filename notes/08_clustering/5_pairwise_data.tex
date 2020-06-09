@@ -1,7 +1,6 @@
+\subsection{The data}
 
-
-\begin{frame}
-\section{Pairwise Clustering: The data}
+\begin{frame}{\secname:~\subsecname}
 
 \notesonly{
 Each data point $\vec x^{(\alpha)}$ with $\alpha = 1, \ldots, p$ is represented through its relation to all other points in the dataset by measuring pairwise distances.
@@ -68,11 +67,13 @@ $$
 \begin{frame}
 \slidesonly{\frametitle{Other sources for pairwise distances}}
 
-A further alternative is to not measure pairwise distance explicitly. The data can be represented in a pairwise fashion as a result of an algroithm. Example: Sequence alignment proceducres and graph-similarity mmeasures produce pairwise representations.\\
+A further use-case is one where pairwise distance is not measured explicitly. The data representation can already be in a pairwise fashion as a result of an algroithm. Example: Sequence alignment proceducres and graph-similarity measures produce pairwise representations.\\
 
-We will rely on the \emph{squared Eucldiean distance} for our pairwise clustering algorithm.
+We will opt for the \emph{squared Eucldiean distance} for our pairwise clustering algorithm.
 
 \end{frame}
+
+\subsection{Cost}
 
 \begin{frame}
 \frametitle{Pairwise Clustering: Problem statement}
@@ -109,12 +110,14 @@ E_{ \big[ \big\{ m_q^{(\alpha)} \big\} \big] }
 		m_q^{(\alpha)} m_q^{(\alpha^{'})} \big( \vec{x}^{(\alpha)}
 		-\vec{x}^{(\alpha^{'})} \big)^2 }{
 			\sum\limits_{\alpha} m_q^{(\alpha)}}
-	\eqexcl \min
+	\eqexcl \min_{\big\{ m_q^{(\alpha)} \big\}}
 \end{align}
             
 \end{frame}
 
-\begin{frame}\frametitle{Relation of pairwise clustering to K-means}
+\subsection{Relation of pairwise clustering to K-means}
+
+\begin{frame}\frametitle{\subsecname}
 
 When we choose squared Euclidean distance as the distance measure for pairwise clustering, we can show that this choice let's pairwise clustering effectively find the same solution as K-means clustering.
 
@@ -267,13 +270,25 @@ When we choose squared Euclidean distance as the distance measure for pairwise c
 \end{equation}
 \end{frame}
 
-\begin{frame}
-We've seen that Pairwise Clustering based on squared Euclidean distance boils down to K-means. \notesonly{Pairwise clustering can therefore be considered a generelization of K-means. One can also think of K-means as a special case of pairwise clustering.}
+\begin{frame}{\subsecname}
+
+\slidesonly{
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{img/meme_pariwseeuclkmeans}
+\end{center}
+}
+
+\notesonly{
+We've seen that Pairwise Clustering based on squared Euclidean distance boils down to K-means. Pairwise clustering can therefore be considered a generelization of K-means. One can also think of K-means as a special case of pairwise clustering.}
 \slidesonly{
 K-menas is a special case of pairwise clustering.
 }
 
-Recall that the assignment variables a defined as binary to reflect hard assignments. Therefore, the optimization problem for pairwise clustering in the general case is a \emph{discrete optimization problem}.
+\end{frame}
+
+\begin{frame}{Pairwise clustering: A discrete optimization problem}
+
+Recall that the assignment variables are defined as binary to reflect hard assignments. Therefore, the optimization problem for pairwise clustering in the general case is a \emph{discrete optimization problem}.
 
 \notesonly{
 The consequence of this is that gradient-based methods are no longer applicable and that rather methods of combinatorial optimization are needed. We've encountered two variants for such:
@@ -312,8 +327,9 @@ calculation of moments and mean-fields must be adapted.
 
 \end{frame}
 
+\subsection{The mean-field approximation for pairwise clustering}
+
 \begin{frame}
-\section{The mean-field approximation for pairwise clustering}
  Nomenclature ($\otimes$ $\rightarrow$ \emph{set-product, cartesian product})\\
  
  \begin{tabular}{r l p{9cm}}

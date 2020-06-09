@@ -1,24 +1,52 @@
-
-
-\begin{frame}
-\underline{Outline}
-\begin{itemize}
-\item K-means clustering
-    \begin{itemize}
-    \item the batch algorithm
-    \item the online algorithm
-    \item mini-batch learning
-    \item the soft clustering algorithm
-    \end{itemize}
-\item pairwise clustering
-\end{itemize}
-\end{frame}
-
-\begin{frame}
 \section{K-means}
 
-\underline{In plain English:}\\
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+    \begin{center}
+		points within a region $\Longrightarrow$ cluster
+    \end{center}
+\end{frame}
+}
 
+\begin{frame}{Finding structure in the data}
+
+K-means is simple.
+
+\pause
+
+\begin{center}
+\slidesonly{
+	\includegraphics<2>[width=6cm]{img/clustering_no-color_no-labels_2p}
+	\includegraphics<3>[width=6cm]{img/clustering_no-color_no-labels_4p}
+	\includegraphics<4>[width=6cm]{img/clustering_no-color_no-labels}
+	}
+	\includegraphics<5->[width=6cm]{img/clustering_color}
+	\notesonly{
+	\captionof{figure}{Example clustering of 2D points into M=2 clusters}
+	}
+\end{center}
+
+
+\slidesonly{
+\visible<6>{
+\begin{itemize}
+\item proximity must count for something
+\item Points that fall within a region form a cluster
+\item Points within a cluster have more in common with one another than points from different clusters
+\end{itemize}
+}
+}
+
+\end{frame}
+
+\subsubsection{In plain English}
+
+\begin{frame}{Finding structure in the data}
+
+\notesonly{
 Data is observed. We want to be able to describe some ``structure'' in the data.
 We base our approach on something very simple and intuitive: 
 A set of 
@@ -26,6 +54,7 @@ objects (points) that share common features tend to fall in some region. A secon
 This ``structure'' we are describing groups, ``clusters'' a collection of points based on their proximity to a region.  
 A point that is further away from this collection and closer to another is grouped with the points associated with that other region. 
 We do have to decide on how many clusters we think exist in a dataset.
+}
 
 \question{What does clustering give us?}
  
@@ -33,30 +62,71 @@ We do have to decide on how many clusters we think exist in a dataset.
 We will also be able to describe the entire dataset by the partitions we've found that separate the clusters.
 
 \end{frame}
-\begin{frame}
 
-\underline{Problem:}\\
+\begin{frame}{K-means is simple}
 
-Group the dataset $\left\{ \vec x^{(1)}, \vec x^{(2)}, \ldots, \vec x^{(p)} \right\}$, where $\vec x \in \R^N$, into $M$ clusters\footnote{$M$ is actually equivalent to the $K$ in $K$-means.}.
+\underline{Problem}\\
 
-\underline{The K-means approach:}\\
+Group the dataset $\left\{ \vec x^{(1)}, \vec x^{(2)}, \ldots, \vec x^{(p)} \right\}$, where $\vec x \in \R^N$, into $M$ clusters\notesonly{\footnote{$M$ is actually equivalent to the $K$ in $K$-means.}}.
 
-Determine $M$ ``good'' prototypes $\vec w_1, \ldots, \vec w_M \in R^N$ and assign each data point $\vec x^{(\alpha)}$ to the prototype closest to it.\\
+\slidesonly{
+\begin{center}
+	\includegraphics[width=6cm]{img/clustering_color}
+\end{center}
+}
 
-TODO: image
+\end{frame}
 
-The assignment is formalized by introducing the following assignment variable $m_q^{(\alpha)}$ for each point $\alpha$ and each cluster $q$:
+\begin{frame}{Formalizing K-means}
+
+\only<1-3>{
+
+\notesonly{
+\underline{The K-means approach}:\\
+}
+
+Determine $M$ ``good'' prototypes $\vec w_1, \ldots, \vec w_M \in \R^N$ and \only<3>{\underline}{assign} each data point $\vec x^{(\alpha)}$ to the prototype closest to it.\\
+}
+
+\slidesonly{
+\begin{center}
+	\includegraphics<1>[width=6cm]{img/clustering_color}
+	\includegraphics<2>[width=6cm]{img/clustering_color_proto}
+\end{center}
+	}
+
+\end{frame}
+
+\begin{frame}{Formalizing K-means: Assignment variables}
+
+\begin{center}
+	\includegraphics[width=6cm]{img/clustering_color_proto_assignment}
+	\notesonly{
+	\captionof{figure}{Example clustering of 2D points into M=2 clusters with location of cluster prototypes (centroids)}
+	}
+\end{center}
+	
+\notesonly{
+The assignment is formalized by introducing the following} assignment variable $m_q^{(\alpha)}$ for each point $\alpha$ and each cluster $q$:
 
 \begin{equation}
 \label{eq:assignment}
 	m_q^{(\alpha)} := \left\{ \begin{array}{ll}
 		1, & \text{if } \vec{x}^{(\alpha)} \text{ belongs to cluster } q
 		\\\\
-		0, & \text{else}
+		0, & \text{otherwise}
 	\end{array} \right. 
 \end{equation}
 
-$q$ is used as the cluster index. We have a total of $p \cdot M$ assignment variables for a dataset with $p$ points and choice of number of clusters $M$.
+\notesonly{$q$ is used as the cluster index. We have a total of $p \cdot M$ assignment variables for a dataset with $p$ points and choice of number of clusters $M$.}
+
+\end{frame}
+
+\begin{frame}{Formalizing K-means: Assignment variables}
+
+\slidesonly{Cluster $p$ points into $M$ clusters $\leadsto$ $p\cdot M$ assignment variables}
+
+\pause
 
 $m_q^{(\alpha)}$ is a binary variable and with the normalization:
 
@@ -66,7 +136,18 @@ $m_q^{(\alpha)}$ is a binary variable and with the normalization:
 \end{equation}
 we limit the assignment of each point to only one cluster. We refer to this as a ``hard'' assignment\footnote{This will be relaxed when we talk about ``soft'' K-means.}.
 
-A solution to our problem is one that finds finds the location of the prototypes $\vec w_q$ and assigns all points that are optimal in terms of the following cost which measures the average distance between a prototype and the subset of points assigned to it:
+\end{frame}
+
+\begin{frame}{The K-means cost function}
+
+A solution to our problem is one that
+\begin{enumerate}
+\item finds the location of the prototypes $\vec w_q$ and 
+\item assigns all points 
+\end{enumerate}
+such that they are optimal in terms of \slidesonly{``cost''}\notesonly{the following cost}
+\pause
+which measures the average distance between a prototype and the subset of points assigned to it:
 
 \begin{align}
 \label{eq:kmeanscost}
@@ -99,5 +180,6 @@ Where the cost is minimized over the set of discrete variables $\big\{ m_q^{(\al
 
 Minimizing the average distance between each prototype $\vec w_q$ and the points assigned to it leads to partitioning the data into $M$ clusters such that a point is assigned to a cluster $q$ because it is closest to $\vec w_q$.
 }
+
 \end{frame}
 
