@@ -32,7 +32,7 @@ d_{\alpha \alpha^{'}} := \frac{1}{2} \big(
 \end{equation}
 
 \notesonly{
-Another possiblility for populating the components of the distance matrix is to base this high-dimensional relation of one point to another on \emph{scalar product}, the ``kernel trick''\footnote{As encountered in Kernel-PCA}. 
+Another possibility for populating the components of the distance matrix is to base this high-dimensional relation of one point to another on \emph{scalar product}, the ``kernel trick''\footnote{As encountered in Kernel-PCA}. 
 The distance is measured for a pair of points in some high-dimensional space $\phi$
 }
 \slidesonly{
@@ -67,9 +67,9 @@ $$
 \begin{frame}
 \slidesonly{\frametitle{Other sources for pairwise distances}}
 
-A further use-case is one where pairwise distance is not measured explicitly. The data representation can already be in a pairwise fashion as a result of an algroithm. Example: Sequence alignment proceducres and graph-similarity measures produce pairwise representations.\\
+A further use-case is one where pairwise distance is not measured explicitly. The data representation can already be in a pairwise fashion as a result of an algorithm. Example: Sequence alignment procedures and graph-similarity measures produce pairwise representations.\\
 
-We will opt for the \emph{squared Eucldiean distance} for our pairwise clustering algorithm.
+We will opt for the \emph{squared Euclidean distance} for our pairwise clustering algorithm.
 
 \end{frame}
 
@@ -279,9 +279,9 @@ When we choose squared Euclidean distance as the distance measure for pairwise c
 }
 
 \notesonly{
-We've seen that Pairwise Clustering based on squared Euclidean distance boils down to K-means. Pairwise clustering can therefore be considered a generelization of K-means. One can also think of K-means as a special case of pairwise clustering.}
+We've seen that Pairwise Clustering based on squared Euclidean distance boils down to K-means. Pairwise clustering can therefore be considered a generalization of K-means. One can also think of K-means as a special case of pairwise clustering.}
 \slidesonly{
-K-menas is a special case of pairwise clustering.
+K-means is a special case of pairwise clustering.
 }
 
 \end{frame}
@@ -310,7 +310,7 @@ The individual state variables $s_k$ in the state vector $\vec s$ were assumed t
 \implies
     \langle \Pi_k s_k \rangle_Q = \Pi_k \langle s_k\rangle_Q.
 \end{equation}
-When we use mean-field annealing in the context of pairwise clustering it is the assignment variables $m_q^{(\alpha)}$ that stand for the state variables. The assignment is based on \textbf{pairwise} distance, this violates our assumption of having independent state variables. $m_q^{(\alpha)}$ is not completly independent of $m_q^{(\alpha')}$.
+When we use mean-field annealing in the context of pairwise clustering it is the assignment variables $m_q^{(\alpha)}$ that stand for the state variables. The assignment is based on \textbf{pairwise} distance, this violates our assumption of having independent state variables. $m_q^{(\alpha)}$ is not completely independent of $m_q^{(\alpha')}$.
  Therefore, the 
 calculation of moments and mean-fields must be adapted.
 }
@@ -321,7 +321,7 @@ calculation of moments and mean-fields must be adapted.
     \langle \Pi_k s_k \rangle_Q = \Pi_k \langle s_k\rangle_Q
     \quad \!\! (\substack{\text{moments}  \\ \text{factorize}})$
 \item mean-field annealing in the context of pairwise clustering: $m_q^{(\alpha)}$ for state variables
-\item \textbf{but} $m_q^{(\alpha)}$ is \textbf{not} completly independent of $m_q^{(\alpha')}$
+\item \textbf{but} $m_q^{(\alpha)}$ is \textbf{not} completely independent of $m_q^{(\alpha')}$
 \end{itemize}
 }
 
@@ -330,13 +330,13 @@ calculation of moments and mean-fields must be adapted.
 \subsection{The mean-field approximation for pairwise clustering}
 
 \begin{frame}
- Nomenclature ($\otimes$ $\rightarrow$ \emph{set-product, cartesian product})\\
+ Nomenclature ($\otimes$ $\rightarrow$ \emph{set-product, Cartesian product})\\
  
  \begin{tabular}{r l p{9cm}}
 $\big\{ \vec{m}^{(\alpha)} \big\}$: & & set of all $M$-dimensional binary vectors $\big( m_1^{(\alpha)}, m_2^{(\alpha)}, \ldots, 
   m_M^{(\alpha)} \big)^\top$ which fulfill the normalization condition (exactly one element equals 1). \\\\
 $\mathscr{M}$: & & $\big\{ \vec{m}^{(1)} \big\} \otimes \big\{ \vec{m}^{(2)} \big\} \otimes \ldots \otimes \big\{ \vec{m}^{(p)} \big\}$\\
-& & set-product (cartesian product) between all possible binary assignment variables i.e.\ all possible valid assignments for the full dataset\\\\
+& & set-product (Cartesian product) between all possible binary assignment variables i.e.\ all possible valid assignments for the full dataset\\\\
 $\mathscr{M}_{\gamma}$:& &  $\big\{ \vec{m}^{(1)} \big\} \otimes \ldots \otimes \big\{ \vec{m}^{(\gamma - 1)} \big\} \otimes
   \big\{ \vec{m}^{(\gamma + 1)} \big\} \otimes \ldots \otimes
   \big\{ \vec{m}^{(p)} \big\}$\\

@@ -16,14 +16,14 @@
 \begin{frame}{\subsecname:~\subsubsecname}
 
 \notesonly{
-The way we've approached previous optimization problems is to derive how the parameters are updated to minimize the cost function and then we look at the algorithm that make use of the derived update rules to find a solution to the problem. Given the simplicity of the K-means algorithm, we will opt to first look at the algorihtm that implements K-means to understand how it operates and interesting aspects of the solution that it finds. We will then follow this by discussing the derivations we encountered in the algorithm (e.g. the update rule)
+The way we've approached previous optimization problems is to derive how the parameters are updated to minimize the cost function and then we look at the algorithm that make use of the derived update rules to find a solution to the problem. Given the simplicity of the K-means algorithm, we will opt to first look at the algorithm that implements K-means to understand how it operates and interesting aspects of the solution that it finds. We will then follow this by discussing the derivations we encountered in the algorithm (e.g. the update rule)
 
 \underline{How does K-means work?} 
 }
 
 An iterative two-step procedure after initializing $\big\{ \vec{w}_q \big\}$:
 \begin{enumerate}
-\item \textbf{assign} each point to its \emph{nearest} prtototype (nearest $\corresponds$ smallest Euclidiean distance.)
+\item \textbf{assign} each point to its \emph{nearest} prototype (nearest $\corresponds$ smallest Euclidean distance.)
 \item \textbf{update} all cluster prototypes by moving them to their cluster's center of mass.
 \end{enumerate}
 
@@ -72,9 +72,9 @@ Things to note about \emph{batch K-means}:
 
 \begin{enumerate}
 \item $E^T$ is \emph{non-increasing}\footnote{Non-increasing $\corresponds$ decreasing OR unchanged.}. We either move to an improved solution with lower cost or the cost remains unchanged.
-\item This is a nonconvex optimization problem. This means that we may arrive at local optima which yield bad solutions.
+\item This is a non-convex optimization problem. This means that we may arrive at local optima which yield bad solutions.
 \item \notesonly{Additionally, }the global minimum is not unique. There exist $M! = \prod_{i=1}^{M} i$ different assignments with the same lowest cost. This is a result of permutation symmetry. \notesonly{If we suddenly start labeling all points assigned to cluster $4 \rightarrow 7$, and simultaneously label all points originally assigned to $7 \rightarrow 4$, the cost remains unchanged.}
-The algorithm is indifferent to the index value of a cluster. The cluster indices are simply ``names''\notesonly{ to differntiate between the clusters and changing their names does not alter the solution obtained}.
+The algorithm is indifferent to the index value of a cluster. The cluster indices are simply ``names''\notesonly{ to differentiate between the clusters and changing their names does not alter the solution obtained}.
 \begin{center}
 \begin{minipage}{0.45\textwidth}
 	\includegraphics[width=0.8\textwidth]{img/clustering_color_proto}
@@ -106,7 +106,7 @@ We just have to find the gradient.
 }
 
 \notesonly{
-We've seen how one would implement K-means. More specifically, we've seen that the prototypes $\vec w_q$ are updated every iteration such that they represent the mean of the points assigned to them in that iteration. However, we have yet to show that this iterative method effecitvley minimizes $E^T$. We do so by evaluating the gradient, finding the zero-crossing. We are effectively looking for the extrema of the cost function $E^T$.
+We've seen how one would implement K-means. More specifically, we've seen that the prototypes $\vec w_q$ are updated every iteration such that they represent the mean of the points assigned to them in that iteration. However, we have yet to show that this iterative method effectively minimizes $E^T$. We do so by evaluating the gradient, finding the zero-crossing. We are effectively looking for the extrema of the cost function $E^T$.
 }
 
 \end{frame}
@@ -209,7 +209,7 @@ The condition for a minimum is that the second-order partial derivatives, the \e
 \end{align}
 }
 
-where $\delta_{ij}$ and $\delta_{qq^{'}}$ are the dirac-delta functions ($\delta_{ij}=1$ iff $i=j$ and $=0$ otherwise). 
+where $\delta_{ij}$ and $\delta_{qq^{'}}$ are the Kronecker delta functions, respectively ($\delta_{ij}=1$ iff. $i=j$ and $=0$ otherwise). 
 Since $\frac{2}{p} \sum\limits_{\alpha} m_q^{(\alpha)}$ is always positive \notesonly{(c.f. \eqref{eq:assignmentnormalization})}:
 
 \begin{itemize}
