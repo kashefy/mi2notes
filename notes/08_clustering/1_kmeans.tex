@@ -11,19 +11,19 @@
 \end{frame}
 }
 
-\begin{frame}{Finding structure in the data}
-
+\begin{frame}
 K-means is simple.
+\end{frame}
 
-\pause
+\begin{frame}{Finding structure in the data}
 
 \begin{center}
 \slidesonly{
-	\includegraphics<2>[width=6cm]{img/clustering_no-color_no-labels_2p}
-	\includegraphics<3>[width=6cm]{img/clustering_no-color_no-labels_4p}
-	\includegraphics<4>[width=6cm]{img/clustering_no-color_no-labels}
+	\includegraphics<1>[width=6cm]{img/clustering_no-color_no-labels_2p}
+	\includegraphics<2>[width=6cm]{img/clustering_no-color_no-labels_4p}
+	\includegraphics<3>[width=6cm]{img/clustering_no-color_no-labels}
 	}
-	\includegraphics<5->[width=6cm]{img/clustering_color}
+	\includegraphics<4->[width=6cm]{img/clustering_color}
 	\notesonly{
 	\captionof{figure}{Example clustering of 2D points into M=2 clusters}
 	}
@@ -31,7 +31,7 @@ K-means is simple.
 
 
 \slidesonly{
-\visible<6>{
+\visible<5>{
 \begin{itemize}
 \item proximity must count for something
 \item Points that fall within a region form a cluster
@@ -58,8 +58,14 @@ We do have to decide on how many clusters we think exist in a dataset.
 
 \question{What does clustering give us?}
  
-- Eventually, instead of describing each point by its absolute location, we will be able to describe it by the cluster it is assigned to. 
-We will also be able to describe the entire dataset by the partitions we've found that separate the clusters.
+\begin{itemize}
+\item[-] Instead of describing each point by its absolute location, we will be able to describe it by the cluster it is assigned to.
+\begin{equation}
+\text{point}~\vec x \in \R^N \quad \longrightarrow \quad~\text{cluster index}~q \in \N
+\end{equation} 
+\item We will be able to describe the entire dataset by the partitions we've found that separate the clusters.
+\item We'll draw relations between simple clustering and other algorithms (embedding algorithms, density estimation)
+\end{itemize}
 
 \end{frame}
 

@@ -55,8 +55,14 @@
 \titlepage
 \end{frame}
 
+\setcounter{tocdepth}{2}
 \begin{frame}
+\mode<presentation>{
+\tableofcontents[subsubsectionstyle=show/show/show/hide]
+}
+\mode<article>{
 \tableofcontents
+}
 \end{frame}
 
 \newpage
@@ -91,12 +97,12 @@
 %\clearpage
 
 \mode<all>
-\input{./7_soft_kmeans_eucl}
+\input{./6_pairwsie_meanfield}
 \mode*
 
 
 \mode<all>
-\input{./6_pairwsie_meanfield}
+\input{./7_soft_kmeans_eucl}
 \mode*
 
 \clearpage

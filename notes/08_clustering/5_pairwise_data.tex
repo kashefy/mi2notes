@@ -1,4 +1,4 @@
-\subsection{The data}
+\subsection{Data representation}
 
 \begin{frame}{\secname:~\subsecname}
 
@@ -67,9 +67,40 @@ $$
 \begin{frame}
 \slidesonly{\frametitle{Other sources for pairwise distances}}
 
-A further use-case is one where pairwise distance is not measured explicitly. The data representation can already be in a pairwise fashion as a result of an algorithm. Example: Sequence alignment procedures and graph-similarity measures produce pairwise representations.\\
+A further use-case is one where pairwise distance is not measured explicitly. The data representation can already be in a pairwise fashion as a result of an algorithm.\\
+Example: Sequence alignment procedures and graph-similarity measures produce pairwise representations.\\
 
 We will opt for the \emph{squared Euclidean distance} for our pairwise clustering algorithm.
+
+\end{frame}
+
+\begin{frame}{Possibilities: transformed distances}
+
+\begin{center}
+\begin{minipage}{0.99\textwidth}
+	\begin{center}
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics[width=0.9\textwidth]{img/m3_circ_data} 
+	\end{minipage}
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics[width=0.9\textwidth]{img/m3_circ_pdist} 
+	\end{minipage}
+	\end{center}
+\end{minipage}
+\end{center}
+
+\begin{center}
+\begin{minipage}{0.99\textwidth}
+	\begin{center}
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics[width=0.9\textwidth]{img/m3_circ_data_polar} 
+	\end{minipage}
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics[width=0.9\textwidth]{img/m3_circ_pdist_polar} 
+	\end{minipage}
+	\end{center}
+\end{minipage}
+\end{center}
 
 \end{frame}
 
@@ -119,7 +150,18 @@ E_{ \big[ \big\{ m_q^{(\alpha)} \big\} \big] }
 
 \begin{frame}\frametitle{\subsecname}
 
+\notesonly{
 When we choose squared Euclidean distance as the distance measure for pairwise clustering, we can show that this choice let's pairwise clustering effectively find the same solution as K-means clustering.
+}
+
+\begin{center}
+\resizebox{.7\textwidth}{!}{%
+\begin{tabular}{cllll}
+Pairwise Clustering                                                                 & \multicolumn{1}{c}{$\Longrightarrow$} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Some\\ clustering solution\end{tabular}} & \multicolumn{1}{c}{$\Longleftarrow$} & K-means \\
+\begin{tabular}[c]{@{}c@{}}using\\ $d_{\alpha\alpha'}$ := sq. Eucl. distance\end{tabular} &                                     &                                                                                        &                                  &       
+\end{tabular}%
+}
+\end{center}
 
 \end{frame}
 
@@ -327,20 +369,3 @@ calculation of moments and mean-fields must be adapted.
 
 \end{frame}
 
-\subsection{The mean-field approximation for pairwise clustering}
-
-\begin{frame}
- Nomenclature ($\otimes$ $\rightarrow$ \emph{set-product, Cartesian product})\\
- 
- \begin{tabular}{r l p{9cm}}
-$\big\{ \vec{m}^{(\alpha)} \big\}$: & & set of all $M$-dimensional binary vectors $\big( m_1^{(\alpha)}, m_2^{(\alpha)}, \ldots, 
-  m_M^{(\alpha)} \big)^\top$ which fulfill the normalization condition (exactly one element equals 1). \\\\
-$\mathscr{M}$: & & $\big\{ \vec{m}^{(1)} \big\} \otimes \big\{ \vec{m}^{(2)} \big\} \otimes \ldots \otimes \big\{ \vec{m}^{(p)} \big\}$\\
-& & set-product (Cartesian product) between all possible binary assignment variables i.e.\ all possible valid assignments for the full dataset\\\\
-$\mathscr{M}_{\gamma}$:& &  $\big\{ \vec{m}^{(1)} \big\} \otimes \ldots \otimes \big\{ \vec{m}^{(\gamma - 1)} \big\} \otimes
-  \big\{ \vec{m}^{(\gamma + 1)} \big\} \otimes \ldots \otimes
-  \big\{ \vec{m}^{(p)} \big\}$\\
-& &\  set of all possible assignments for all data points  \\& & \hspace{0.03cm} except $\gamma$
-\end{tabular}
-
-\end{frame}
