@@ -10,6 +10,7 @@ projnameA = $(projname).notes
 
 slides: $(projname).slides.tex $(projname).tex
 	$(compile) $(projname).slides.tex
+	$(compile) $(projname).slides.tex
 #	bibtex $(projname).slides
 #	$(compile) --interaction=batchmode  $(projname).slides.tex
 #	$(compile) --interaction=batchmode  $(projname).slides.tex
