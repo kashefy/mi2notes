@@ -6,7 +6,7 @@
         \secname
     \end{center}
     \begin{center}
-		Collaborate, Compete and Adapt\\
+		Compete, Cooperate and Adapt\\
 		Learn to ``cover''/``explain'' the data
     \end{center}
 \end{frame}
@@ -26,7 +26,7 @@
 \Begin(){
   choose a random data point $\vec{x}^{(\alpha)}$ \\
   determine the closest prototype:\[ \vec{p} = \underset{\vec r}{\argmin} \big| \vec{x}^{(\alpha)} - \vec{w}_{\vec r} \big|\] \\
-  change all prototypes $\vec{w}_q$ according to: $$\Delta \vec{w}_{\vec q} = \varepsilon \cdot h_{\vec{q} \, \vec{p}} \cdot 
+  change all prototypes $\vec{w}_{\vec q}$ according to: $$\Delta \vec{w}_{\vec q} = \varepsilon \cdot h_{\vec{q} \, \vec{p}} \cdot 
   \big( \vec{x}^{(\alpha)} - \vec{w}_{\vec q} \big) \text{\hspace{1cm} for \textcolor{red}{all} \vec{q}}$$ \\
   lower the learning rate $\varepsilon$ and neighborhood width $\sigma$
 }
@@ -53,6 +53,23 @@
 			- \vec{p} )^2 }{2 \sigma^2} \bigg\}
 			\end{equation}
 \end{itemize}
+
+\begin{center}
+\begin{minipage}{0.4\textwidth}
+\begin{center}
+	\includegraphics[width=0.9\textwidth]{img/guassian_function_1d}
+	\notesonly{\captionof{figure}{In the case of a 1D map}}
+\end{center}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{center}
+	\includegraphics[width=0.9\textwidth]{img/guassian_function_2d_3Dview}
+	\notesonly{\captionof{figure}{In the case of a 2D map}}
+\end{center}
+\end{minipage}
+	\notesonly{\captionof{figure}{The Gaussian function around the winning neuron.}}
+\end{center}
+
 \end{frame}
 
 \begin{frame}[t] \frametitle{\subsecname~$h_{\vec{q} \, \vec{p}}$} 
@@ -77,7 +94,7 @@
 
 \svspace{-3mm}
 
-\question{what is the effect of the width $\sigma$?}
+\question{What is the effect of the width $\sigma$?}
 
 \begin{itemize}
 \only<1>{
@@ -109,7 +126,7 @@ $$
        \itr solution depends on 
         final value of $\sigma$
         \vspace{0.5cm}
-       \itr $\sigma = 0$: minimum of the K-means clustering cost function but 
+       \itr $\sigma \rightarrow 0$: minimum of the K-means clustering cost function but 
             \emph{``neighborhood preserving''}  \itr $\sigma$ small : better representation capabilities at the expense of a non-optimal clustering cost 
 \end{itemize}
 
@@ -117,10 +134,10 @@ $$
 
 \end{frame}
 
-\begin{frame}{Rushing the annealing process}
+\begin{frame}{The effect of rushing the annealing process}
 
 
-- We ``leave the neighborhood behind'' and ``kicks into K-means mode too early''.
+- We ``leave the neighborhood behind''. It ``kicks into K-means mode'' too early.
 
 \begin{minipage}{0.45\textwidth}
 \begin{center}
