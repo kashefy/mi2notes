@@ -11,58 +11,57 @@
 \end{frame}
 }
 
-\begin{frame}{Sinusoid Example}
+\subsection{K-means Sinusoid example}
 
-Consider the following 2-D data.
+\begin{frame}{\subsecname}
 
+Consider the following 2-D data and applying K-means with $M=7$ prototypes.
+
+\begin{minipage}{0.45\textwidth}
 \begin{center}
-	\includegraphics[width=0.4\textwidth]{img/sin_data}
+	\includegraphics[width=0.8\textwidth]{img/sin_data}
 	\notesonly{\captionof{figure}{2D points describing a sinusoid.}}
 \end{center}
-
-\pause
-
-Apply K-means clustering with $M=7$ prototypes.
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+\begin{center}
+	\includegraphics[trim=950 0 0 0,clip, width=0.9\textwidth]{img/sin_clustering}
+	\notesonly{\captionof{figure}{A clustering solution with 7 prototypes.}}
+\end{center}
+\end{minipage}
 
 \end{frame}
 
-\begin{frame}{Applying K-means}
+\begin{frame}{Multiple runs of K-means on the data}
 
 \begin{center}
-\only<1>{
-\slidesonly{
-	\includegraphics[trim=950 0 0 0,clip, width=0.6\textwidth]{img/sin_clustering}
-	}
-	}
-\only<2>{
 	\includegraphics[width=0.95\textwidth]{img/sin_clustering}
 	\captionof{figure}{Equivalent clustering solutions with 7 prototypes.}
-	}
 \end{center}
 
-\only<2>{
 \begin{itemize}
 \item The clustering solutions are equivalent in that they are permutations of one another.
 \item There is no ``order'' in the numbering of the cluster indices. The numbers don't reflect any topology about the clusters.
 \end{itemize}
-}
 
 \end{frame}
 
-\begin{frame}{A ``sorted'' K-means to reflect topology}
+\begin{frame}{Reflect topology by sorting the cluster indices}
 
 Renumber the cluster indices by sorting the prototypes according to position along the horizonal axis.
 
 \begin{center}
 	\includegraphics[width=0.5\textwidth]{img/sin_clustering_sorted}
-	\captionof{figure}{Equivalent clustering solution with 7 prototypes that reflects some topology in the data.}
+	\notesonly{\captionof{figure}{Equivalent clustering solution with 7 prototypes that reflects some topology in the data.}}
 \end{center}
 
 $\vec w_{q}$ and $\vec w_{q+1}$ are neighbors in input space.
 
 \end{frame}
 
-\begin{frame}{Motiation for clustering that preserves neighborhood}
+\subsection{Motivation for clustering that preserves neighborhood}
+
+\begin{frame}{\subsecname}
 
 Recap from last time\\
 
@@ -113,8 +112,6 @@ It is a space in which we draw any insights from the data just as we try to do f
 
 \begin{frame}{An ant's perspective}
 \notesonly{Looking at data from the perspective of an \emph{ant}.}
-
-\pause
 
 \begin{center}
 	\includegraphics[width=0.9\textwidth]{img/sin_manifold_ant}

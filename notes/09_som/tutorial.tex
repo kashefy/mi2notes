@@ -55,10 +55,18 @@
 \titlepage
 \end{frame}
 
-\setcounter{tocdepth}{2}
+%\setcounter{tocdepth}{2}
+%\begin{frame}
+%\mode<presentation>{
+%\tableofcontents[subsubsectionstyle=show/show/show/hide]
+%}
+%\mode<article>{
+%\tableofcontents
+%}
+%\end{frame}
 \begin{frame}
 \mode<presentation>{
-\tableofcontents[subsubsectionstyle=show/show/show/hide]
+\tableofcontents[hideallsubsections]
 }
 \mode<article>{
 \tableofcontents
@@ -75,6 +83,12 @@
 
 \mode<all>
 \input{./1_som}
+\mode*
+
+\clearpage
+
+\mode<all>
+\input{./2_som_algorithm}
 \mode*
 
 \clearpage
