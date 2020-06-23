@@ -1,0 +1,55 @@
+
+\section{The ICA problem}
+
+\begin{frame}{\secname}
+
+Let $\vec s = (s_1, s_2,...,s_N)^\top$ denote the concatenation of independent sources 
+and $\vec x \in \R^N$ describe our observations. $\vec x$ relates to $\vec s$ through a 
+\emph{linear transformation} $\vec A$:
+
+\begin{equation}
+\label{eq:ica}
+\vec x = \vec A \, \vec s
+\slidesonly{\hspace{3cm}\text{(the ICA problem)}\hspace{-4cm}}
+\end{equation}
+
+We refer to $\vec A$ as the \emph{mixing matrix}\notesonly{ and Eq.\ref{eq:ica} as the \emph{ICA problem}}.
+Solving the ICA problems is to recover $\vec s$ from only observing $\vec x$.
+
+\end{frame}
+
+\subsection{Example scenario}
+
+\begin{frame}{\subsecname}
+
+\begin{center}
+	\includegraphics[width=0.7\textwidth]{img/setting}
+\notesonly{	\captionof{figure}{Example scenario} }
+\end{center}
+
+\notesonly{
+
+Two speakers are placed in a room and emit signals $s_1$ and $s_2$. 
+The speakers operate independent of one another.  
+Two microphones are placed in the room and start recording. 
+The first microphone is placed slightly closer to speaker 2, while 
+the second microphone is placed slightly closer to speaker 1.
+$x_1$ and $x_2$ denote the recordings of the first and second microphone respectively. 
+When we listen to the recordings we expect to hear a mix of $s_1$ and $s_2$. 
+Since microphone 1 was placed closer to speaker 2, when we only listen to $x_1$ we hear more of $s_2$ than $s_1$. 
+The opposite can be said when we listen only to $x_2$.
+
+Acoustic systems are linear. This means that $x_1$ is a superposition of \emph{both} sources $s_1$ and $s_2$. 
+We will assume here that the contribution of a source $s_i$ 
+to an observation $x_j$ is inversely proportional to the distance between the source and the microphone. 
+The distance-contribution relationship is \emph{linear}. We don't need this to be any more realistic. 
+
+If we had a measurement of the distance between each microphone and each speaker, 
+we would tell exactly what the contribution of each of $s_1$ and $s_2$ is to each recorded observation. 
+If we know the exact contribution of a source to an observation, we can look at both observations and recover each source in full.
+}
+
+\pause 
+This is what ICA tries to solve, except that it does not have any knowledge about the spatial setting. It is blind.
+
+\end{frame}

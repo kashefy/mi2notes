@@ -1,179 +1,164 @@
-\section{The setting}
-
-\underline{Data:}
-
-observations: $\big\{ \vec{x}^{(\alpha)} \big\}, \alpha = 1, \ldots, p; \quad \vec{x} \in \R^N$
-
-$$
-\vec x = \rmat{
-x_1\\
-x_2\\
-\vdots\;\,\\
-x_N
-}
-$$
-
-Our entire dataset:
-\[
-\vec X = 
-\left(
-\begin{array}{cccc}
-\Big| & \Big| & &\Big| \\[3mm]
-\vec x^{(1)} & \vec x^{(2)} & \cdots &\vec x^{(p)}\\[2mm]
-\Big| & \Big| & &\Big|
-\end{array}
-\right) \in \R^{N \times p}
-\]
-
-\section{Dimensionality Reduction}
-\vspace{0.5cm}
-
-We want to reduce the number of elements in $\vec x \in \R^N$
-while retaining as most of the intrinsic information content.
-
-\question{For what purpose?}
-
-\question{What is the difference between dimensionality reduction and compression, if any?}
-
-\newpage
-
-\underline{Simple truncation:}
-
-Let\\[0.2cm]
-$\vec x \in \R^N$,\\
-$\E[\vec x] = \vec 0$ (i.e. for each variable $x_i$ its mean $m_i = \sum_{\alpha=1}^{p} x_i^{(\alpha)} = 0$) and $1 < M\, < N$.\\[0.2cm]
-We simply transmit the first $M$ elements of $\vec x$. The recipient reconstructs all $N$ elements by adding zero entries for all missing elements (i.e. \textit{zero-padding}).\\[0.2cm]
-How much error will they accumulate in this case?\\[0.2cm]
-Let $\widetilde{\vec{x}}$ be the reconstructed observation. The first $M$ elements were transmitted perfectly, zero padding is used to extend the vector to its original size of $N$ elements:
-\begin{align*}
-MSE  &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2\\
-     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \left(\underbrace{\sum\limits_{j = 1}^M ( x_j^{(\alpha)} - \widetilde{x_j}^{(\alpha)} )^2}_{\substack{=0 \\\text{ (perfect transmission)}}} + \sum\limits_{j = M+1}^N ( x_j^{(\alpha)} - \underbrace{\widetilde{x_j}^{(\alpha)}}_{\substack{=0\\ \text{padded}}}\;)^2 \right)\\
-     &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = M+1}^N ( x_j^{(\alpha)} )^2 \\
-     &=  \sum\limits_{j = M+1}^N \frac{1}{p} \sum\limits_{\alpha = 1}^p  ( x_j^{(\alpha)} )^2 \\
-     &=  \sum\limits_{j = M+1}^N \sigma_j^2 \\
-\end{align*}
-They will end up with an MSE equal to $\sum_{j=M+1}^{N} \sigma_j^2$, where $\sigma_j^2$ is the variance of the $x_j$.\\
-
-\underline{Objective:} Rotate/Transform the data s.t. truncating the transformed vector $\vec v \in \R^M$ is optimum in the sense of minimal MSE.
-
-\newpage
 \section{PCA}
+
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+    \begin{center}
+    Transform and rotate the data s.t. keeping only the first $M$ dimensions has minimal MSE.
+    \end{center}
+\end{frame}
+}
+
+\subsection{Procedure}
+
+\begin{frame}\frametitle{\secname: \subsecname}
+
 \begin{enumerate}
-\item Center the data, $\E[\vec x] = \vec m  = \frac{1}{p} \sum_{\alpha=1}^{p} \vec x^{(\alpha)}\eqexcl \vec 0$.
-\item Let $\vec X'$ be the $N \times p$ matrix of the centered data.
-\item Measure the variance of each component in $\vec x_{centered}$. Not enough, the variables in $\vec x$ could be correlated.
-\item Measure covariances $C_{ij}$.
-\item Construct covariance matrix $\vec C$.\\
-$$ 
-\vec C = \text{Cov}(\vec X') = \mathbf{\Sigma} = \E[\vec X' \vec X'^\top] \in \R^{N \times N}
-$$
-\item \textbf{eigenvalue decomposition}:\\
-$$
-\vec C \, \vec e_a \; = \; \lambda_a \vec e_a  \quad\text{(the eigenvalue problem of PCA)}
-$$
-$$
-\lambda_a: \text{the eigenvalue, the variance along principle component } a.
-$$
-$$
-\vec e_a: \text{the normalized eigenvector, the direction of PC } a \text{ in } R^N
-$$
-
-\question{How do we perform an eigenvalue decomposition?}
-((1) Get eigenvalues: $\det(\vec C-\lambda \vec I) = 0$, 
-(2) Find eigenvector $\vec e_a$ associated with each $\lambda_a$ by solving the linear system\\
-$ (\vec C - \lambda_a \vec I )\, \vec e_a = \vec 0$
-(see {\emph{math\_primer.pdf} on ISIS}  for details)
-\item Order eigenvalues in descending order. (Highest variance first). The ordered eigenvectors are the \emph{principle components} of the dataset $\vec X$.
-
-\question{What is a scree plot?}
-
-\item Rotate $\vec x_{centered}$ using the first $M$ PCs.
+	\item Center the data, $\E\lbrack\vec x\rbrack = \vec m  = \frac{1}{p} \sum_{\alpha=1}^{p} \vec x^{(\alpha)}\eqexcl \vec 0$.
+\slidesonly{	\only<2>{
+	\begin{center}
+		\includegraphics[width=5.5cm]{img/meme_center}
+    \end{center}
+	}
+}
+	\visible<3->{
+	\item Let $\vec X$ be the $N \times p$ matrix of the centered data.
+	\item Measure
+	\begin{itemize}
+	\item the variance of each component in $\vec x$.\\
+	\textbf{Not enough}, the variables in $\vec x$ could be correlated.
+	\item the covariances $C_{ij} \;\; \forall\,i,j = 1,\ldots,N$.
+	\end{itemize}
+	\item[$\Rightarrow$] Construct the covariance matrix $\vec C$.
+		\begin{equation}
+		\vec C = \text{Cov}(\vec X) = \mathbf{\Sigma} = \E\lbrack\vec X~\vec X^\top\rbrack \in \R^{N \times N}
+		\end{equation}
+	\item \textbf{eigenvalue decomposition}
+	\item Order eigenvalues in \emph{descending} order. (Highest variance first). The ordered eigenvectors are the \emph{principle components} of the dataset $\vec X$.
+	\item Project $\vec x$ onto the first $M$ PCs.
+	}
 \end{enumerate}
 
-%\newpage
 
-\underline{How much better is this than simple trunctation?}\\[0.3cm]
-The transformation onto the PCs is linear:
-\begin{equation*}
+\end{frame}
+
+\subsubsection{Eigenvalue decomposition}
+
+\begin{frame}\frametitle{\subsubsecname}
+
+\begin{equation}
+\vec C \, \vec e_a \; = \; \lambda_a \vec e_a  \quad\text{(the eigenvalue problem of PCA)}
+\end{equation}
+
+\begin{itemize}
+\item[] $\lambda_a: \text{the eigenvalue, the variance along principle component } a.$
+\item[] $\vec e_a: \text{the \underline{normalized} eigenvector, the direction of the } a\text{-th PC in } \R^N$
+\end{itemize}
+
+\question{How do we perform an eigenvalue decomposition?}
+
+\pause
+
+\begin{enumerate}
+\item Get eigenvalues:
+\begin{equation}\det(\vec C-\lambda \vec I) = 0,
+\end{equation} 
+\item Find the eigenvector $\vec e_a$ associated with each $\lambda_a$ by solving the linear system
+\footnote{If interested, see {\emph{math\_primer.pdf} on ISIS} for details and an example.}
+\begin{equation}(\vec C - \lambda_a \vec I )\, \vec e_a = \vec 0
+\end{equation}
+\end{enumerate}
+
+\end{frame}
+
+\subsubsection{The Scree plot}
+
+\begin{frame}\frametitle{\subsubsecname}
+
+In PCA we sort the eigenvectors from highest to smallest eigenvalue.
+Plotting the sorted eigenvalues is referred to as a \emph{scree plot}
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/screeplot_kpca_poly_d3}%
+\captionof{figure}{Example of a scree plot}
+\end{center}
+
+\end{frame}
+
+\subsubsection{Projection onto the PC space}
+
+\begin{frame}\frametitle{\subsubsecname}
+
+Recall \notesonly{from \sectionref{sec:objective} }that we wanted to \notesonly{improve on simple truncation by
+transforming }\slidesonly{transform }the data before transmitting the first $M$ components.
+
+\notesonly{We described the projection as follows:}
+
+\begin{equation}
+\vec u = \vec M^\top \vec x = (a_1,a_2,\ldots,a_N)^\top
+\end{equation}
+
+
+We can now define the transformation using the normalized eigenvectors of the PCs:
+
+\begin{equation}
+\vec M := (\vec e_1, \vec e_2, \ldots,\vec e_N)
+\end{equation}
+
+\slidesonly{
+
+\begin{equation}
 	\vec{x} = \underbrace{ a_1 }_{ \vec{e}_1^\top \vec{x} } \vec{e}_1
 		+ \underbrace{ a_2 }_{ \vec{e}_2^\top \vec{x} } \vec{e}_2
 		+ \ldots
 		+ \underbrace{ a_N }_{ \vec{e}_N^\top \vec{x} } \vec{e}_N
-\end{equation*}
+\end{equation}
+}
 
-Therefore, we perfectly reconstruct observations by projecting them from PC space (i.e. feature space) back to the input space. 
-However, if we only use the first $M$ PCs for reconstructing the observations, we will accumulate error.
 
-$$
+\end{frame}
+
+\subsection{Reconstruction error}
+
+\begin{frame}\frametitle{How much better is this vs. simple truncation?}
+%\newpage
+
+\pause
+
+\only<2,3>{
+The transformation onto the PCs is linear:
+\begin{equation}
+	\vec{x} = \underbrace{ a_1 }_{ \vec{e}_1^\top \vec{x} } \vec{e}_1
+		+ \underbrace{ a_2 }_{ \vec{e}_2^\top \vec{x} } \vec{e}_2
+		+ \ldots
+		+ \underbrace{ a_N }_{ \vec{e}_N^\top \vec{x} } \vec{e}_N
+\end{equation}
+
+Therefore, we can perfectly reconstruct observations by projecting them from PC space (i.e. feature space) back to the input space. \\
+If we only use the \textcolor{red}{first} ${\color{red}M}$ PCs for reconstructing the observations, we will accumulate error.
+
+\svspace{-5mm}
+
+\begin{equation}
 \widetilde{\vec{x}} = a_1 \vec{e}_1 + a_2 \vec{e}_2 + \ldots
 		+ a_M \vec{e}_M
-$$
+\end{equation}
+}
 		
-We measure MSE between original centered observations and their corresponding reconstructions.
-$$
-E = \frac{1}{p} \sum_{\alpha = 1}^{p} (\vec x_{centered} - \widetilde{\vec{x}})^2 = \frac{1}{p} \sum_{\alpha = 1}^{p} \sum_{j = M+1}^{N} (a_j^{(\alpha)})^2
-$$
-The MSE is equal to the sum of variances of the final M components of the \emph{transformed} observations. Since we've ordered the PCs w.r.t to variance in descending order the variance of the last $M-N$ components of the transformed data is smallest.
+\notesonly{We measure MSE between original centered observations and their corresponding reconstructions just as we did in \eqref{eq:mse}.}
+
+\pause
+
+\only<3,4>{
+\begin{equation}
+E = \frac{1}{p} \sum_{\alpha = 1}^{p} (\vec x - \widetilde{\vec x})^2 = \frac{1}{p} \sum_{\alpha = 1}^{p} \sum_{j = M+1}^{N} (a_j^{(\alpha)})^2
+\end{equation}
+The MSE is equal to the sum of variances of the final $\notesonly{N-(M+1)-1=}N-M$ components of the \emph{transformed} observations.\\
+}
+\only<4>{\notesonly{Since the PCs are ordered w.r.t to variance in descending order, }the variances of the last $N-M$ components of the transformed data are smallest.
 The transformation is therefore optimal in the sense of minimal MSE.
+}
 
-
-\subsection{Applying PCA}
-What can we do with PCA?
-\begin{enumerate}
-\item Dimensionality reduction
-\item Visualization (e.g. plot the projections onto the first 2 or 3 PCs.)
-\item Whitening (i.e. decorrelate the data) - exploit that eigenvectors form an orthonormal basis.
-$$
-\vec v^{(\alpha)} = \vec x_{whitened}^{(\alpha)} = \vec{\Lambda}^{-\frac{1}{2}}\vec{M}^\top\vec{x}^{(\alpha)}
-\quad
-\forall \alpha
-$$
-
-\question{What is the covariance of $\vec x_{whitened}$?}
-
-\end{enumerate}
-
-\newpage
-\subsection{A note on implementation:}
-
-\question{Is an off-the-shelf implementation such as\\ sklearn.decomposition.PCA for python really necessary?}
-
-PCA boils down to solving the eigenvalue problem.
-We bascially need a routine with which to solve the eigenvalue problem. For python, the obvious choice is to use a routine like \textit{numpy.linalg.eig(A)}. \emph{Whatch out for how to intepret the output.}
-
-\question{Are there alternatives to eigenvalue decomposition?}
-
-Yes, namely,
-
-\underline{Singular Value Decomposition (SVD)}:\\
-Let $\vec X' \in \R^{N \times p}$ be the centered dataset (centering is a must):
-$$
-\vec X'_{N \times p} = \vec U_{N \times N} \, \vec S_{N \times p} \, \vec V^\top_{{p \times p}}
-$$
-where,
-$$
-\vec U^\top \vec U = \vec I_{N \times N}
-$$ and 
-$$
-\vec V^\top \vec V = \vec I_{p \times p}
-$$ (i,e. $\vec U$, $\vec V$ are orthogonal.).
-\begin{itemize}
-\item The columns of $\vec U$ make up the eigenvectors of $\vec X'\vec X'^\top$.
-\item The columns of $\vec V$ (or rows of $\vec V^\top$) make up the eigenvectors of $\vec X'^\top\vec X'$.
-\item $\vec S$ is a diagonal matrix. The singular values in $\vec S$ (the diagonal entries) are the \textbf{square roots} of the  eigenvalues of the eigenvectors of $\vec X'\vec X'^\top$ or $\vec X'^\top\vec X'$.
-
-\end{itemize}
-Recall:
-
-$$
-\vec C = \E[\vec X \vec X^\top] = \frac{1}{p} \vec X \vec X^\top
-$$
-
-\underline{When to use SVD vs. Eig? \textbf{Not dogma}}
-
-\begin{itemize}
-
-\item Numerical instabilities in eigendecomposition of very large covariance matrix $\rightarrow$ SVD
-\item SVD not applicable to Kernel-PCA $\rightarrow$ Eig
-\item Computational efficiency $\rightarrow$ SVD (depends...?)
-\end{itemize}
+\end{frame}

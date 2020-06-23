@@ -1,0 +1,778 @@
+\section{Kernel PCA}
+
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{img/koffer}%
+		
+	\vspace{5mm}
+	non-linear transformation $\Leftrightarrow$ kernel trick
+	\end{center}
+	
+\end{frame}
+}
+
+\begin{frame}\frametitle{\secname}
+
+We apply standard linear PCA on the \emph{transformed} version of the data
+$
+\big\{
+\vec{\phi}_{(\vec{x}^{(\alpha)})}
+\big\}_{\alpha=1}^{p}
+$.
+
+We will first assume we have $\vec{\phi}_{(\vec{x})}$ 
+but we will eventually turn to $K_{\alpha \beta}$ 
+which we can actually obtain.\\
+
+\pause
+
+\svspace{10mm}
+
+\underline{Remark:}
+\slidesonly{It might look different from the slides, but it's not}
+\notesonly{A difference between these notes and the lecture slides is that} 
+the lecture slides employ ``identity'' as the mapping. 
+This is why you don't see $\phi$ in the derivations of Kernel PCA in the slides but rather see $\vec x$ used directly.\\
+
+\end{frame}
+
+\subsection{The Method}
+
+\begin{frame}{Kernel PCA: Outline the method}
+
+\mode<presentation>{
+\begin{itemize}
+\item center the ``immediate'' input to PCA
+
+\pause
+\only<2>{
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{img/meme_realinput}%
+\end{center}
+}
+
+\pause
+
+\item compute covariance $\vec C_\phi$
+\item solve the eigenvalue problem
+\item normalize the eigenvectors
+\item sort the eigenvectors and eigenvalues
+\end{itemize}
+
+Use Kernel PCA:
+
+\begin{itemize}
+\item projection
+\item reconstruction
+
+\end{itemize}
+
+\pause
+
+\only<4>{
+\placeimage{9}{6}{img/meme_exactly}{width=5cm}%
+
+\vspace{5mm}
+The difference is in the details.
+}
+
+}
+
+\end{frame}
+
+\subsubsection{Centering the immediate input to PCA}
+
+\begin{frame}{\subsubsecname}
+
+Remember, we will first assume that we have the non-linear mapping $\phi$.\\
+
+PCA assumes its input is centered.
+It's direct input are the $\phi$'s. Therefore,
+\begin{equation}
+\frac{1}{p} \sum^{p}_{\alpha=1} \vec{\phi}_{(\vec{x}^{(\alpha)})} \eqexcl \vec 0
+\end{equation}
+
+\question{Isn't it enough to center $\vec X$?}
+
+\pause
+
+- No, Centering $\vec X$ does not guranatee it stays centered after the transformation.
+Therefore, there is no need to center $\vec X$ beforehand.
+
+Example:
+\begin{equation}
+\E[\vec x] = 0 \quad \nRightarrow \quad \E[\vec x^2] = 0
+\end{equation}
+
+\end{frame}
+
+\subsubsection{The covariance matrix of the transformed data}
+
+\begin{frame}{\subsubsecname}
+
+Compute the covariance matrix $\vec C_{\phi}$ for $\vec{\phi}_{(\vec{x})}$:
+
+
+\begin{equation} \label{eq:cov}
+\vec C_{\phi} = \frac{1}{p} \sum_{\alpha=1}^{p} \vec{\phi}_{(\vec{x}^{(\alpha)})} \vec{\phi}^{\top}_{(\vec{x}^{(\alpha)})}
+\end{equation}
+
+\end{frame}
+
+\subsubsection{The eigenvalue problem}
+
+\begin{frame}{\subsubsecname}
+
+Solve the eigenvalue problem:
+
+\begin{equation} \label{eq:eig}
+\vec C_{\phi} \, \vec e = \lambda \vec e
+\end{equation}
+
+Each eigenvector $\vec e_i$ with corresponding $\lambda_i \ne 0$ lies in the span of 
+\begin{equation}
+\big\{
+\vec{\phi}_{(\vec{x}^{(\alpha)})}
+\big\}_{\alpha=1}^{p}. \qquad \big(\vec{\phi}_{(\vec{x}^{(\alpha)})} = \vec{\phi}^{(\alpha)} \text{ for brevity}\big)
+\end{equation}
+
+\pause
+
+Consequently, there exists a set of coefficients (i.e. a coefficient for each transformed observation)
+\begin{equation}
+\big\{
+a^{(\alpha)}
+\big\}_{\alpha=1}^{p}\,,
+\end{equation} which satisfies the following:
+
+\begin{equation}
+\label{eq:ephi}
+\vec e = \sum^{p}_{\beta=1} a^{(\beta)} 
+%\vec{\phi}_{(\vec{x}^{(\beta)})}
+\vec{\phi}^{(\beta)}
+\end{equation}
+
+\notesonly{
+Eq.\ref{eq:ephi} tells us that we can describe $\vec e$ in terms of the transformed observations (a weighted summation of $\phi$'s).
+ The use of the index $\beta$ is only to avoid collisions with $\alpha$ later.
+}
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+\vspace{-12mm}
+\hspace{7.8cm}
+\StickyNote[1.7cm]{
+	\begingroup
+	\footnotesize
+	\begin{equation} \label{eq:cov}
+		\vec C_{\phi} = \frac{1}{p} \sum_{\alpha=1}^{p} \vec{\phi}^{(\alpha)} \big(\vec{\phi}^{(\alpha)}\big)^\top
+	\end{equation}
+	\begin{equation}
+	\label{eq:ephi}
+		\vec e = \sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}
+	\end{equation}
+	\endgroup
+}[3.5cm]
+\vspace{-22mm}
+}
+
+\notesonly{
+Substituting Eq.\ref{eq:cov} and Eq.\ref{eq:ephi} into the eignevalue problem Eq.\ref{eq:eig}:
+}
+\slidesonly{
+Express the eigenvalue problem in terms of $\phi$'s:
+
+\begin{equation} \label{eq:eig}
+\vec C_{\phi} \;\; \vec e \; = \; \lambda \;\; \vec e
+\end{equation}
+
+}
+
+\begin{equation}
+\underbrace{\frac{1}{p} \sum_{\alpha=1}^{p} \vec{\phi}^{(\alpha)} \big(\vec{\phi}^{(\alpha)}\big)^\top 
+\vphantom{\sum^{p}_{\beta=1}}
+}_{=\,\vec C_{\phi}}
+ \, 
+\underbrace{\sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}}_{=\,\vec e}
+ = \lambda \;\,
+\underbrace{\sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}}_{=\,\vec e}
+\end{equation}
+
+\pause
+
+After rearranging the terms we get:
+\begin{equation} \label{eq:eig2}
+\frac{1}{p} \sum_{\alpha=1}^{p} \sum^{p}_{\beta=1} 
+a^{(\beta)} \vec{\phi}^{(\alpha)}
+\underbrace{
+ \big(\vec{\phi}^{(\alpha)}\big)^\top  \,  \vec{\phi}^{(\beta)}
+}_{\substack{\text{scalar product}\\ = K_{\alpha\beta}}}
+ = \lambda 
+\sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}
+\end{equation}
+
+We are one step closer to not needing the eplxicit mapping $\phi$.
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+\vspace{-12mm}
+\hspace{7.8cm}
+\StickyNote[1.7cm]{
+	\begingroup
+	\footnotesize
+	\begin{equation} \label{eq:cov}
+		\vec C_{\phi} = \frac{1}{p} \sum_{\alpha=1}^{p} \vec{\phi}^{(\alpha)} \big(\vec{\phi}^{(\alpha)}\big)^\top
+	\end{equation}
+	\begin{equation}
+	\label{eq:ephi}
+		\vec e = \sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}
+	\end{equation}
+	\endgroup
+}[3.5cm]
+\vspace{-22mm}
+}
+
+\notesonly{
+Recall from \sectionref{sec:nonlin} that we not even be able compute $\vec{\phi}_{(\vec{x})}$ but we now see it is possible to avoid the transformation altogether by exploiting the kernel trick (cf. Eq.\ref{eq:trick}) by substituing 
+$ K_{\alpha \beta} $ for
+$
+\vec{\phi}^{\top}_{(\vec{x}^{(\alpha)})}
+ \, 
+  \vec{\phi}_{(\vec{x}^{(\beta)})}
+$
+
+Eq.\ref{eq:eig2} becomes:}
+
+\begin{equation} \label{eq:eig3}
+\frac{1}{p} \sum_{\alpha=1}^{p} \sum^{p}_{\beta=1} 
+a^{(\beta)}
+\vec{\phi}^{(\alpha)}
+K_{\alpha \beta}
+= \lambda 
+\sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}
+\slidesonly{\hspace{40mm}}
+\end{equation}
+
+We now proceed with reformulating the above until we no longer have any $\phi$'s:
+
+\pause
+
+\notesonly{We }left-multiply\notesonly{ Eq.\ref{eq:eig3}} with $\big(\vec \phi_{(\vec x^{(\gamma)})}\big)^\top$, where $\gamma = 1, \ldots, p$.
+ We can pull $\big(\vec \phi^{(\gamma)}\big)^\top$ directly into the sum on the \slidesonly{LHS}\notesonly{left-hand-side} and the sum on the \slidesonly{RHS}\notesonly{right-hand-side}:
+
+\only<2,3>{
+\begin{equation} \label{eq:eig4}
+\frac{1}{p} \sum_{\alpha=1}^{p} \sum^{p}_{\beta=1} 
+a^{(\beta)}
+\underbrace{
+\left(\vec \phi^{(\gamma)}\right)^\top
+\vec{\phi}^{(\alpha)}
+}_{=K_{\gamma \alpha}}
+K_{\alpha \beta}
+ = \lambda 
+\sum^{p}_{\beta=1} a^{(\beta)} 
+\underbrace{
+\left(\vec \phi^{(\gamma)}\right)^\top \vec{\phi}^{(\beta)}
+}_{=K_{\gamma \beta}}
+\end{equation}
+}
+
+\pause
+
+\newpage
+
+\notesonly{Eq.\ref{eq:eig4} without the clutter:}
+
+\begin{equation} \label{eq:eigK}
+\frac{1}{p} \sum_{\alpha=1}^{p} \sum^{p}_{\beta=1} 
+a^{(\beta)}
+K_{\gamma \alpha}
+K_{\alpha \beta}
+ = \lambda 
+\sum^{p}_{\beta=1} a^{(\beta)} 
+K_{\gamma \beta} \quad {\only<4>{\color{red}}\forall \gamma}
+\end{equation}
+
+\slidesonly{
+\only<4>{
+Use matrix notation to reduce the clutter.
+}
+}
+
+
+
+\end{frame}
+
+\begin{frame}
+
+\slidesonly{
+\begin{equation} \label{eq:eigK}
+\frac{1}{p} \sum_{\alpha=1}^{p} \sum^{p}_{\beta=1} 
+a^{(\beta)}
+K_{\gamma \alpha}
+K_{\alpha \beta}
+ = \lambda 
+\sum^{p}_{\beta=1} a^{(\beta)} 
+K_{\gamma \beta} \quad {\color{red}\forall \gamma}
+\end{equation}
+}
+
+We want to solve \notesonly{\eqref{eq:eq:eigK}}\slidesonly{the above} \textbf{for all} training samples $\gamma$.
+We can further reduce the clutter by using matrix notation.\\ 
+Specifically, by computing the \emph{kernel matrix} $\vec K=\{K_{\alpha\beta}\}$, where \\
+\begin{equation}
+K_{\alpha \beta} = 
+k(\vec x^{(\alpha)}, \vec x^{(\beta)}) = 
+\big(\vec{\phi}^{(\alpha)}\big)^\top 
+		\vec{\phi}^{(\beta)}
+\end{equation}
+
+We end up with this formulation of the eigenvalue problem:
+
+\begin{align}
+	\frac{1}{p} \vec{K}^2 \vec{a} = \lambda \vec{K} \, \vec{a}\\
+	\vec{K}^2 \vec{a} = p \lambda \vec{K} \, \vec{a}
+\end{align}
+
+
+\end{frame}
+
+\begin{frame}{Side-note: Arriving at the matrx notation}
+
+\notesonly{Side note: Going from \eqref{eq:eigK} to the matrix notation:\\}
+
+\slidesonly{
+
+\svspace{-3mm}
+
+\begingroup
+\footnotesize
+\begin{equation} \label{eq:eigK}
+\frac{1}{p} \sum_{\alpha=1}^{p} \sum^{p}_{\beta=1} 
+a^{(\beta)}
+K_{\gamma \alpha}
+K_{\alpha \beta}
+ = \lambda 
+ \sum^{p}_{\beta=1} a^{(\beta)} 
+K_{{\gamma} \beta} \quad {\forall \gamma}
+\end{equation}
+\endgroup
+
+\svspace{-1mm}
+}
+
+First, we look at the RHS\notesonly{ of \eqref{eq:eigK}}:
+
+\svspace{-5mm}
+
+\begin{equation}
+ \ldots = \lambda 
+ \sum^{{\color{blue}p}}_{\color{blue}\beta=1} a^{({\color{blue}\beta})} 
+K_{{\color{red}\gamma} {\color{blue}\beta}} \quad {\color{red}\forall \gamma}
+\end{equation}
+
+\begin{itemize}
+\item ${\color{red}\gamma}$ corresponds to a specific row in the Kernel matrix $\vec K$.
+\item Let $\vec a$ be a vector that stores the values $a^{({\color{blue}\beta})}$, ${\color{blue}\beta=1,\ldots,p}$.
+\item ${\color{blue}\beta}$ iterates over the elements in the vector $\vec a$ and columns in $\vec K$.
+\item If we switch terms to:
+\svspace{-3mm}
+\begin{equation}
+ \ldots = \lambda 
+ \sum^{{\color{blue}p}}_{\color{blue}\beta=1}  
+K_{{\color{red}\gamma} {\color{blue}\beta}} \, a^{({\color{blue}\beta})} \quad {\color{red}\forall \gamma}
+\label{eq:rearrangerhs}
+\end{equation}
+
+\notesonly{We see that the }RHS is essentially the inner product of the $\gamma$-th row with $\vec a$.
+Recall that we're doing this ${\color{red}\forall \gamma}$ (i.e. all rows). Therefore RHS $\Rightarrow \lambda \vec K \, \vec a$ (a vector). 
+
+
+\end{itemize}
+
+\end{frame}
+
+\definecolor{darkgreen}{rgb}{0,0.6,0}
+
+\begin{frame}{Side-note: Arriving at the matrx notation - LHS}
+
+Next, we look at the LHS\notesonly{ of \eqref{eq:eigK}}:
+
+\svspace{-3mm}
+
+\begin{equation}
+ \frac{1}{p} \sum_{{\color{darkgreen}\alpha=1}}^{p} \sum^{p}_{{\color{blue}\beta=1}} 
+a^{({\color{blue}\beta})}
+K_{{\color{red}\gamma} {\color{darkgreen}\alpha}}
+K_{{\color{darkgreen}\alpha} {\color{blue}\beta}} = \ldots
+ \quad {\color{red}\forall \gamma}
+\end{equation}
+
+\svspace{-1mm}
+
+\begin{itemize}
+\item Same as before:
+\begin{itemize}
+\item ${\color{red}\gamma}$ corresponds to a specific row in the Kernel matrix $\vec K$.
+\item Let $\vec a$ be a vector that stores the values $a^{({\color{blue}\beta})}$, ${\color{blue}\beta=1,\ldots,p}$.
+\item ${\color{blue}\beta}$ iterates over the elements in the vector $\vec a$ and columns in $\vec K$.
+\end{itemize}
+\item ${\color{darkgreen}\alpha}$ iterates over the columns in $\vec K$.
+\item $K_{{\color{red}\gamma} {\color{darkgreen}\alpha}}$ doesn't change with ${\color{blue}\beta}$, so we can move it out of the inner sum:
+\svspace{-3mm}
+\begin{align}
+ \frac{1}{p} \sum_{{\color{darkgreen}\alpha=1}}^{p} 
+ K_{{\color{red}\gamma} {\color{darkgreen}\alpha}}
+ \underbrace{
+\sum^{p}_{{\color{blue}\beta=1}} 
+a^{({\color{blue}\beta})}
+K_{{\color{darkgreen}\alpha} {\color{blue}\beta}}}_{\circledast} = \ldots
+ \quad {\color{red}\forall \gamma}
+\end{align}
+\item $\circledast$ is the inner-product of the ${\color{darkgreen}\alpha}$-th row and $\vec a$.
+\item LHS is essentially the inner product of the $\gamma$-th row with the \underline{vector} $\circledast$.
+\item Recall ${\color{red}\forall \gamma}$. Therefore LHS $\Rightarrow \vec K \, \vec K \, \vec a = \vec K^2 \vec a$. \notesonly{$\vec K$ is a symmetric matrix} 
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Back to the eigenvalue problem}
+
+\notesonly{Back to the eigenvalue problem:\\}
+
+\slidesonly{
+\begin{align}
+	\vec{K}^2 \vec{a} = p \lambda \vec{K} \, \vec{a}
+\end{align}
+}
+
+\pause
+
+$\vec K$ appears on both sides. All the solutions that are of interest remain represented in 
+the following simpler eigenvalue problem, which we refer to as the \emph{transformed eigenvalue problem}:
+\begin{equation}
+\label{eq:eigsimple1}
+	\vec{K} \, \vec{a} = p \lambda \vec{a}
+\end{equation}
+
+\pause
+
+We can interpret $\vec a$ as the \emph{eigenvector} of $\vec K$
+
+\pause
+
+\question{Do we really need $p$ in the transformed eigenvalue problem?}
+
+\pause
+
+No, by omitting the constant $p$ (optional), we can rely on finding solutions for $\lambda$ that absorb it:
+
+\begin{equation}
+\label{eq:eigsimple2}
+	\vec{K} \, \vec{a} = \lambda \vec{a}
+\end{equation}
+
+\end{frame}
+
+\begin{frame}
+
+\question{What was all this about?}
+
+All we've been doing so far is reformulate the eigenvalue problem such that we end up 
+with a formulation that only contains terms of the inner product kernel.\\
+
+\pause
+
+\slidesonly{
+\begin{minipage}{0.45\textwidth}
+	\begin{center}
+		\includegraphics[width=3cm]{img/meme_necessary}
+    \end{center}
+\end{minipage}
+\pause
+\begin{minipage}{0.45\textwidth}
+	\begin{center}
+		\includegraphics[width=4cm]{img/meme_ofcourse2}
+    \end{center}
+\end{minipage}
+}
+
+\notesonly{
+\question{Was all this necessary?}
+
+Yes, }because
+
+\begin{enumerate}
+\item we want to enable PCA to find non-linear correlations and
+\item we don't have access to $\vec \phi_{(\vec x)}$.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+\slidesonly{
+\begin{center}
+		\includegraphics[width=6cm]{img/meme_nowwhat}
+\end{center}
+}
+
+\pause
+
+Now that we've solved the eigenvalue problem, we continue with the remaining steps for PCA.
+
+\pause
+
+
+\slidesonly{
+\begin{center}
+		\includegraphics[width=2cm]{img/meme_right}
+\end{center}
+}
+
+\end{frame}
+
+\subsubsection{Normalize the eigenvectors}
+
+\begin{frame}{\subsecname}
+
+Before we can project anything onto the space spanned by the PCs, we need to know they are normalized first.
+
+In linear PCA, we've relied on \textit{Eig} giving us normalized eigenvectors $\vec e$. 
+
+\question{If we feed it with the kernel matrix will we get normalized $\vec a$?}
+
+\pause
+
+- Yes, Eig() gives us \underline{unit} vectors regardless.
+
+\pause
+
+\question{So, are we done talking about normalization?}
+
+\pause
+
+-No, because it's the $\vec e$'s that PCA needs normalized.
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+Recall, that PCA solves the eigenvalue problem
+
+\begin{equation}
+\vec C_{\phi} \, \vec e = \lambda \vec e
+\end{equation}
+
+At the solution, $\vec e^\top \vec e = 1$. $\vec e$ are normalized eigenvectors to use as PCs.
+
+We don't have the $\phi$'s so we opted to solve the transformed eigenvalue problem instead:
+
+\begin{equation}
+%\label{eq:eigsimple1}
+	\vec{K} \, \vec{a} = p \lambda \vec{a}
+\end{equation}
+
+At the solution, $\widetilde{\vec a}^\top \widetilde{\vec a} = 1 \quad \nRightarrow \quad \vec e^\top \vec e \ne 1$\\
+
+\notesonly{Now that we are aware that we need further normalization, }we'll use $\widetilde{\vec a}_k$ where $k=1,\ldots,p$ to denote the \textbf{un}normalized eigenvectors from the transformed eigenvalue problem and $\vec a_k$ to denote that the vector has been normalized to use to correctly project onto the corresponding PC.
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+Recall\notesonly{ing Eq.\ref{eq:ephi} (we add the index $k$ to denote which eigenvector):}
+\begin{equation}
+\label{eq:ephik}
+\vec e_k = \sum^{p}_{\beta=1} a_k^{(\beta)} \vec{\phi}_{(\vec{x}^{(\beta)})},
+\end{equation}
+
+We want an expression for the norm $\vec e^{\top}_k \vec e_k$ that does not involve $\phi$'s. We left-multiply\slidesonly{ the above}\notesonly{ Eq.\ref{eq:ephik}} with $\left(\vec e_k\right)^\top$:
+\begin{align}
+\vec e^{\top}_k \vec e_k &= \sum^{p}_{\alpha=1}  a_k^{(\alpha)} \vec{\phi}_{(\vec{x}^{(\alpha)})}^\top \sum^{p}_{\beta=1} a_k^{(\beta)} \vec{\phi}_{(\vec{x}^{(\beta)})} \\
+&= \sum^{p}_{\alpha=1}  \sum^{p}_{\beta=1}  a_k^{(\beta)}  \underbrace{\vec{\phi}_{(\vec{x}^{(\alpha)})}^\top  \vec{\phi}_{(\vec{x}^{(\beta)})}} a_k^{(\alpha)} \\
+&= \sum^{p}_{\alpha=1}  \sum^{p}_{\beta=1}  a_k^{(\beta)} \quad \; K_{\alpha\beta} \quad \; a_k^{(\alpha)} \\
+&= \widetilde {\vec a}_k^\top \vec K \, \widetilde {\vec a}_k
+\end{align}
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+\notesonly{
+And when we plug Eq.\ref{eq:eigsimple1} into the above:
+}
+\slidesonly{
+From $\vec{K} \, \widetilde {\vec a}_k = p \lambda \widetilde {\vec a}_k$ follows:
+}
+
+\begin{equation}
+\label{eq:eignorm}
+\vec e^{\top}_k \vec e_k = 
+\widetilde {\vec a}_k^\top 
+\underbrace{p \lambda_k \, \widetilde {\vec a}_k}_{=\, \vec K \, \widetilde {\vec a}_k} 
+= p \lambda_k \, \widetilde {\vec a}_k^\top \widetilde {\vec a}_k  \eqexcl 1
+\end{equation}
+
+\pause
+
+w.l.o.g.
+
+\svspace{-7mm}
+
+\begin{equation}
+\widetilde {\vec a}_k^\top \widetilde {\vec a}_k = 1
+\end{equation}
+
+Remark: a unit-length vector $\widetilde {\vec a}_k$ does not imply \emph{normlized} for PCA anymore.
+
+\pause
+
+\notesonly{
+Scaling $\widetilde {\vec a}_k$ by $\frac{1}{\sqrt{p \lambda_k}}$ yields 
+a vector in the same direction as $\widetilde {\vec a}_k$ to satisfy \notesonly{Eq.\ref{eq:eignorm}}\slidesonly{$\vec e^{\top}_k \vec e_k \eqexcl 1$}.\\
+}
+With
+\svspace{-5mm}
+\begin{equation}
+\vec a_k^{norm.} := \frac{1}{\sqrt{p \lambda_k}} \widetilde {\vec a}_k,
+\end{equation}
+follows:
+\svspace{-5mm}
+\begin{align}
+\vec e^{\top}_k \vec e_k 
+&= p \lambda_k \, \; \widetilde {\vec a}_k^\top \; \widetilde {\vec a}_k\\
+&= p \lambda_k \, \left(\vec a_k^{\text{norm.}}\right)^\top \vec a_k^{\text{norm.}} \\
+&= p \lambda_k \left(\frac{1}{\sqrt{p \lambda_k}} \widetilde {\vec a}_k\right)^\top \left(\frac{1}{\sqrt{p \lambda_k}} \widetilde {\vec a}_k\right)
+= 1
+\end{align}
+
+\end{frame}
+
+\subsubsection{Sorting}
+
+\begin{frame}{\subsubsecname}
+
+Sort the eigenvectors such that the corresponding eigenvalues are arranged in decreasing order. 
+
+\slidesonly{
+\begin{center}
+		\includegraphics[width=4cm]{img/meme_sort}
+\end{center}
+}
+
+\end{frame}
+
+\subsubsection{Projection}
+
+\begin{frame}{\subsubsecname}
+\notesonly{In order t}\slidesonly{T}o project some observation $\vec x$ into the PC space, we first map it into \notesonly{the non-linear }space of $\phi$ 
+and then project that into the space spanned by the PCs.\\
+
+\pause
+
+\slidesonly{
+\begin{center}
+		\includegraphics[width=4cm]{img/meme_mapx}
+\end{center}
+}
+
+\notesonly{ 
+By now we should expect that the transformation will be performed}\slidesonly{Transform} via the kernel trick.
+\notesonly{We basically }represent this sample $\vec x$ by its relation to the \emph{training data} 
+(i.e. the $p$ observations that were used to compute the PCs).
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+\visible<2->{
+\vspace{-12mm}
+\hspace{8.cm}
+\StickyNote[1.cm]{
+	\begingroup
+	\footnotesize
+	\begin{equation}
+	\label{eq:ephi}
+		\vec e = \sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}
+	\end{equation}
+	\endgroup
+}[3.cm]
+\vspace{-5mm}
+}
+}
+ 
+\notesonly{We derive the projection for Kernel PCA by starting}\slidesonly{Start} with the projection used in linear PCA.
+
+Recall in linear PCA, to get the component of $\vec x$ in the direction of the $k$-th PC we use:
+
+\svspace{-5mm}
+
+\begin{equation}
+\label{eq:projlinx}
+u_k(\vec x) = \vec e_k^\top \vec x
+\end{equation}
+
+Assuming we have a the $\phi$'s:
+
+\svspace{-3mm}
+
+\begin{equation}
+\label{eq:projlin}
+u_k(\phi_{(\vec x)}) = \vec e_k^\top \vec \phi_{(\vec x)}
+\end{equation}
+
+\pause
+
+\notesonly{
+We substitute $\vec \phi_{(\vec x)}$ for $\vec x$ and plug Eq.\ref{eq:ephi} into Eq.\ref{eq:projlin}:
+}
+
+\visible<3>{
+
+\svspace{-2mm}
+
+\begin{align}
+\label{eq:projk1}
+u_k(\vec \phi_{(\vec x)}) &= \sum^{p}_{\beta=1} a^{(\beta)} 
+\hspace{-3mm}
+\underbrace{
+\vec{\phi}^\top_{(\vec{x}^{(\beta)})} \, \vec \phi_{(\vec x)}
+}_{\substack{
+\text{recognize the familiar}\\
+\text{scalar product?}
+\\ =k(\vec x^{(\beta)}, \vec x) = K_{\beta,\vec x}}}\notesonly{\\
+&}= \sum_{\beta=1}^{p} a_k^{(\beta)} K_{\beta, \vec x}
+\end{align}
+
+\notesonly{Note that }$\vec x$ can be a sample that was used in computing the PCs or a completly new ``test'' point.
+}
+\end{frame}
+
+\subsubsection{Reconstruction}
+
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+\begin{center}
+		\includegraphics[width=4cm]{img/meme_reconstruct}
+\end{center}
+}
+
+Since we never had the transformation $\phi$ to begin with. 
+It is not psssible to simply project a sample from PC space back into the original $N$-dimensional input space. 
+Algorithms exist that \emph{approximate} a ``pre-image'' of some new observation.
+
+\end{frame}

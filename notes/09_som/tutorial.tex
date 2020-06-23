@@ -2,19 +2,19 @@
 \usepackage{multirow}
 
 \newcommand{\sheetnum}{%
-	10
+	09
 }
 %\setcounter{section}{\sheetnum-3}
 \newcommand{\tutorialtitle}{%
-    Locally Linear Embedding (LLE)
+    Self-Organizing Maps
 }
 \newcommand{\tutorialtitleshort}{%
-	LLE
+	SOM
 }
 % for slides
 \subtitle{\sheetnum \tutorialtitle}
 
-%\maxdeadcycles=1000 % Workaround for ! Output loop---100 consecutive dead cycles because of too many figures
+\maxdeadcycles=1000 % Workaround for ! Output loop---100 consecutive dead cycles because of too many figures
 
 % The following use of algroithms does not work well with the notes:
 %
@@ -55,14 +55,40 @@
 \titlepage
 \end{frame}
 
+%\setcounter{tocdepth}{2}
+%\begin{frame}
+%\mode<presentation>{
+%\tableofcontents[subsubsectionstyle=show/show/show/hide]
+%}
+%\mode<article>{
+%\tableofcontents
+%}
+%\end{frame}
 \begin{frame}
+\mode<presentation>{
+\tableofcontents[hideallsubsections]
+}
+\mode<article>{
 \tableofcontents
+}
 \end{frame}
 
 \newpage
 
 \mode<all>
-\input{./1_embedding}
+\input{./0_noneighborhood}
+\mode*
+
+\clearpage
+
+\mode<all>
+\input{./1_som}
+\mode*
+
+\clearpage
+
+\mode<all>
+\input{./2_som_algorithm}
 \mode*
 
 \clearpage

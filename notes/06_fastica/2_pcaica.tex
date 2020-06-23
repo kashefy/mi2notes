@@ -1,0 +1,337 @@
+\subsection{Whitening in the context of ICA}
+
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \subsecname
+    \end{center}
+    \begin{center}
+    Bringing PCA into the mix.
+    How PCA solves half of the ICA problem.
+    \end{center}
+\end{frame}
+}
+
+\begin{frame}{\subsecname}
+
+\slidesonly{
+We've established that
+\begin{equation}
+\vec \Sigma_x =  \vec A\, \vec A^\top
+\end{equation}
+}
+
+\pause
+
+\notesonly{
+If we were to apply \emph{Singular Value Decomposition} on the symmetric matrix $\Sigma_x$:
+}
+
+\begin{equation}
+\mathrm{SVD}(\vec \Sigma_x) = \vec U\, \vec D \, \vec U^\top
+\end{equation}
+
+where\\
+\notesonly{
+$\vec U$ is an orthogonal matrix,} $\vec U^\top\vec U = \vec I_N$ and
+\notesonly{$\vec D$ is a diagonal matrix with rank $N$, }$\vec D^\top = \vec D$.\\
+
+We define the two following transformation $\vec Q$ and $\widetilde{\vec A}$:
+\begin{equation}
+\label{eq:defq}
+\vec Q := \vec D^{-\frac{1}{2}} \vec U^\top
+\end{equation}
+\begin{equation}
+\label{eq:defatilde}
+\widetilde{\vec A} := \vec Q \, \vec A 
+\end{equation}
+
+Which yields\only<3>{ a new ICA problem:
+\begin{equation}
+\vec u = \vec Q\, \vec x = \vec Q\,\vec A \, \vec s = \widetilde{\vec A} \, \vec s
+\end{equation}
+}
+
+\end{frame}
+
+\begin{frame}{A new ICA problem}
+
+\slidesonly{
+\begin{equation}
+\vec u := \vec Q\, \vec x = \vec Q\,\vec A \, \vec s = \widetilde{\vec A} \, \vec s
+\end{equation}
+}
+
+\question{What is so special about the new mixing matrix $\widetilde{\vec A}$?} \\
+
+\notesonly{-$\widetilde{\vec A}$ is orthogonal (i.e. $\widetilde{\vec A}\, \widetilde{\vec A}^\top = \widetilde{\vec A}^\top \widetilde{\vec A} = \widetilde{\vec A}^{-1} \widetilde{\vec A} = \vec I_N$).
+ We will see the implications of this in how it reduces the number of free parameters for solving the new ICA problem.
+}
+
+\pause
+
+\slidesonly{
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{img/meme_newalwaysbetter}%
+\end{center}
+
+- $\widetilde{\vec A}$ is orthogonal. Not necessarily the case for the original mixing matrix $\vec A$.
+}
+
+\end{frame}
+
+\begin{frame}{A new ICA problem}
+
+\slidesonly{
+\vspace{-14mm}
+\hspace{8.0cm}
+\StickyNote[1.7cm]{
+	\begingroup
+	\scriptsize
+	%\begin{equation}
+		%\widehat{P}_{u_i} (\widehat{u}_i) =
+		 %\frac{1}{\big| \widehat{f}_i^{'} (\widehat{s}_i) \big|} 
+		 %\widehat{P}_{s_i}(\widehat{s}_i)
+	%\end{equation}
+	\begin{equation}
+		\vec Q := \vec D^{-\frac{1}{2}} \vec U^\top
+	\end{equation}
+\vspace{-2mm}
+	\begin{equation}
+	\vec \Sigma_x = \E \lbrack\, \vec x \, \vec x^\top \rbrack = \vec U \, \vec D \, \vec U^{\top}
+	\end{equation}
+	\endgroup
+}[3.3cm] % width
+\vspace{-22mm}
+}
+
+\begin{align}
+\E \lbrack\, \vec u \, \vec u^\top \rbrack
+&\mystackrel{\vec u := \vec Q\, \vec x}{\vec u = \vec Q\, \vec x}
+ \E \lbrack\, \vec Q \, \vec x  \left( \vec Q \, \vec x\right)^\top \rbrack\\
+&\mystackrel{\vec u = \vec Q\, \vec x}{}\E \lbrack\, \vec Q \, \vec x \; \vec x^\top \vec Q^\top \rbrack\\
+&\mystackrel{\vec u = \vec Q\, \vec x}{} \E \lbrack\, \vec Q \, \vec \Sigma_{x} \, \vec Q^\top \rbrack\\
+&\mystackrel{\vec u = \vec Q\, \vec x}{} \vec Q \, \vec \Sigma_{x} \, \vec Q^\top\\
+&\mystackrel{\vec u = \vec Q\, \vec x}{}
+\left( \vec D^{-\frac{1}{2}} \vec U^\top \right)
+\left( \vec U \, \vec D \, \vec U^\top \right)
+\left( \vec D^{-\frac{1}{2}} \vec U^\top \right)^\top
+\end{align}
+
+\end{frame}
+\begin{frame}
+
+\slidesonly{
+\begin{align}
+\E \lbrack\, \vec u \, \vec u^\top \rbrack
+&\mystackrel{\vec u = \vec Q\, \vec x}{}
+\left( \vec D^{-\frac{1}{2}} \vec U^\top \right)
+\left( \vec U \, \vec D \, \vec U^\top \right)
+\left( \vec D^{-\frac{1}{2}} \vec U^\top \right)^\top
+\end{align}
+}
+
+From $\vec U^\top\vec U = \vec I_N$ and $\vec D^\top = \vec D$ follows:
+
+\begin{align}
+\E \lbrack\, \vec u \, \vec u^\top \rbrack
+&=
+\vec D^{-\frac{1}{2}}
+\underbrace{\left( \vec U^\top  \vec U \right)}_{= \vec I_N}
+\, \vec D \, 
+\underbrace{\left( \vec U^\top \,  \vec U \right)}_{= \vec I_N}
+\,
+\left(\vec D^{-\frac{1}{2}} \right)^\top \\
+&= \vec D^{\top}
+\, 
+\underbrace{\vec D^{-\frac{1}{2}}  \, 
+\left(\vec D^{-\frac{1}{2}} \right)^{\cancel{\top}}}_{=\vec D^{-1}} = {\color{blue}\vec I_N}
+\end{align}
+
+
+Recall 
+\notesonly{from \eqref{eq:sigmax}:}
+\begin{equation}
+\vec \Sigma_x =  \E \lbrack \, \vec x \, \vec x^\top \rbrack
+=  \vec A\, \vec A^\top
+\end{equation}
+Therefore:
+\begin{equation}
+\E \lbrack \, \vec u \, \vec u^\top \rbrack
+= \widetilde {\vec A}\, \widetilde {\vec A}^\top = {\color{blue}\vec I_N}
+\end{equation}
+
+\notesonly{
+The new mixing matrix}
+$\widetilde{\vec A}$ is orthonormal.\\
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\slidesonly{
+
+What makes $\widetilde{\vec A}$ so special is that it is orthonormal.
+}
+
+\pause
+
+\svspace{5mm}
+
+The space of solutions restricted to finding unmixing matrices that are also orthogonal.
+This restriction can speed up convergence of ICA. 
+The number of free parameters for solving the new ICA problem 
+$\vec u = \widetilde{\vec A}\, \vec s$
+is reduced\notesonly{ from $N^2$ to $N(N-1)/2$
+}\slidesonly{:\\
+$$N^2 \rightarrow N(N-1)/2$$
+}
+
+\end{frame}
+
+\begin{frame}
+\slidesonly{
+\frametitle{What just happened?}
+
+\begin{itemize}
+\setlength\itemsep{1em}
+\item We've transformed $\vec x$ to get $\vec u$:
+$ \qquad \qquad \qquad
+\vec u := \vec D^{-\frac{1}{2}} \vec U^\top \vec x
+$
+
+\item Where did $\vec D$ and $\vec U$ come from?
+$ \qquad \qquad
+\mathrm{SVD}(\vec \Sigma_x) = \vec U\, \vec D \, \vec U^\top
+$
+
+\item What do $\vec D$ and $\vec U$ represent? - the eigenval. and eigenvect. of $\vec \Sigma_x$
+
+\item What's so special about $\vec u$?
+$ \qquad \qquad \qquad \qquad
+\E \lbrack \, \vec u \, \vec u^\top \rbrack = \vec I_N
+$
+
+\pause
+
+\item ...So?
+
+\pause
+
+\begin{itemize}
+\item[-] new ICA problem: $\vec u := \widetilde{\vec A}\, \vec s$\\
+\item[-] $\widetilde{\vec A}$ is orthogonal\\
+\item[-] unmixing the new problem involves only ``half'' the number of free parameters.
+\end{itemize}
+
+\question{What is the transformation $\vec D^{-\frac{1}{2}} \vec U^\top$ called?}
+
+\notesonly{- It's a whitening transformation. The same we know from PCA.}
+
+\end{itemize}
+}
+
+\end{frame}
+
+\subsubsection{Whitening solves half of the ICA problem}
+
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+
+Unmixing the new problem involves only ``half'' the number of free parameters.
+$$N^2 \rightarrow N(N-1)/2$$
+}
+
+\pause
+
+\svspace{-5mm}
+
+\question{Does this mean that $\vec W$ is no longer $N \times N$?}
+
+-No $\vec W$ is still $N \times N$, but we no longer have to search for each component individually.
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+Example with $N=2$ uniformly distributed sources $s_1, s_2$:
+
+ \begin{center}
+  \begin{minipage}{0.29\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_original_sources} 
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.29\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_mixtures_centered} 
+  \end{minipage}\\
+  
+  \begin{minipage}{0.29\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_mixtures_decorrelated} 
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.29\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_mixtures_whitened} 
+  \end{minipage}
+  \notesonly{
+  \captionof{figure}{Example with $N=2$ uniformly distributed sources $s_1, s_2$}
+  }
+\end{center}
+
+\end{frame}
+
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+Example with $N=2$ uniformly distributed sources $s_1, s_2$:
+
+ \begin{center}
+  \begin{minipage}{0.25\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_original_sources} 
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.25\textwidth}
+\includegraphics[width=0.99\textwidth]{./img/uniform_mixtures_whitened} 
+  \end{minipage}
+\end{center}
+}
+
+ICA on whitened mixtures is about ``rotating it back''.
+
+2D data can be rotated by an angle $\theta$ using:
+
+\begin{align}
+  \vec{x}_{\theta} & = 
+  \begin{pmatrix}
+	\cos(\theta) & -\sin(\theta) \\
+	\sin(\theta) & \cos(\theta)
+  \end{pmatrix}
+  \vec{x} \qquad \text{with} \quad \theta = 0, \, \ldots\, , 2\pi
+\end{align}
+
+\pause
+
+Find the right rotation for \textcolor{blue}{2}D data involves a \textcolor{red}{single} free parameter.
+\begin{equation}
+\# \text{free parameters} = \textcolor{blue}{N} \cdot (\textcolor{blue}{N}-1)/2 = \textcolor{blue}{2} \cdot (\textcolor{blue}{2}-1)/2 = \textcolor{red}{1}
+\end{equation}
+
+\end{frame}
+
+\slidesonly{
+\begin{frame}{Summary so far}
+\begin{enumerate}
+\item Initial ICA Problem: $\vec x = \vec A\, \vec s$
+\item New ICA Problem: $\vec u := \widetilde{\vec A}\, \vec s$,\\
+
+where $\vec u = \vec D^{-\frac{1}{2}} \vec U^\top \vec x$ and $\vec \Sigma_u = \vec I_N$.
+\item $\vec u$ is the \emph{whitened} version of $\vec x$.
+\item $\vec D$ and $\vec U$ can be obtained via PCA on $\vec x$.
+\item Applying ICA on whitened data reduces the number of free parameters.
+\item PCA simplifies the ICA problem.
+\item ICA on whitened data is about ``rotating it back''.
+\end{enumerate}
+
+\end{frame}
+}
+

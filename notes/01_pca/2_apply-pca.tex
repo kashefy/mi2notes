@@ -1,0 +1,139 @@
+\subsection{Applying PCA}
+
+\mode<presentation>{
+\begin{frame} 
+    %\begin{center} \huge
+        %\subsecname
+    %\end{center}
+    \begin{center}
+		\includegraphics[width=5cm]{img/meme_knowpca}
+    \end{center}
+    \begin{center}What can we do with it?
+    \end{center}
+\end{frame}
+}
+
+
+\begin{frame}\frametitle{\subsecname}
+
+\begin{enumerate}
+\item Dimensionality reduction
+\item Visualization (e.g. plot the projections onto the first 2 or 3 PCs.)
+\item Outlier detection (project onto PCs with \emph{smallest} eigenvalues)
+\item Whitening (i.e. decorrelate the data) - exploit that eigenvectors form an orthonormal basis.
+\begin{equation}
+\vec x_{whitened}^{(\alpha)} = \vec{\Lambda}^{-\frac{1}{2}}\vec{M}^\top\vec{x}^{(\alpha)}
+\quad
+\forall \alpha
+\end{equation}
+
+\question{What is the covariance of $\vec x_{whitened}$?}
+
+\pause
+
+- the Identity matrix.
+
+\end{enumerate}
+
+\end{frame}
+
+\newpage
+
+
+\subsubsection{A note on implementation:}
+
+\begin{frame}\frametitle{\subsubsecname}
+
+\question{Is an off-the-shelf implementation such as\\ sklearn.decomposition.PCA for python really necessary?}
+
+\notesonly{
+PCA boils down to solving the eigenvalue problem.
+We bascially need a routine with which to solve the eigenvalue problem. 
+}
+\pause
+\slidesonly{
+    \begin{center}
+		\includegraphics[width=5cm]{img/meme_eig}
+    \end{center}
+    }
+\pause
+
+For python, the obvious choice is to use a routine like \textit{numpy.linalg.eig(A)}. \emph{Watch out for how to interpret the output.}
+
+\end{frame}
+
+\begin{frame}{Only}\frametitle{\subsubsecname}
+
+\svspace{-5mm}
+
+\question{Are there alternatives to eigenvalue decomposition?}
+
+\notesonly{Yes, namely,}
+
+\underline{Singular Value Decomposition (SVD)}:\\
+Let $\vec X \in \R^{N \times p}$ be the centered dataset (centering is a must):
+\begin{equation}
+\vec X_{N \times p} = \vec U_{N \times N} \, \vec S_{N \times p} \, \vec V^\top_{{p \times p}}
+\end{equation}
+\svspace{-5mm}
+where,
+\begin{equation}
+\vec U^\top \vec U = \vec I_{N \times N}
+\notesonly{
+\end{equation} and 
+\begin{equation}
+}
+\slidesonly{\quad \text{and} \quad}
+\vec V^\top \vec V = \vec I_{p \times p}
+\end{equation} (i.e. $\vec U$, $\vec V$ are orthogonal).
+\begin{itemize}
+
+\item<only@2> The columns of $\vec V$ (or rows of $\vec V^\top$) make up the eigenvectors of $\vec X^\top\vec X$.
+\item<only@3,4,5> The columns of $\vec U$ make up the eigenvectors of $\vec X~\vec X^\top$.
+\item<only@4,5> $\vec S$ is a diagonal matrix. The singular values in $\vec S$ (the diagonal entries) are the \textbf{square roots} of the  eigenvalues of the eigenvectors of $\vec X~\vec X^\top$ or $\vec X^\top\vec X$.
+\end{itemize}
+
+\only<5>{
+Recall:
+$$
+\vec C = \E[\vec X~\vec X^\top] = \frac{1}{p} \vec X~\vec X^\top
+$$
+}
+
+\end{frame}
+
+\begin{frame}\frametitle{\subsubsecname}
+
+\question{When to use \textit{SVD} vs. \text{Eig}? \textbf{Not dogma}}
+
+\begin{itemize}
+
+\item Numerical instabilities in eigendecomposition of very large covariance matrix $\rightarrow$ \textit{SVD}
+\item SVD not applicable to Kernel-PCA $\rightarrow$ \textit{Eig}
+\item Computational efficiency $\rightarrow$ \textit{SVD} (depends...?)
+
+\slidesonly{
+$$
+\vec X \in \R^{N \times p} \quad \leadsto \quad \vec C = \frac{1}{p} \vec X~\vec X^\top
+$$
+}
+\item Possible differences between PCA via SVD and PCA via eig: SVD may flip the sign.
+
+\notesonly{
+
+The reason for the difference in sign between the eigenvector's you would get via \text{Eig} and the eigenvector you would get via \text{SVD}\footnote{Python's scikit-learn package uses SVD for its PCA implementation.}, is that SVD, in practice, may arbitrarily flip the direction of the eigenevectors.
+Possible reasons for the sign ambiguity according to \ref{bro2008resolving}:
+\begin{enumerate}
+\item  It's a mechanism in the SVD implementation (there's more than one SVD implementation) to mitigate numerical instabilities,
+\item Due to centering of the data,
+\item an SVD impelementation could have a random component.
+\end{enumerate}
+
+In both approaches you should be able to get the same reconstructions from both of them, i.e. the sign of the components along the flipped PC will also be flipped. Depending on the application, it may be necessary to "detect" if SVD flipped the direction or not. Numerical methods to detect this exist. A reason to care about what the sign should be, is when you want to interpret what an eigenvector represents to possibly assign meaning to the component along this PC: Is the component positive or negative along the PC, or this point has a larger component along the PC than another point. The classicial example of "interpreting" PCs would be "Eigenfaces". PCA is applied on images of faces. It is similar to what we ask you to do in Exercise 1.4. The Eigenvectors extracted form image data can be represented as images themselves. If SVD gives you "flipped" eigenvectors, visualizing them would give you the "negative" of that image. It's not as intuitive to look at negatives, but a person will still be able to make sense of them. However, imagine trying to interpret the eigenvector of other highdimensional data that isn't as pretty as pictures. Lnowing that SVD could have flipped the sign, could give you a hard time trying to make sense of what the eigenvector represents.
+
+}
+
+\end{itemize}
+
+\end{frame}
+

@@ -2,7 +2,13 @@
 
 \definecolor{darkgreen}{rgb}{0,0.6,0}
 
-\begin{frame}\frametitle{\secname} 
+\begin{frame}
+	\slidesonly{
+	\begin{center}\Large
+	\secname
+	\end{center}
+	\pause
+	}
     \begin{center}
     \slidesonly{\huge}
 	Don't panic!
@@ -53,7 +59,7 @@ The gradient $\vec \nabla f$ describes the direction of greatest ascent:\\
 \begin{equation}
 \vec \nabla f = 
 \frac{\partial f}{\partial \vec w} = 
-\rmat{\frac{\partial f}{\partial w_1} \\[0.2cm] \frac{\partial f}{\partial w_1} }
+\rmat{\frac{\partial f}{\partial w_1} \\[0.2cm] \frac{\partial f}{\partial w_2} }
 \end{equation}
 
 \end{frame}
@@ -163,6 +169,8 @@ Not much emphasis is put on knowing how to solve this by hand. If interested, th
 We refer to $\lambda$ as the \emph{multiplier} for the constraint $c$.
 }
 \end{frame}
+
+\newpage
 
 \subsection{Multiple constraints}
 
