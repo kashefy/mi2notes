@@ -181,7 +181,7 @@ We have used $\vec W$ to reconstruct any point $\vec x^{(\alpha)}$ in the input 
 The embedding space has to preserve the local structure.
 
 If the embedding space maps every point $\vec x^{(\alpha)}$ to an $M$-dimensional space with 
-coordinates $\vec u^{(\alpha)} \in \R^M$, then the following aproximation:
+coordinates $\vec u^{(\alpha)} \in \R^M$, then the following approximation:
 
 \begin{equation}\vec{u}^{(\alpha)} \approx \hspace{-3mm} \sum_{\beta \in \operatorname{KNN}(\vec{x}^{(\alpha)})}^{} \hspace{-3mm} \mathrm{W}_{\alpha \beta} \cdot \vec{u}^{(\beta)}
 \end{equation}
@@ -194,7 +194,7 @@ should hold as well.
 
 The reconstruction weights in $\vec W$ remain \emph{fixed}.
 
-The embedding coorindates are found by minimizing the approximation error of every point $\vec u^{(\alpha)}$ through its local neighborhood:
+The embedding coordinates are found by minimizing the approximation error of every point $\vec u^{(\alpha)}$ through its local neighborhood:
 
 \begin{equation}
 	F(\vec U) =
@@ -206,6 +206,7 @@ The embedding coorindates are found by minimizing the approximation error of eve
 where $\vec U \in \R^{M,p}$ is the embedded dataset with all $p$ points.
 
 \end{frame}
+
 
 \begin{frame}
 The binomial expansion leads to an equivalent formulation of the cost function as:
@@ -227,7 +228,7 @@ F(\vec{U}) =&
 \svspace{-3mm
 }
 \begin{itemize}
-\item[-] Tranlsation, scaling and rotaiton of the original dataset $\vec X$ should yield the same embedding coordinates $\vec U$.
+\item[-] Translation, scaling and rotation of the original dataset $\vec X$ should yield the same embedding coordinates $\vec U$.
 \item[-] The above invariances are already properties of the reconstruction weights $\vec W$.
 \item[-] Minimizing the squared Euclidean distance enables the above invariances.
 \item[-] We still have to prevent the trivial solution of $\vec u^{(\alpha)} = \vec 0 \;\; \forall \;\; \alpha$
@@ -235,70 +236,7 @@ F(\vec{U}) =&
 
 \end{frame}
 
-\begin{frame}{A constrained optimization problem}
 
-minimize $F(\vec{U}) = \sum_{\alpha, \beta=1}^{p} g_{\alpha \beta} (\vec{u}^{(\alpha)})^\top \vec{u}^{(\beta)}$
-\begin{align}
-\quad \text{s.t.} \quad
-%&\sum_{\alpha=1}^{p} \vec{u}^{(\alpha)} = 0,\quad \text{(remove translation freedom)} \\
-&\frac{1}{p} \sum_{\alpha=1}^{p} \vec{u}^{(\alpha)} (\vec{u}^{(\alpha)})^\top = \vec{I} \quad \text{(prevent trivial solution } \vec{u}^{(\alpha)} = \vec{0})
-\end{align}
-
-\end{frame}
-
-\begin{frame}
-
-Reformulating $F(\vec U)$ may provide intuition to finding the embedding coordinates $\vec U$:
-
-\begingroup
-\small
-\begin{align}
-\intertext{with $\sum_{\alpha, \beta=1}^{p} g_{\alpha \beta} u_i^{(\alpha)} u_i^{(\beta)}$}
-F(\vec U) =& \sum_{i=1}^M \sum_{\alpha, \beta=1}^{p} g_{\alpha \beta} u_i^{(\alpha)} u_i^{(\beta)}
-\intertext{and having all $\{g_\alpha\beta\}$ stored in a matrix $\vec G = \Big( \vec{I} - \vec{W}^\top \Big) \Big( \vec{I} - \vec{W} \Big)$ we can rewrite $F(\vec U)$ as}
-=& \sum_{i=1}^M  \vec u_{(i)}^\top \vec G \, \vec u_{(i)} = 
-\sum_{i=1}^M \vec u_{(i)}^\top \vec u_{(i)} \lambda_{i}
-\end{align}
-\endgroup
-
-\end{frame}
-
-\begin{frame}
-
-\slidesonly{
-\begin{equation}
-F(\vec U)
-= \sum_{i=1}^M  \vec u_{(i)}^\top \vec G \, \vec u_{(i)} = 
-\sum_{i=1}^M \vec u_{(i)}^\top \vec u_{(i)} \lambda_{i}
-\end{equation}
-
-Recall from PCA:
-\begin{equation}
-	\underbrace{ \vec{e}_a^\top \vec{C} \, \vec{e}_a }_{
-		\text{objective} }
-	- \lambda \underbrace{ \big( \vec{e}_a^\top\vec{e}_a - 1 \big) }_{
-			\text{constraints} }
-	\eqexcl \max
-\end{equation}
-}
-
-Finding $\vec U$ involves finding the eigenfunctions of $\vec G$.
-
-\begin{equation}
-\vec G \vec e_j = \lambda_j \vec e_j
-\end{equation}
-
-\question{Which eigenvectors do we look for?}
-
-\notesonly{
--Unlike PCA, which tries to maximize the Lagrangian, we're trying to minimize $F(\vec U)$.
-Therefore, we will be looking for the eigenvectors with \emph{smallest} eigenvalues.
-
-Local structure is described by the eigenvectors with small eigenvalues.
-
-In order to obtain $M$ embedding coordinates, we find the $M+1$ eigenvectors with smalles eigenvalues and discard the last eigenvector. In this case the last eigenvector will always be associated with a $\lambda$ of zero, so there's no information about the manifold there.
-}
-\end{frame}
 
 \mode<article>{
 %\begin{frame}%[label=g_alpha_beta_proof]{Supplementary Material}
@@ -377,6 +315,71 @@ In order to obtain $M$ embedding coordinates, we find the $M+1$ eigenvectors wit
     %}
 %\end{frame}
 }
+
+\begin{frame}{A constrained optimization problem}
+
+minimize $F(\vec{U}) = \sum_{\alpha, \beta=1}^{p} g_{\alpha \beta} (\vec{u}^{(\alpha)})^\top \vec{u}^{(\beta)}$
+\begin{align}
+\quad \text{s.t.} \quad
+%&\sum_{\alpha=1}^{p} \vec{u}^{(\alpha)} = 0,\quad \text{(remove translation freedom)} \\
+&\frac{1}{p} \sum_{\alpha=1}^{p} \vec{u}^{(\alpha)} (\vec{u}^{(\alpha)})^\top = \vec{I} \quad \text{(prevent trivial solution } \vec{u}^{(\alpha)} = \vec{0})
+\end{align}
+
+\end{frame}
+
+\begin{frame}
+
+Reformulating $F(\vec U)$ may provide intuition to finding the embedding coordinates $\vec U$:
+
+\begingroup
+\small
+\begin{align}
+\intertext{with $\sum_{\alpha, \beta=1}^{p} g_{\alpha \beta} u_i^{(\alpha)} u_i^{(\beta)}$}
+F(\vec U) =& \sum_{i=1}^M \sum_{\alpha, \beta=1}^{p} g_{\alpha \beta} u_i^{(\alpha)} u_i^{(\beta)}
+\intertext{and having all $\{g_\alpha\beta\}$ stored in a matrix $\vec G = \Big( \vec{I} - \vec{W}^\top \Big) \Big( \vec{I} - \vec{W} \Big)$ we can rewrite $F(\vec U)$ as}
+=& \sum_{i=1}^M  \vec u_{(i)}^\top \vec G \, \vec u_{(i)} = 
+\sum_{i=1}^M \vec u_{(i)}^\top \vec u_{(i)} \lambda_{i}
+\end{align}
+\endgroup
+
+\end{frame}
+
+\begin{frame}
+
+\slidesonly{
+\begin{equation}
+F(\vec U)
+= \sum_{i=1}^M  \vec u_{(i)}^\top \vec G \, \vec u_{(i)} = 
+\sum_{i=1}^M \vec u_{(i)}^\top \vec u_{(i)} \lambda_{i}
+\end{equation}
+
+Recall from PCA:
+\begin{equation}
+	\underbrace{ \vec{e}_a^\top \vec{C} \, \vec{e}_a }_{
+		\text{objective} }
+	- \lambda \underbrace{ \big( \vec{e}_a^\top\vec{e}_a - 1 \big) }_{
+			\text{constraints} }
+	\eqexcl \max
+\end{equation}
+}
+
+Finding $\vec U$ involves finding the eigenfunctions of $\vec G$.
+
+\begin{equation}
+\vec G \vec e_j = \lambda_j \vec e_j
+\end{equation}
+
+\question{Which eigenvectors do we look for?}
+
+\notesonly{
+-Unlike PCA, which tries to maximize the Lagrangian, we're trying to minimize $F(\vec U)$.
+Therefore, we will be looking for the eigenvectors with \emph{smallest} eigenvalues.
+
+Local structure is described by the eigenvectors with small eigenvalues.
+
+In order to obtain $M$ embedding coordinates, we find the $M+1$ eigenvectors with smallest eigenvalues and discard the last eigenvector. In this case the last eigenvector will always be associated with a $\lambda$ of zero, so there's no information about the manifold there.
+}
+\end{frame}
 
 \subsection{Remarks}
 
