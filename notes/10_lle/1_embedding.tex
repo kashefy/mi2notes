@@ -1,23 +1,38 @@
-\begin{frame}
 \section{Locally Linear Embedding (LLE)}
 
-\notesonly{
-\underline{Motivation:}\\
-
-Find structure in the data that extends to non-linear manifolds (e.g. $\textbf{S}$-dataset). 
-Utilize this to reduce the dimensionality of the data such that points that lie close \textbf{on} the manifold, also lie close when projected (we will refer to the preserving local neighborhoods / ``structure preserving'' as \emph{embedding}).
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \secname
+    \end{center}
+\end{frame}
 }
+
+\subsection{Motivation}
+
+\begin{frame}{\subsecname}
+
+Find structure in the data that extends to non-linear manifolds.
+
+\notesonly{
+
+$\textbf{S}$-dataset provides an example of a non-linear manifold.}
+
 \begin{figure}[ht]
 	\centering
-    \includegraphics[width=12cm]{img/s_data_proj.png}
-	\caption{$\textbf{S}$-dataset, PCA projections and LLE solutions. Points are colorized according to their index in the dataset.}
+    \includegraphics[width=12cm]{img/s_data_proj}
+	\notesonly{\caption{The S-dataset, PCA projections and embedding solution. Points are colorized according to their index in the dataset.}}
 	\label{fig:s_data_proj_lle}
 \end{figure}
 
+\notesonly{
+Utilize this to r}\slidesonly{R}educe the dimensionality of the data such that points that lie close \textbf{on} the manifold also lie close in their projection\notesonly{ (we will refer to the projection space which preserving local neighborhoods / ``structure preserving'' as \emph{embedding space})}.
 
 \end{frame}
 
+\notesonly{
 Looking at \figref{fig:s_data_proj_lle} we see that the nonlinear manifold is preserved in the LLE embedding, while PCA does not capture the non-linear local structure. The same can be said for \figref{fig:faces_translated_pca_lle}, translating the images from one corner to another has a corresponding translation in the embedded space. In this case we can also infer the coordinates of an image where the face appears in the bottom-left corner in the embedded space.
+}
 
 \begin{frame}
 \slidesonly{
@@ -26,18 +41,35 @@ Looking at \figref{fig:s_data_proj_lle} we see that the nonlinear manifold is pr
  
 \begin{figure}[ht]
 	\centering
-    \includegraphics[width=4cm]{img/fig3_lle_intro_cropped.png}
+    \includegraphics[width=0.3\textwidth]{img/fig3_lle_intro_cropped.png}
 	\caption{PCA projections and LLE of translated versions of the same image. What would be the coordinates of the face-in-bottom-left-corner-image be?}
 	\label{fig:faces_translated_pca_lle}
 \end{figure}
 \end{frame}
 
-\begin{frame}
-\section{Locally Linear Embedding (LLE): Algorithm outline}
+\subsection{The algorithm}
+
+\subsubsection{A representation of local structure}
+
+\begin{frame}{\subsecname:~\subsubsecname}
 
 \notesonly{
-LLE is a fairly simple algorithm. Local structure is preserved by optimizing the projection of a neighborhood of points (PCA finds a projection for all points collectively).
-}
+LLE is a fairly simple algorithm. }Local structure is preserved by optimizing the projection of a neighborhood of points (PCA finds a projection for all points collectively).
+
+\pause
+
+But first we have to identify the neighborhood.
+
+\end{frame}
+
+\begin{frame}{\subsecname:~\subsubsecname}
+
+\question{How do we ``localize'' the local structure?}
+
+\pause
+
+- through K-nearest neighbors
+
 \begin{figure}[ht]
 	\centering
     \includegraphics[width=8cm]{img/section4_fig11_K2}
@@ -83,7 +115,7 @@ for each data point $\vec{x}^{(\alpha)}$ (result from applying Lagrange multipli
 \begin{align}
 e^{(\alpha)} &= \lVert\vec{x}^{(\alpha)} - \sum_{\beta=1}^{p} \mathrm{W}_{\alpha \beta} \vec{x}^{(\beta)}\rVert^2\\
 &\stackrel{\text{sum to 1 for} \beta \in \text{KNN}}{=} \lVert \sum_{\beta=1}^{p} \mathrm{W}_{\alpha \beta} \vec{x}^{(\alpha)} - \sum_{\beta=1}^{p} \mathrm{W}_{\alpha \beta} \vec{x}^{(\beta)}\rVert^2\\
-\end{align}
+\end{align}/
 
 \textbf{switch to LLE lecture slides}
 
