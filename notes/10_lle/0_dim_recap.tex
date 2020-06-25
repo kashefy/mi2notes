@@ -127,6 +127,8 @@ We are not arguing that PCA does a bad job at dimensionality reduction. This is 
 - Pick any two neighboring points from some dataset. Their proximity to one another lets us assume they have more in common than a pair of points that are far away from one another \footnote{This proximity assumption forms the basis for pairwise clustering.}. If we perform PCA on this data and project it onto the principle components, we may find that the two points that were neighbors in the original space are no longer neighbors in the space spanned by the PCs. To be more precise, if their projections do happen to appear close to one another, then this is due to the linearity in the data. But what about non-linear manifolds? PCA does not try to preserve any neighborhood or ``local'' information. This becomes a problem if the ``local'' information is key to \emph{efficiently} reduce the dimensionality.
 }
 
+\pause
+
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=4.3cm]{img/fig3_lle_intro_cropped_pca}

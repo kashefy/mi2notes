@@ -36,8 +36,10 @@ Looking at \figref{fig:s_data_proj_lle} we see that the nonlinear manifold is pr
 
 \begin{frame}
 \slidesonly{
- \frametitle{Locally Linear Embedding (LLE)}
+ \frametitle{PCA vs. Locally Linear Embedding (LLE)}
 }
+
+\svspace{-5mm}
  
 \begin{figure}[ht]
 	\centering
@@ -153,17 +155,18 @@ E(\vec{W}) =& \sum_{\alpha=1}^{p} \overbrace{\Big\lVert{\vec{x}^{(\alpha)} - \su
 \endgroup
 }
 
-\svspace{-15mm}
+\svspace{-5mm}
 
-\begin{minipage}{0.28\textwidth}
+\begin{minipage}{0.25\textwidth}
 \begin{center}
 	\includegraphics[width=1.2\textwidth]{img/parabola_data}
 	\notesonly{\captionof{figure}{2D points describing a parabola.}}
 \end{center}
 \end{minipage}
+\hspace{2mm}
 \begin{minipage}{0.7\textwidth}
 \begin{center}
-	\includegraphics[width=0.95\textwidth]{img/parabola_knn}
+	\includegraphics[trim=0 180 0 180, clip, width=0.92\textwidth]{img/parabola_knn}
 	\notesonly{\captionof{figure}{Highlighting the KNN.}}
 \end{center}
 \end{minipage}
