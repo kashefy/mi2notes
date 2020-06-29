@@ -41,32 +41,4 @@ data-driven. Estimate the density with as few assumptions as possible (e.g. Kern
 
 Many people habe already encountered density estimation in the form of histograms.
 
-\begin{frame}
-\end{frame}
-
-\begin{frame}
-
-\begin{figure}[ht]
-     \centering
-     \savebox{\imagebox}{\includegraphics[width=0.4\textwidth]{img/spiral_data.png}}%
-     \begin{subfigure}[t]{0.4\textwidth}
-         \centering
-         \usebox{\imagebox}% Place largest image
-         \caption{original observations $\vec x$}
-         \label{fig:spiral_data}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[t]{0.35\textwidth}
-         \centering
-         \raisebox{\dimexpr.5\ht\imagebox-.5\height}{% Raise smaller image into place
-         \includegraphics[width=\textwidth]{img/spiral_pca.png}
-         }
-         \caption{projection onto the first 2 PCs}
-         \label{fig:spiral_pca}
-     \end{subfigure}
-     \caption{Dimensionality reduction of ``spiral data''. Points are colored according to their index in the dataset.}
-	 \label{fig:spiral}
-\end{figure}
-
-\end{frame}
 
