@@ -1,0 +1,34 @@
+\subsection{Parametric density estimation}
+
+\mode<presentation>{
+\begin{frame} 
+    \begin{center} \huge
+        \subsecname
+    \end{center}
+    \begin{center}
+        Fitting the parameters of a Gaussian/Laplacian/... to the data
+    \end{center}
+	
+\end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[t]{The multivariate Gaussian}
+\smaller
+\vspace{-0.8cm}
+\begin{alignat*}{2}
+&\widehat{P}\left(\left\{ \vec{x}^{(\alpha)} \right\}; \vec{\boldsymbol \mu}, \vec{\Sigma} \right) &&= \left( \frac{1}{\sqrt{(2\pi)^N \det \vec{\Sigma}}} \right)^p \cdot \prod_{\alpha=1}^{p} \exp \left(-\frac{1}{2} \left(\vec{x}^{(\alpha)} - \vec{\boldsymbol \mu} \right)^\top \vec{\Sigma}^{-1} \left(\vec{x}^{(\alpha)} - \vec{\boldsymbol \mu} \right) \right) \\[10pt]
+&E^T\left( \vec{\boldsymbol \mu}, \vec{\Sigma} \right) &&= - \ln \widehat{P}\left(\left\{ \vec{x}^{(\alpha)} \right\}; \vec{\boldsymbol \mu}, \vec{\Sigma} \right) \\
+& &&= \frac{p \cdot N}{2} \ln(2\pi) + \frac{p}{2} \ln(\det \vec{\Sigma}) + \frac{1}{2} \sum_{\alpha=1}^{p} \left(  \vec{x}^{(\alpha)} - \vec{\boldsymbol \mu} \right)^\top \vec{\Sigma}^{-1} \left(  \vec{x}^{(\alpha)} - \vec{\boldsymbol \mu} \right)
+\end{alignat*}
+\\\vspace{0.2cm}
+minimization of $E^T$ (necessary conditions):
+\vspace{-0.1cm}
+\begin{align*}
+\frac{\partial E^T}{\partial \vec{\boldsymbol \mu}} = \vec{0} \quad &\Rightarrow \quad \vec{\boldsymbol \mu}^* = \frac{1}{p} \sum_{\alpha=1}^{p} \vec{x}^{(\alpha)}  &&\text{(empirical average)}\\
+\frac{\partial E^T}{\partial \vec{\Sigma}} = \vec{0} \quad &\Rightarrow \quad \vec{\Sigma}^* = \frac{1}{p} \sum_{\alpha=1}^{p} (\vec{x}^{(\alpha)} - \vec{\boldsymbol \mu}^*) (\vec{x}^{(\alpha)} - \vec{\boldsymbol \mu}^*)^\top &&\text{(empirical covariance matrix)}
+\end{align*}
+
+remark: $\vec{\boldsymbol \mu}^*$ is unbiased, but $\vec{\Sigma}^*$ is a biased estimator (cf. next section)
+
+\end{frame}
