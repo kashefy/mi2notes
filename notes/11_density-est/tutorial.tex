@@ -55,8 +55,14 @@
 \titlepage
 \end{frame}
 
+\setcounter{tocdepth}{2}
 \begin{frame}
+\mode<presentation>{
+\tableofcontents[subsubsectionstyle=show/show/show/hide]
+}
+\mode<article>{
 \tableofcontents
+}
 \end{frame}
 
 \newpage
