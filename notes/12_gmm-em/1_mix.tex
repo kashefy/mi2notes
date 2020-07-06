@@ -1,0 +1,48 @@
+\section{Mixture Models}
+
+
+\begin{frame} 
+\mode<presentation>{
+    \begin{center} \huge
+        \secname
+    \end{center}
+    }
+    \begin{center} \large
+        A class of models that can cluster the data and keep track of importance by estimating densities around clusters.
+    \end{center}
+	
+\end{frame}
+
+\subsection{Many ways of describing the same thing}
+
+\begin{frame}{\subsecname}
+
+Mixture Models\ldots
+\begin{itemize}
+\item combine density estimation and clustering
+\item cluster the data and estimate the density around each cluster
+\item increase the resolution of your density estimation in order to end up with a mode around each cluster of data
+\item Assume $M$ source are generating points in the data. Find a measure for:
+	\begin{enumerate}
+	\item the probability of a source $\{q_1,q_2,\ldots,q_M\}$ generating \emph{any} point (How much are you contributing to the data?)
+	\item the probability of a point coming from source $q_1$ vs. $q_2$ vs. \ldots vs. $q_M$. Who generated this point?
+	\end{enumerate}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Model class}
+
+Let $\vec x \in \R^N \sim P(\vec x)$ (data generating distribution)
+
+The Mixture Model breaks down the data generating distribution $P(\vec x)$ into\notesonly{ a linear combination as follows}:
+
+\begin{equation}
+	P_{(\vec{x})} = \sum_{q=1}^{M} P_{(\vec{x} | q)} P_{(q)}
+\end{equation}
+	
+$P_{(\vec{x} | q)}:$ components: probability density, that data point $\vec{x}$ was created by component $q$.
+\\\vspace{0.3cm}
+$P_{(q)}:$ mixture parameters: probability, that component $q$ creates a data point. (How much are you contributing to the data?)
+
+\end{frame}
