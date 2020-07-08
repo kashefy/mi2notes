@@ -180,10 +180,13 @@ P_{(\vec{x}^{(\alpha)})} &= \sum_{q=1}^{M} \mathcal{N}\left( \vec{x}^{(\alpha)};
 
 Minimizing the cost w.r.t. to the parameters by mininimizing the nagative data log-likelihood:
 
-%\vspace{-2mm}
+\vspace{-2mm}
+
 \begin{align}
-E^T = - \ln P_{\left( \left\{ \vec{x}^{(\alpha)} \right\} \right)} &= -\ln \prod_{\alpha=1}^{p} \left\{ \sum_{q=1}^{M} \mathcal{N}\left( \vec{x}^{(\alpha)}; \vec{w}_q, \sigma_q^2 \right) P_{(q)} \right\} 
-\\&= - \sum_{\alpha=1}^{p} \ln \sum_{q=1}^{M} \exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_q \right)^2 \right\} + \text{const}_{(\vec{w}_q)}
+E^T = - \ln P_{\left( {\color{red}\left\{ \vec{x}^{(\alpha)} \right\}} \right)} &= -\ln {\color{red}\prod_{\alpha=1}^{p}}
+\bigg\{ \sum_{q=1}^{M} \mathcal{N}\left( \vec{x}^{(\alpha)}; \vec{w}_q, \sigma_q^2 \right) P_{(q)}
+\bigg\} 
+\\&= - {\color{red}\sum_{\alpha=1}^{p}} \ln \sum_{q=1}^{M} \exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_q \right)^2 \right\} + \text{const}_{(q)}
 \end{align}
 
 \end{frame}
@@ -195,7 +198,7 @@ The prototypes are found by estimating the means of the individual components.
 We compute the derivative of the cost w.r.t an individual prototype $\vec w_r$, set it to zero and solve for $\vec w_r$:
 
 \begin{align}
-\frac{\partial E^T}{\partial \vec{w}_r} &= - \sum_{\alpha=1}^{p} \frac{\overbrace{\exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_r \right)^2 \right\}}^{P_{(r|\vec x)}}}{\sum_{q=1}^{M} \exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_q \right)^2 \right\}} \beta \left( \vec{x} - \vec{w}_r \right) \eqexcl 0 \\
+\frac{\partial E^T}{\partial \vec{w}_r} &= - \sum_{\alpha=1}^{p} \frac{\overbrace{\exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_r \right)^2 \right\}}^{P_{(r|\vec x)}}}{\sum_{q=1}^{M} \exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_q \right)^2 \right\}} \beta \left( \vec{x} - \vec{w}_r \right) \eqexcl \vec 0 \\
 \vec{w}_r &= \frac{\sum_{\alpha=1}^{p} P_{(r | \vec{x}^{(\alpha)})} \vec{x}^{(\alpha)}}{\sum_{\alpha=1}^{p} P_{(r | \vec{x}^{(\alpha)})}} \quad \leadsto \substack{\text{ center of mass condition}\\\text{for soft-clustering!}}
 \end{align}
 
@@ -235,11 +238,12 @@ $P_{(q | \vec{x})}$: posterior probability of component q having generated a giv
 }
 
 \only<4>{
+
 $\leadsto$ given the simplified Gaussian mixture model we obtain:
 \begin{eqnarray}
-P_{(q | \vec{x})} &=& \frac{
+P_{(q | \vec{x})} &=& \slidesonly{\frac{P_{(\vec{x} | q)} P_{(q)}}{P_{(\vec{x})}} = } \frac{
 \overbrace{\left( \frac{\beta}{2\pi} \right)^{N/2} \exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_q \right)^2 \right\}}^{P_{(\vec x|q)}} \cdot \overbrace{\frac{1}{M}}^{P_{(q)}}}{
-\underbrace{\left( \frac{\beta}{2\pi} \right)^{N/2} \frac{1}{M} \sum_{\gamma}^{} \exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_{\gamma=1}^M \right)^2 \right\}}_{
+\underbrace{\left( \frac{\beta}{2\pi} \right)^{N/2} \frac{1}{M} \sum_{\gamma=1}^M \exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_{\gamma} \right)^2 \right\}}_{
 P_{(\vec x)}
 }} \\
 &=& \frac{\exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_q \right)^2 \right\}}{ \sum_{\gamma=1}^{M} \exp \left\{ - \frac{\beta}{2} \left( \vec{x} - \vec{w}_{\gamma} \right)^2 \right\}}
@@ -253,6 +257,8 @@ P_{(\vec x)}
 \begin{frame}{\subsecname: A constraint for the mixture parameters}
 
 \question{Why do we need to constraint the mixture parameters $P_{(q)}$ s.t. they sum up to 1?}
+
+\svspace{-5mm}
 
 \begin{equation}
 \sum_{q=1}^M P_{(q)} = 1

@@ -120,33 +120,39 @@ Example:\\
 
 \begin{frame}{Latent variable models}
 
-We view the data likelihood as a marginalization of the latent variables:
+We view the data likelihood as a \textcolor{blue}{marginalization} of the latent variables:
+
+\svspace{-1mm}
 
 \begin{equation}
-P \left( \left\{ \vec{x}^{(\alpha)} \right\} | \vec{w} \right) \stackrel{\text{iid}}{=} \prod_{\alpha=1}^{p} P \left( \vec{x}^{(\alpha)} | \vec{w} \right) = \prod_{\alpha=1}^{p}  \sum_{\vec{m}} P \left( \vec{x}^{(\alpha)}, \vec{m} | \vec{w} \right)
+P \left( \left\{ \vec{x}^{(\alpha)} \right\} | \vec{w} \right) \stackrel{\text{iid}}{=} \prod_{\alpha=1}^{p} P \left( \vec{x}^{(\alpha)} | \vec{w} \right) = \prod_{\alpha=1}^{p}  
+\kern-4ex
+\underbrace{{\color{blue}\sum_{\vec{m}}}}_{
+\substack{\text{all possible}\\\text{valid assignments}\\{\text{for point }\alpha}}
+} 
+\kern-4ex
+P \left( \vec{x}^{(\alpha)}, \vec{m} | \vec{w} \right)
 \end{equation}
+
+\svspace{-5mm}
 
 The corresponding log-likelihood:
 
 \begin{equation}
-\ln P \left( \left\{ \vec{x}^{(\alpha)} \right\} | \vec{w} \right) = \sum_{\alpha=1}^{p}  \ln \left( \sum_{\vec{m}} P \left( \vec{x}^{(\alpha)}, \vec{m} | \vec{w} \right) \right)
+\ln P \left( \left\{ \vec{x}^{(\alpha)} \right\} | \vec{w} \right) = \sum_{\alpha=1}^{p}  \ln \left( {\color{blue}\sum_{\vec{m}}} P \left( \vec{x}^{(\alpha)}, \vec{m} | \vec{w} \right) \right)
 \end{equation}
 
 The sum in the logarithm prevents us from finding a closed-form solution.
 
-\end{frame}
-
-\begin{frame}{A chicken-and-egg problem}
-
-The objective is to maximize the likelihood of the data. In addition to estimating the densities our latent variable models can also tune the assignment variables of the data points for the different components.
-Modifying one will lead to a modification of the other.
-
 \pause
 
-\question{Where have we encountered this alternating behavior before?}
+\slidesonly{
+\svspace{-1mm}
 
-- K-means. But there we didn't dwell too much about any chicken-and-egg problem. Basing everything on Euclidean distance took care of this.
-
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{img/meme_emrescue}
+\end{center}
+}
 
 \end{frame}
 
@@ -154,15 +160,44 @@ Modifying one will lead to a modification of the other.
 
 \begin{frame}{\subsecname}
 
-The EM algorithm is an iterative approximate solution to the chicken-and-egg problem.
 
-\begin{block}{The chicken-and-egg problem}
+The objective is to maximize the likelihood of the data.\\
+
+The EM algorithm is an iterative approximate solution to maximizing the likelihood for a problem that requires \emph{alternation}.
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\begin{block}{The need to alternate}
 
 We need to know who is assigned to which group in order to estimate the density of that group (i.e. identify which date influences a component $q$)\\
 \textbf{But} we don't know the assignments.\\
-To get the assignments we need the density of that group\ldots
+To get the assignments we need the density of that group\ldots\\
+
+Modifying one will lead to a modification of the other.
 
 \end{block}
+
+\begin{center}
+\begin{minipage}{0.1\textwidth}
+\begin{center}
+	\includegraphics[width=0.9\textwidth]{img/fried-chicken}
+\end{center}
+\end{minipage}
+\begin{minipage}{0.1\textwidth}
+\begin{center}
+	\includegraphics[width=0.9\textwidth]{img/fried-egg}
+\end{center}
+\end{minipage}
+\end{center}
+
+\pause
+
+\question{Where have we encountered this alternating behavior before?}
+
+- K-means. But there we didn't dwell too much about any chicken-and-egg problem. Basing everything on Euclidean distance took care of this.
+
 
 \end{frame}
 
@@ -178,7 +213,7 @@ To get the assignments we need the density of that group\ldots
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{\subsecname}
+\begin{frame}{\subsecname: Outline}
 
 \begin{figure}[!th]
 \footnotesize
@@ -187,14 +222,15 @@ To get the assignments we need the density of that group\ldots
 \scalebox{.9}{   
 	\begin{algorithm}[H]
 		\DontPrintSemicolon
-		initialization:
+		initialization:\\
+		Decide on the number of groups.
 		Random initial densities (i.e. random initialization of density parameters)\\
 		\vspace{1mm}
 		\Repeat{change below tolerance}{
 			\vspace{3mm}
-			1. Use the densities to assign points to groups\\
+			1. \textbf{E-step}: Use the densities to assign points to groups\\
 			\vspace{3mm}
-			2. Use the curent assignments to update the densities\\
+			2. \textbf{M-step}: Use the curent assignments to update the densities\\
 			\vspace{3mm}
 		}
 		\caption{Outline of the EM alogrithm}
@@ -217,14 +253,513 @@ If you find that the outline of the EM algorithm looks a lot like K-means, it's 
 
 \end{frame}
 
-\begin{frame}{Does EM work?}
+\subsection{Does EM work?}
+
+\begin{frame}{\subsecname}
 
 We now need reassurance that alternating between the steps improves both
 \begin{itemize}
-\item our assignments\\
+\item[A] our assignments\\
 AND\\
-\item our densities
+\item[B] our densities
 \end{itemize}
 
 \end{frame}
 
+\begin{frame}{\subsecname}
+
+\begin{itemize}
+\item observed variables $\vec x \in \R^N$
+\item latent (hidden) variables $\vec m \in \R^M$
+\item Parameters of the densities we want to estimate: $\vec w$ (e.g. $\vec \mu$, $\sigma^2$ for every Gaussian component $q$)
+\end{itemize}
+
+Objetive: Maximize the joint distribution of observed and latent variables with $p$ samples:
+\begin{align}
+	\widehat{P} \left( \vec x^{(1)}, \vec x^{(2)},\ldots, \vec x^{(p)}, \vec m^{(1)}, \vec m^{(2)},\ldots, \vec m^{(p)}~|~\vec w \right) \eqexcl \max_{\vec w}\\
+	\widehat{P} \left( \{\vec x^{(\alpha)}\}, \{\vec m^{(\alpha)}\}~|~\vec w \right) \eqexcl \max_{\vec w}~, \;\; \alpha=1,\ldots,p
+\end{align}
+
+$\vec w$ depend on the assignments $\vec m$ but $\vec m$ are unknown.
+
+\pause
+
+\question{How do $\vec x$, $\vec m$ and $\vec w$ interact with one another?}
+
+\end{frame}
+
+\begin{frame}{How do $\vec x$, $\vec m$ and $\vec w$ interact with one another?}
+
+\svspace{-2mm}
+
+We start with the likelihood function:
+
+\svspace{-5mm}
+
+\begin{align}
+	\widehat{P} \left( \{\vec x^{(\alpha)}\}~|~\vec w \right)
+	&\stackrel{\text{iid}}{=}
+	\prod_{\alpha=1}^{p}  \widehat{P} \left( \vec x^{(\alpha)}~|~\vec w \right)
+	\intertext{``\textcolor{blue}{sum out}'' to recover the likelihood}
+	&= \prod_{\alpha=1}^{p} {\color{blue}\sum_{\vec m}} \widehat{P} \left( \vec x^{(\alpha)}, \vec m~|~\vec w \right)
+\end{align}
+
+\pause
+
+\begin{equation}
+P(a,b) = P(a|b)~P(b) \qquad \text{(product rule)}
+\end{equation}
+
+From this follows {\footnotesize(omitting indices for readability)}:
+
+\svspace{-5mm}
+
+\begin{align}
+P(~\vec x,\vec m ~|~ \vec w) &= P(~\vec x~|~\vec m;\vec w)~P(\vec m~|~ \vec w)\\
+P(~\vec m, \vec x ~|~ \vec w) &= P(~\vec m~|~\vec x;\vec w)~P(\vec x~|~ \vec w)
+\end{align}
+
+It does not matter how we order the arguments of a joint distributions:
+
+\svspace{-3mm}
+
+\begin{equation}
+P(~\vec x,\vec m ~|~ \vec w) = P(~\vec m, \vec x ~|~ \vec w)
+\end{equation}
+
+\end{frame}
+
+\begin{frame}{How do $\vec x$, $\vec m$ and $\vec w$ interact with one another?}
+
+\svspace{-3mm}
+
+\slidesonly{
+\begin{flushright}
+{\footnotesize (omitting indices for readability)}\\
+\end{flushright}
+}
+
+\svspace{-7mm}
+
+\slidesonly{
+\begin{align}
+P(~\vec m, \vec x ~|~ \vec w) &= P(~\vec m~|~\vec x;\vec w)~P(\vec x~|~ \vec w)
+\end{align}
+}
+
+%\begin{align}
+%\widehat{P}(~\vec x,\vec m ~|~ \vec w) &= \widehat{P}(~\vec m, \vec x ~|~ \vec w)\\
+%\widehat{P}(~\vec x~|~\vec m;\vec w)~\widehat{P}(~\vec m ~|~ \vec w) &=
+%\widehat{P}(~\vec m~|~\vec x;\vec w)~\widehat{P}(~\vec x ~|~ \vec w)\\
+%\end{align}
+
+%\svspace{-5mm}
+
+\pause
+
+%\svspace{-5mm}
+
+%Plugging $\widehat{P}(~\vec m, \vec x ~|~ \vec w) = \overbrace{\widehat{P}(~\vec m~|~\vec x;\vec w)}^{\text{posterior}}~\widehat{P}(~\vec x ~|~ \vec w)$ into the likelihood.
+
+%\pause
+
+%We've stablished that the likelihood is recovered by marginalizing over the latent variables.
+
+%\svspace{-3mm}
+
+%\begin{align}
+	%\widehat{P} \left(~\vec x~|~\vec w \right)
+	%&= \sum_{\vec m} \widehat{P} \left(~\vec x, \vec m~|~\vec w \right)\\
+	%&= \sum_{\vec m} \widehat{P}(~\vec x~|~\vec m;\vec w)~\widehat{P}(~\vec m ~|~ \vec w)\\
+	%\text{equivalently}
+	%&= \sum_{\vec m} \widehat{P}(~\vec m~|~\vec x;\vec w)~\widehat{P}(~\vec x ~|~ \vec w)\\
+%\end{align}
+
+%Posterior distribution of latent variables $\vec m$ given observations $\vec x$:
+
+%\begin{align}
+%\widehat{P}(~\vec m~|~\vec x;\vec w) &= \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{\widehat{P}(~\vec x ~|~ \vec w)}\\
+%\widehat{P}(~\vec x ~|~ \vec w) &= \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{\widehat{P}(~\vec m~|~\vec x;\vec w)}
+%\end{align}
+
+This gives us an alternative expression for the likelhood function:
+
+\begin{equation}
+\widehat{P}(~\vec x ~|~ \vec w) = \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{\widehat{P}(~\vec m~|~\vec x;\vec w)}
+\end{equation}
+
+We introduce $P(\vec m)$ as the prior distribution of latent variables $\vec m$. No need to define it just yet:
+
+\svspace{-7mm}
+
+\slidesonly{
+\begin{align}
+\widehat{P}(~\vec x ~|~ \vec w) &= \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{\widehat{P}(~\vec m~|~\vec x;\vec w)}
+~\cdot~
+\frac{P(\vec m)}{P(\vec m)}
+\end{align}
+}
+
+\end{frame}
+
+\begin{frame}{How do $\vec x$, $\vec m$ and $\vec w$ interact with one another?}
+
+\only<1,2>{
+\begin{align}
+\widehat{P}(~\vec x ~|~ \vec w) &= \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{\widehat{P}(~\vec m~|~\vec x;\vec w)}
+~\cdot~
+\frac{P(\vec m)}{P(\vec m)}\\
+&= \frac{{\widehat{P}(~\vec m, \vec x ~|~ \vec w)} \cdot P(\vec m)}{P(\vec m) \cdot \widehat{P}(~\vec m~|~\vec x;\vec w)}\\
+%&= \frac{{\color{blue}\widehat{P}(~\vec x~|~\vec m;\vec w)~\widehat{P}(~\vec m ~|~ \vec w)} \cdot P(\vec m)}{\cdot P(\vec m) \widehat{P}(~\vec m~|~\vec x;\vec w)}\\
+%&= \frac{{\color{blue}\widehat{P}(~\vec x~|~\vec m;\vec w)~\widehat{P}(~\vec m ~|~ \vec w)} \cdot P(\vec m)}{\cdot P(\vec m) \widehat{P}(~\vec m~|~\vec x;\vec w)}\\
+&= \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} \cdot \frac{P(\vec m)}{\widehat{P}(~\vec m~|~\vec x;\vec w)}
+\end{align}
+
+We take the logarithm on both sides
+}
+
+\only<2-3>{
+\begin{equation}
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+= \ln \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} + \ln \frac{P(\vec m)}{\widehat{P}(~\vec m~|~\vec x;\vec w)}
+\end{equation}
+}
+
+\only<3->{
+Compute the expectation w.r.t. $P(\vec m)$:
+
+\only<4->{
+\slidesonly{
+\begingroup
+\small
+}
+}
+\begin{align}
+\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack
+&= \int P(\vec m) \ln  \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m \\
+&\;\;+ \int P(\vec m) \ln \frac{P(\vec m)}{\widehat{P}(~\vec m~|~\vec x;\vec w)} d\vec m
+\end{align}
+\only<4->{
+\slidesonly{
+\endgroup
+}
+}
+
+}
+
+\only<4>{
+\question{How did we get here?}
+
+- likelihood $\rightarrow$ product rule $\rightarrow$ $P(\vec m)$ $\rightarrow$ log $\rightarrow$ $\E\lbrack \cdot \rbrack$
+
+}
+
+\only<5->{
+
+\question{What is all this for?}
+
+\begin{itemize}
+\item[-] We want to see if EM can actually maximize the likelihood
+\item[-] To do so, we need to see how the different variables interact
+\item[-] This lets us formulate the terms that EM uses during the optimization
+\item[-] Bonus: We find a hint to what \emph{Expectation} is actually \emph{maximized}
+\end{itemize}
+}
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\svspace{-5mm}
+
+\question{What do the terms in the expectation represent?}
+
+\svspace{-5mm}
+
+\begingroup
+\small
+\begin{align}
+\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack
+&= \int P(\vec m) \ln \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m 
+\;+ \int  P(\vec m) \ln \frac{P(\vec m)}{\widehat{P}(~\vec m~|~\vec x;\vec w)} d\vec m\slidesonly{\\[-7mm]}
+\intertext{\footnotesize switching numerator and denominator in second integral adds a minus sign in front of the integral}
+&= \int \ln P(\vec m) \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m
+~
+{\color{red}-} \int P(\vec m) \ln \frac{\color{red}\widehat{P}(~\vec m~|~\vec x;\vec w)}{\color{red}P(\vec m)} d\vec m \\ 
+&= 
+\underbrace{\int \ln P(\vec m) \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m
+}_{\substack{=:~\mathscr{L}(P(\vec m), \vec w)\\\text{the expected complete}\\\text{data log-likelihood}}}
+\,
+\underbrace{-\int \ln P(\vec m) \frac{\widehat{P}(~\vec m~|~\vec x;\vec w)}{P(\vec m)} d\vec m
+}_{+\dkl \left(~P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) ~\right)}
+\end{align}
+\endgroup
+
+\end{frame}
+
+\begin{frame}{Verifying the decomposition}
+
+\notesonly{Before we continue let's verify the decomposition from before:}
+
+\begingroup
+\small
+\begin{align}
+\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack
+&= 
+\mathscr{L}(P(\vec m), \vec w) + {\color{red}\dkl \left(~P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) ~\right)}\\
+&= 
+\int P(\vec m) \ln \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m
++ 
+{\color{red}\dkl}\\
+&= 
+\int P(\vec m) \ln \frac{\widehat{P}(~\vec m ~|~ \vec x ; \vec w) \widehat{P}(~\vec x ~|~ \vec w)}{P(\vec m)} d\vec m
++ 
+{\color{red}\dkl}\\
+&= 
+\int P(\vec m) \ln \frac{{\color{blue}\widehat{P}(~\vec m ~|~ \vec x ; \vec w)} \widehat{P}(~\vec x ~|~ \vec w)}{{\color{blue}P(\vec m)}} d\vec m
++
+{\color{red}\dkl}\\
+&= 
+\int P(\vec m) \ln \widehat{P}(~\vec x ~|~ \vec w) d\vec m
++\kern-0.7ex
+\int \kern-0.5ex P(\vec m) \ln \frac{{\color{blue}\widehat{P}(~\vec m ~|~ \vec x ; \vec w)}}{{\color{blue}P(\vec m)}} d\vec m
++
+{\color{red}\dkl}\\
+&= 
+\int P(\vec m) \ln \widehat{P}(~\vec x ~|~ \vec w) d\vec m
+~{\color{red} - \dkl}
++
+{\color{red}\dkl}\\
+&= \E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack
+\end{align}
+\endgroup
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\question{What do we gain from this decomposition?}
+
+\slidesonly{
+\begingroup
+\footnotesize
+\begin{align}
+\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack
+&= 
+\mathscr{L}(P(\vec m), \vec w) + {\dkl \left(~P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) ~\right)}
+\end{align}
+\endgroup
+}
+
+\pause
+
+- We use the decomposition to show how EM optimizes the log likelihhod at every iteration.
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+\slidesonly{
+\begingroup
+\footnotesize
+\begin{align}
+\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack
+&= 
+\mathscr{L}(P(\vec m), \vec w) + {\dkl \left(~P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) ~\right)}
+\end{align}
+\endgroup
+}
+
+
+\begin{block}{Jensen's inequality}
+
+Given a random variable $Z$, Jensen's inequality tells us that for any convex function $f$:
+
+\slidesonly{
+\placeimage{12.5}{5}{img/convex}{width=2cm}
+}
+
+\svspace{-5mm}
+
+  \begin{equation}
+    f(\E[Z]) \leq \E[f(Z)]    
+  \end{equation}
+  
+\pause
+
+The reverse is true for a concave function $g$:
+  
+  \begin{equation}
+    g(\E[Z]) \geq \E[g(Z)]    
+  \end{equation}
+
+
+\end{block}
+
+\slidesonly{
+\placeimage{12}{8}{img/concave}{width=2cm}
+}
+
+\pause
+
+\svspace{5mm}
+
+The logarithm $\ln(z)$ is concave in the interval $0 < z < \infty$.
+The derivative $\frac{d \ln(z)}{dz} = \frac{1}{z}$ strictly decreases when its argument increases.
+
+\pause
+
+\question{What does this have to do with anything?}
+
+\notesonly{
+- It tells us that $\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack$ has a lower bound.
+}
+
+
+\end{frame}
+
+\begin{frame}{The lower bound}
+
+\slidesonly{
+\begingroup
+\footnotesize
+\begin{align}
+\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack
+&= 
+\mathscr{L}(P(\vec m), \vec w) + {\dkl \left(~P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) ~\right)}
+\end{align}
+\endgroup
+}
+
+Since $\dkl \ge 0$ and $\dkl = 0$ iff. $P(\vec m) = P(~\vec m~|~ \vec x; \vec w)$, the expected complete data log-likelhood $\mathscr{L}(P(\vec m), \vec w)$ is a lower bound on $\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack$.
+
+\pause
+
+\begin{enumerate}[a]
+\item The EM algorithm maximizes the log-likelihood by maximizing the lowerbound $\mathscr{L}(P(\vec m), \vec w)$ at every iteration $t$ w.r.t. $P(\vec m)$.
+\item With every increase the $\dkl$ term becomes smaller and \underline{may} eventually vanish.
+\item In the case of the $\dkl$ term vanishing, $\mathscr{L}(P(\vec m), \vec w) = \E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack$
+\item The likelihood under EM is sctrictly monotoncially increasing. \notesonly{During intermediate optimization steps in EM lead to the likelhood increasing or remaining unchanged.}
+\item A decrease is indicative of a mistake in the implementation.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+TODO plot
+\end{frame}
+
+\subsubsection{The E-step}
+
+\begin{frame}{\subsubsecname}
+
+\slidesonly{
+\begingroup
+\footnotesize
+\begin{align}
+\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack
+&= 
+\mathscr{L}(P(\vec m), \vec w) + {\dkl \left(~P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) ~\right)}
+\end{align}
+\endgroup
+}
+
+\begin{enumerate}
+\item Maximize $\mathscr{L}(P(\vec m), \vec w)$ w.r.t. $P(\vec m)$ keeping the parameters fixed (i.e. use $\vec w_{\text{old}}$)
+\item At the solution the $\dkl$ decreases (ultimately, $\dkl \rightarrow$ 0)
+\end{enumerate}
+
+\end{frame}
+
+\subsubsection{The M-step}
+
+\begin{frame}{\subsubsecname}
+
+\svspace{-5mm}
+
+\slidesonly{
+\begingroup
+\footnotesize
+\begin{align}
+\E
+\big\lbrack
+\ln \widehat{P}(~\vec x ~|~ \vec w)
+\big\rbrack
+&= 
+\mathscr{L}(P(\vec m), \vec w) + {\dkl \left(~P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) ~\right)}
+\end{align}
+\endgroup
+}
+
+\svspace{-5mm}
+
+\begin{enumerate}
+\item Keep $P(\vec m)$ fixed.
+\item Maximize $\mathscr{L}(P(\vec m), \vec w)$ w.r.t. $\vec w \leadsto \vec w_{\text{new}}$
+\item We either manage to increase the lower bound or it remains unchanged
+\begin{equation}
+\mathscr{L}(P(\vec m), \vec w_{\text{new}}) \ge \mathscr{L}(P(\vec m), \vec w_{\text{old}})
+\end{equation}
+\item The possible increase in $\mathscr{L}$ leads to an increase in the likelihood but not necessarily by a different amount.\\
+The difference in increase is explained by the $\dkl$ term.
+\end{enumerate}
+
+\pause
+
+\question{Which of the two will increase more? The likelihood or $\mathscr{L}$?}
+
+\pause
+
+-Since $\dkl \ge 0$, the increase in the likelihood can be larger than that of $\mathscr{L}$.
+
+\end{frame}
+
+\begin{frame}
+
+\question{How should we define $P(\vec m)$?}
+
+- By keeping $P(\vec m)$ fixed during the M-step, we are effectively measuring $P(\vec m)$ as a function of the data \notesonly{and the parmeters values of the previous step }$\vec w_{\text{old}}$.
+
+This leads to the following definition
+
+\begin{equation}
+P(\vec m) := P(~\vec m ~|~ \vec x ; \vec w_{\text{old}})
+\end{equation}
+
+From this follows
+
+\end{frame}
