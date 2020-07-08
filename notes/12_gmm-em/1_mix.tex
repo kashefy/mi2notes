@@ -119,7 +119,7 @@ E^T = - \ln P_{\left( \left\{ \vec{x}^{(\alpha)} \right\} \right)} &= - \sum_{\a
 
 \begin{frame}{\subsecname}
 
-\question{How do formulate a Gaussian mixture model to act as soft K-means?}
+\question{How do you get a Gaussian mixture model to act as soft K-means?}
 
 \pause
 
@@ -178,7 +178,7 @@ P_{(\vec{x}^{(\alpha)})} &= \sum_{q=1}^{M} \mathcal{N}\left( \vec{x}^{(\alpha)};
 &= \frac{1}{M}\left(\frac{\beta}{2\pi}\right)^{N/2} \sum_{q=1}^{M} \exp \left\{ - \frac{\beta}{2} \left( \vec{x}^{(\alpha)} - \vec{w}_q \right)^2 \right\} 
 \end{align}
 
-Minimizing the cost w.r.t. to the parameters by mininimizing the nagative data log-likelihood:
+Minimizing the cost w.r.t. to the parameters by minimizing the negative data log-likelihood:
 
 \vspace{-2mm}
 
@@ -211,7 +211,7 @@ We compute the derivative of the cost w.r.t an individual prototype $\vec w_r$, 
 \svspace{-3mm}
 
 \only<1>{
-In soft-clustering we have the assignment probabilities $m_q^{(\alpha)} \in \lbrack 0,1 \rbrack$ to relfect the probability of a point $\vec x^{(\alpha)}$ being assigned to cluster $q$ with $\sum_{q=1}^M m_q^{(\alpha)} = 1$.
+In soft-clustering we have the assignment probabilities $m_q^{(\alpha)} \in \lbrack 0,1 \rbrack$ to reflect the probability of a point $\vec x^{(\alpha)}$ being assigned to cluster $q$ with $\sum_{q=1}^M m_q^{(\alpha)} = 1$.
 }
 
 \only<2,3>{
@@ -219,7 +219,7 @@ In Mixture Models we have a probabilistic setting with the following quantities.
 
 \begin{itemize}
 \item $P_{(\vec x)}$ : likelihood \only<3>{(\emph{prior} of the data)}
-\item $P_{(q)}$: the probability of component $q$ creating a point \only<3>{(\emph{prior} of the component) $\leadsto$ vconstraint $\sum_{q=1}^M P_{(q)} = 1$}
+\item $P_{(q)}$: the probability of component $q$ creating a point \only<3>{(\emph{prior} of the component) $\leadsto$ constraint $\sum_{q=1}^M P_{(q)} = 1$}
 \item $P_{(\vec x|q)}$ : the probability density that a point $\vec x$ was created by component $q$
 \end{itemize}
 }
@@ -256,7 +256,7 @@ P_{(\vec x)}
 
 \begin{frame}{\subsecname: A constraint for the mixture parameters}
 
-\question{Why do we need to constraint the mixture parameters $P_{(q)}$ s.t. they sum up to 1?}
+\question{Why do we need to constrain the mixture parameters $P_{(q)}$ s.t. they sum up to 1?}
 
 \svspace{-5mm}
 
@@ -272,6 +272,6 @@ Side effect:\\
 
 If $M$ is chosen too large, a solution may contain a component with a very low mixture parameter $P_{(q)}$ that is only useful for explaining a very small portion of the dataset (e.g. a component that explains a single point)
 
-Such ``degenerate'' solutions or ``collapse''of the mixture model can be avoided by choosing a smaller $M$.
+Such ``degenerate'' solutions or ``collapse'' of the mixture model can be avoided by choosing a smaller $M$.
 
 \end{frame}
