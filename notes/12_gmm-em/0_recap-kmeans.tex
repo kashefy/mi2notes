@@ -15,7 +15,7 @@
 \begin{itemize}
 \item[] observations $\vec x \in \R^N$
 \item[] $M$ clusters: $q_1, q_2, \ldots, q_M$
-\item[] $M$ prototypes: $q_1, q_2, \ldots, q_M$
+\item[] $M$ prototypes: $\vec w_1, \vec w_2, \ldots, \vec w_M$
 \item[] assignment variables for each point
 \begin{equation}
 \label{eq:assignment}
@@ -37,7 +37,7 @@
 \end{center}
 
 $\sum_{\alpha=1}^p m_q^{(\alpha)}$ counts how many points are assigned to cluster $q$ while $\frac{1}{p} \sum_{\alpha=1}^{p}
-		\big( \vec{x}^{(\alpha)} - \vec{w}_q \big)^2$ yields the ``size''/variance of cluster $q$
+		m_q^{(\alpha)} \big( \vec{x}^{(\alpha)} - \vec{w}_q \big)^2$ yields the ``size''/variance of cluster $q$
 		
 \pause
 
