@@ -168,7 +168,7 @@ P(
 $\\
 for any step $t \in \lbrack0, T)$
 
-Intepretation of the above distribution:\\
+Interpretation of the above distribution:\\
 
 The distribution for the sub-sequence of observations \emph{following} step $t$
 
@@ -178,5 +178,122 @@ The distribution for the sub-sequence of observations \emph{following} step $t$
 
 \subsection{Forward-Backward}
 
-\begin{frame}
+\begin{frame}{\subsecname: Putting things together}
+
+\begin{equation}
+P(
+\vec m^{(t)} | \{\vec x^{(s)}\}_{s=1}^T )
+\propto 
+P(\vec m^{(t)} , \{\vec x^{(s)}\}_{s=1}^T)
+\end{equation}
+
+Here, $\{\vec x^{(s)}\}_{s=1}^T$ is the entire observed sequence.
+
+\pause
+
+\begin{align}
+P(\vec m^{(t)} , \{\vec x^{(s)}\}_{s=1}^T)
+&= 
+P( \{\vec x^{(s)}\}_{s=1}^T, \vec m^{(t)})\\
+\stackrel{\substack{\text{product}\\\text{rule}}}{=}&
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)})\\
+&\qquad\cdot 
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+\end{align}
+
+\pause
+
+We can simplify the above by epxloiting the Markov property.\\
+Specifically, that
+$\vec x^{(t+1)}, \ldots, \vec x^{(T)}$ are conditionally independent of $\vec x^{(1)}, \ldots, \vec x^{(t)}$ \underline{given} $\vec m^{(t)}$.
+
+
+
 \end{frame}
+
+\begin{frame}{\subsecname: Putting things together}
+
+\notesonly{From this follows:}
+
+\slidesonly{
+\only<1>{
+\begin{align}
+P(\vec m^{(t)} , \{\vec x^{(s)}\}_{s=1}^T)
+&= 
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
+\cdot 
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+\end{align}
+}
+}
+\only<2>{
+\begin{align}
+P(\vec m^{(t)} , \{\vec x^{(s)}\}_{s=1}^T)
+&= 
+\underbrace{\color{orange}
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
+}_{
+\substack{
+\text{from backward}\\
+\text{algorithm}
+}
+}
+\cdot 
+\underbrace{\color{blue}
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+}_{
+\substack{
+\text{from forward}\\
+\text{algorithm}
+}
+}
+\end{align}
+}
+
+\pause
+
+\begin{align}
+P(
+\vec m^{(t)} | \{\vec x^{(s)}\}_{s=1}^T )
+\; \propto& \;
+{\color{orange}
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
+}
+\cdot 
+{\color{blue}
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+}\\[5mm]
+=& \;
+\frac{
+{\color{orange}
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
+}
+\cdot 
+{\color{blue}
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+}
+}{
+P(\vec x^{(1)}, \ldots, \vec x^{(T)})
+}
+\label{eq:hmmcondfwdbwd}
+\end{align}
+
+\pause
+
+\question{Where did the normalization factor come from?}
+
+\pause
+
+\notesonly{-The normalization in \eqref{eq:hmmcondfwdbwd} comes from Bayes'theorem:}
+\begin{equation}
+P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(s)}\})
+\kern-2ex
+	\underbrace{=}_{{\tiny \text{Bayes theorem}}} 
+\kern-3ex
+	\frac{P( \{\vec{x}^{(s)}\} ~|~ \vec{m}^{(t)}) \cdot P(\vec{m}^{(t)})}
+		 {P( \{\vec{x}^{(s)}\})}
+\end{equation}
+
+\end{frame}
+
+
