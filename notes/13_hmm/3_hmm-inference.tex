@@ -1,0 +1,124 @@
+\section{Inference in HMMs: the forward-backward algorithm}
+
+\begin{frame} 
+\mode<presentation>{
+    \begin{center} \huge
+        \secname
+    \end{center}
+    }    
+    \begin{center}
+    What can we do with a \underline{trained} HMM model
+    \end{center}
+	
+\end{frame}
+
+\begin{frame}
+
+\begin{itemize}
+\item[] \textbf{Goal}: Compute the probability of a state at any step $t$ given the observed sequence:
+\begin{equation}
+P(\vec{m}^{(t)}  ~|~ \vec{x}^{(1)},  \ldots,\vec{x}^{(T)}) =
+		P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(t-1)}\})
+\end{equation}
+
+\item[] \textbf{Assumptions}: parameters $\vec{w} := \{
+		\vec{A}
+		\vec{b}
+		\vec{\boldsymbol{\phi}}
+		\}$ are \underline{known} (have been found) We will cover estimating these parameters later.
+\item[] \textbf{Procedure}: The forward-backward algorithm yields an expression for $P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(t-1)}\})$
+
+\end{itemize}
+
+\end{frame}
+
+\subsection{The Forward algorithm}
+
+\begin{frame}{\subsecname}
+
+The Forward algorithm computes the joint distribution $P(\vec x^{(1)}, \ldots , \vec x^{(t)}, \vec m^{(t)}) \stackrel{\substack{\text{for}\\ \text{brevity}}}{=} P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$\\
+for any step $t \in \lbrack 1, T\rbrack$.\\
+
+\svspace{5mm}
+
+Here, $\{\vec x^{(s)}\}_{s=1}^t$ denotes the sequence of observations leading up to step $t$\\
+
+\svspace{5mm}
+
+Example intepretation for $P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$: ``The distribution of temperature and humidity measures that lead up to a ``sunny'' day on day $t$.''
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+The joint distribution $P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$ for any step $t \in \lbrack 1, T\rbrack$ is computed by \textit{marginalizing over the previous step in order to move ``forward''}:
+
+\begin{equation}
+P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})
+=
+\kern-3ex
+\underbrace{
+\sum_{\vec m^{(t-1)}}
+}_{
+\substack{
+\text{\tiny all possible}\\
+\text{\tiny valid assignments}\\
+\text{\tiny at the previous}\\
+\text{\tiny step t-1}
+}
+}
+\kern-3ex
+P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)}, \vec m^{(t-1)})
+\end{equation}
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+%\svspace{-5mm}
+
+\begingroup
+\begin{align}
+\slidesonly{
+\only<1->{
+	P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})
+	&=
+}
+\only<2>{
+\sum_{\vec m^{(t-1)}}
+P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)}, \vec m^{(t-1)})
+}
+\intertext{Applying the product rule:}
+&=
+\sum_{\vec m^{(t-1)}}
+\bigg\lbrack
+P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})\\
+&\qquad\qquad\cdot 
+P(\vec m^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t-1)})\\
+&\qquad\qquad\cdot 
+P(\vec m^{(t-1)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1})
+\bigg\rbrack
+\intertext{due to the Markov property
+$P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})
+=
+P(\vec x^{(t)}~|~\vec m^{(t)})
+$}
+}
+\only<3>{
+&=
+\sum_{\vec m^{(t-1)}}
+\bigg\lbrack
+P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})\\
+&\qquad\qquad\cdot 
+P(\vec m^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t-1)})\\
+&\qquad\qquad\cdot 
+P(\vec m^{(t-1)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1})
+\bigg\rbrack
+}
+\end{align}
+\endgroup
+
+\end{frame}
+
+
+\subsection{The Backward algorithm}
+
