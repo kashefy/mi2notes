@@ -76,49 +76,107 @@ P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)}, \vec m^{(t-1)})
 \begin{frame}{\subsecname}
 %\svspace{-5mm}
 
-\begingroup
 \begin{align}
 \slidesonly{
 \only<1->{
 	P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})
+}
+\only<1,2>{
 	&=
+	\sum_{\vec m^{(t-1)}}
+	P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)}, \vec m^{(t-1)})
 }
+}
+\only<1,2>{
+	\intertext{Applying the product rule:}
+	&=
+	\sum_{\vec m^{(t-1)}}
+	\bigg\lbrack
+	P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})\\
+	&\qquad\qquad\cdot 
+	P(\vec m^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t-1)})\\
+	&\qquad\qquad\cdot 
+	P(\vec m^{(t-1)},\{\vec x^{(s)}\}_{s=1}^{t-1})
+	\bigg\rbrack
+	}
 \only<2>{
-\sum_{\vec m^{(t-1)}}
-P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)}, \vec m^{(t-1)})
-}
-\intertext{Applying the product rule:}
-&=
-\sum_{\vec m^{(t-1)}}
-\bigg\lbrack
-P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})\\
-&\qquad\qquad\cdot 
-P(\vec m^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t-1)})\\
-&\qquad\qquad\cdot 
-P(\vec m^{(t-1)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1})
-\bigg\rbrack
-\intertext{due to the Markov property
-$P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})
-=
-P(\vec x^{(t)}~|~\vec m^{(t)})
-$}
+	\intertext{due to the Markov property
+	$P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})
+	=
+	P(\vec x^{(t)}~|~\vec m^{(t)})
+	$}\\
 }
 \only<3>{
-&=
-\sum_{\vec m^{(t-1)}}
-\bigg\lbrack
-P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})\\
-&\qquad\qquad\cdot 
-P(\vec m^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t-1)})\\
-&\qquad\qquad\cdot 
-P(\vec m^{(t-1)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1})
-\bigg\rbrack
+	&=
+	\sum_{\vec m^{(t-1)}}
+	\bigg\lbrack
+	P(\vec x^{(t)}~|~ \vec m^{(t)})\\
+	&\qquad\qquad\cdot 
+	P(\vec m^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t-1)})\\
+	&\qquad\qquad\cdot 
+	\underbrace{
+	P(\vec m^{(t{\color{red}-1})}, \{\vec x^{(s)}\}_{s=1}^{t{\color{red}-1}})
+	}_{\text{recursion}}
+	\bigg\rbrack
 }
 \end{align}
+
+
+\only<3>{
+
+To illustrate the recursion:
+
+\begingroup
+\footnotesize
+\begin{align}
+	P(&\{\vec x^{(s)}\}_{s=1}^{t{\color{red}-1}}, \vec m^{(t{\color{red}-1})})\\
+	=&
+	\kern-2ex
+	\sum_{\vec m^{(t-1{\color{red}-1})}}
+	\kern-1ex
+	\bigg\lbrack
+	P(\vec x^{(t{\color{red}-1})}|\vec m^{(t{\color{red}-1})})
+	%\\
+	%&\qquad\qquad
+	%\cdot 
+	P(\vec m^{(t{\color{red}-1})}|\{\vec x^{(s)}\}_{s=1}^{t-1{\color{red}-1}}, \vec m^{(t-1{\color{red}-1})})
+	%\\
+	%&\qquad\qquad
+	%\cdot 
+	\underbrace{
+	P(\vec m^{(t{\color{red}-1}{\color{cyan}-1})}|\{\vec x^{(s)}\}_{s=1}^{t{\color{red}-1}{\color{cyan}-1}})
+	}_{\text{recursion}}
+	\bigg\rbrack
+\end{align}
 \endgroup
+}
 
 \end{frame}
 
 
 \subsection{The Backward algorithm}
 
+\begin{frame}{\subsecname}
+
+The Forward algorithm computes the conditional distribution
+$
+P(
+\underbrace{\vec x^{(t+1)}, \ldots, \vec x^{(T)}
+}_{
+\{\vec x^{(s)}\}_{s=t+1}^T
+} | \vec m^{(t)})
+$\\
+for any step $t \in \lbrack0, T)$
+
+Intepretation of the above distribution:\\
+
+The distribution for the sub-sequence of observations \emph{following} step $t$
+
+\slidesonly{No need to manipulate this further}
+
+\end{frame}
+
+\subsection{Forward-Backward}
+
+\begin{frame}
+\end{frame}
