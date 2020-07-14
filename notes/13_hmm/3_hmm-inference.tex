@@ -1,4 +1,4 @@
-\section{Inference in HMMs: the forward-backward algorithm}
+\section{Inference in HMM: the forward-backward procedure}
 
 \begin{frame} 
 \mode<presentation>{
@@ -22,21 +22,21 @@ P(\vec{m}^{(t)}  ~|~ \vec{x}^{(1)},  \ldots,\vec{x}^{(T)}) =
 \end{equation}
 
 \item[] \textbf{Assumptions}: parameters $\vec{w} := \{
-		\vec{A}
-		\vec{b}
+		\vec{A},
+		\vec{b},
 		\vec{\boldsymbol{\phi}}
 		\}$ are \underline{known} (have been found) We will cover estimating these parameters later.
-\item[] \textbf{Procedure}: The forward-backward algorithm yields an expression for $P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(t-1)}\})$
+\item[] \textbf{Procedure}: The forward-backward procedure yields an expression for $P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(t-1)}\})$
 
 \end{itemize}
 
 \end{frame}
 
-\subsection{The Forward algorithm}
+\subsection{The forward recursion}
 
 \begin{frame}{\subsecname}
 
-The Forward algorithm computes the joint distribution $P(\vec x^{(1)}, \ldots , \vec x^{(t)}, \vec m^{(t)}) \stackrel{\substack{\text{for}\\ \text{brevity}}}{=} P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$\\
+The forward procedure computes the joint distribution $P(\vec x^{(1)}, \ldots , \vec x^{(t)}, \vec m^{(t)}) \stackrel{\substack{\text{for}\\ \text{brevity}}}{=} P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$\\
 for any step $t \in \lbrack 1, T\rbrack$.\\
 
 \svspace{5mm}
@@ -45,7 +45,7 @@ Here, $\{\vec x^{(s)}\}_{s=1}^t$ denotes the sequence of observations leading up
 
 \svspace{5mm}
 
-Example intepretation for $P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$: ``The distribution of temperature and humidity measures that lead up to a ``sunny'' day on day $t$.''
+Example interpretation for $P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$: ``The distribution of temperature and humidity measures that lead up to a ``sunny'' day on day $t$.''
 
 \end{frame}
 
@@ -154,29 +154,52 @@ To illustrate the recursion:
 \end{frame}
 
 
-\subsection{The Backward algorithm}
+\subsection{The backward recursion}
 
 \begin{frame}{\subsecname}
 
-The Forward algorithm computes the conditional distribution
-$
+The backward recursion computes the conditional distribution:
+\begin{equation}
 P(
 \underbrace{\vec x^{(t+1)}, \ldots, \vec x^{(T)}
 }_{
 \{\vec x^{(s)}\}_{s=t+1}^T
 } | \vec m^{(t)})
-$\\
-for any step $t \in \lbrack0, T)$
+\qquad 
+\text{for any step }t \in \lbrack0, T)
+\end{equation}
 
-Interpretation of the above distribution:\\
+Interpretation of the above\notesonly{ distribution}:\\
 
 The distribution for the sub-sequence of observations \emph{following} step $t$
 
 \slidesonly{No need to manipulate this further}
 
+\pause
+
+\question{Where is the recursion?}
+
+\pause
+
+\svspace{-5mm}
+
+\begin{align}
+P(&\vec{x}^{(t+1)}, \ldots, \vec{x}^{(T)} ~|~ \vec{m}^{(t)}) =\\
+				&\sum_{\big\{\vec{m}^{(t{\color{red}+1})}\big\}} \kern-2ex
+				\underbrace{
+				P(\vec{x}^{(t+1{\color{red}+1})}, \ldots, \vec{x}^{(T)} | \vec{m}^{(t{\color{red}+1})})
+				}_{
+				P(\vec{x}^{(t{\color{red}+2})}, \ldots, \vec{x}^{(T)} | \vec{m}^{(t{\color{red}+1})})
+				}
+				%{\color{orange}\beta(\vec{m}^{(t+1)})} ~
+				P(\vec{x}^{(t{+1})} | \vec{m}^{(t{\color{red}+1})}) ~
+				P(\vec{m}^{(t{\color{red}+1})} | \vec{m}^{(t)})
+\end{align}
+
+
 \end{frame}
 
-\subsection{Forward-Backward}
+\subsection{The forward-backward procedure}
 
 \begin{frame}{\subsecname: Putting things together}
 
@@ -203,7 +226,7 @@ P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)})
 
 \pause
 
-We can simplify the above by epxloiting the Markov property.\\
+We can simplify the above by exploiting the Markov property.\\
 Specifically, that
 $\vec x^{(t+1)}, \ldots, \vec x^{(T)}$ are conditionally independent of $\vec x^{(1)}, \ldots, \vec x^{(t)}$ \underline{given} $\vec m^{(t)}$.
 
@@ -235,7 +258,7 @@ P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
 }_{
 \substack{
 \text{from backward}\\
-\text{algorithm}
+\text{recursion}
 }
 }
 \cdot 
@@ -244,7 +267,7 @@ P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)})
 }_{
 \substack{
 \text{from forward}\\
-\text{algorithm}
+\text{recursion}
 }
 }
 \end{align}
@@ -284,13 +307,16 @@ P(\vec x^{(1)}, \ldots, \vec x^{(T)})
 
 \pause
 
-\notesonly{-The normalization in \eqref{eq:hmmcondfwdbwd} comes from Bayes'theorem:}
+\notesonly{-The normalization in \eqref{eq:hmmcondfwdbwd} comes from Bayes' theorem:
+}
 \begin{equation}
 P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(s)}\})
 \kern-2ex
 	\underbrace{=}_{{\tiny \text{Bayes theorem}}} 
 \kern-3ex
-	\frac{P( \{\vec{x}^{(s)}\} ~|~ \vec{m}^{(t)}) \cdot P(\vec{m}^{(t)})}
+	\frac{P( \{\vec{x}^{(s)}\} ~|~ \vec{m}^{(t)})
+	\cdot
+	P(\vec{m}^{(t)})}
 		 {P( \{\vec{x}^{(s)}\})}
 \end{equation}
 
