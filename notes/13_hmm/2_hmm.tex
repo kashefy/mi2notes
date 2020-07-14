@@ -89,6 +89,34 @@ Next: Formulation of the joint distribution of the entire sequence
 
 \end{frame}
 
+\begin{frame}{The trellis diagram of the HMM}
+
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{img/weather_trellis}
+	\notesonly{\captionof{figure}{The trellis diagram of the HMM depicting the dependencies between the variables.}}
+\end{center}
+
+\slidesonly{
+We recognize the Markov properties in the \emph{trellis diagram} of the HMM
+\begin{itemize}
+\item
+Every state $\vec{m}^{(t)}$ depends only on the previous state $\vec{m}^{(t)}$
+\begin{equation}
+P(\vec{m}^{(t)}  ~|~ \vec{m}^{(1)},  \dots,\vec{m}^{(t-1)}) =
+		{P(\vec{m}^{(t)}  ~|~ \vec{m}^{(t-1)})}
+\end{equation}
+
+\item Every observation $\vec x^{(t)}$ depends only on $\vec m^{(t)}$
+
+\begin{equation}
+P(\vec{x}^{(t)}  ~|~ \vec{x}^{(1)},  \dots,\vec{x}^{(t-1)}, \vec{m}^{(1)},  \dots,\vec{m}^{(t)}) =
+		{P(\vec{x}^{(t)}  ~|~ \vec{m}^{(t)})}
+\end{equation}
+\end{itemize}
+}
+
+\end{frame}
+
 \begin{frame}{The factorization corresponding to the graphical model of the HMM}
 
 \notesonly{The factorization corresponding to the graphical model of the HMM:}
@@ -108,7 +136,29 @@ P(\vec{x}^{(t)}  ~|~ \vec{x}^{(1)},  \dots,\vec{x}^{(t-1)}, \vec{m}^{(1)},  \dot
 \end{equation}
 }
 
-We exploit the Markov property to factorize the joint distribution for the observed and hidden sequences.
+\begin{block}{Conditional independence}
+Two random variables $X$ and $Y$ are conditionally independent if:
+
+\svspace{-3mm}
+
+\begin{equation}
+P(X,Y|Z) \;=\; P(X|Z) P(Y|Z).
+\end{equation}
+
+\svspace{-5mm}
+
+Consequently,
+
+\svspace{-3mm}
+
+\begin{equation}
+P(X,Y,Z) \stackrel{\substack{\text{product}\\\text{rule}}}{=} P(X,Y|Z)P(Z) \;=\; P(X|Z) P(Y|Z)P(Z).
+\end{equation}
+\end{block}
+
+\notesonly{We exploit the Markov property to factorize the joint distribution for the observed and hidden sequences for the HMM:}
+
+\svspace{-4mm}
 
 \begin{align}
 P(\{\vec{x}^{(t)}\}  , \{\vec{m}^{(t)}\}) = 
@@ -151,60 +201,25 @@ the distribution of observations given the hidden state $q$.  \notesonly{(\secti
 
 \begin{frame}{\subsubsecname}
 
-{Transition probabilities}\only<1-4>{:\\
+Transition probabilities:\\
+
 The probability of going from state $q$ to $r$:\\
-\only<1>{
-	\begin{equation}
+
+\begin{equation}
 	A_{qr}^{(t)} :=	P(m_r^{(t)} = 1 ~|~  m_q^{(t - 1)} = 1)
-	\end{equation}
-	\notesonly{Store all transition probabilities in a }transition probability matrix
-	\begin{equation}
+\end{equation}
+\notesonly{Store all transition probabilities in a }transition probability matrix
+\begin{equation}
 	\vec A^{(t)} \in \lbrack 0, 1\rbrack^{M\times M} \quad \text{(stochastic matrix)}
-	\end{equation}
-	with $\sum_{r=1}^M A_{qr}^{(t)} = 1 \quad \forall q= 1, \dots, M$\\
-	Assuming homogeneity simplifies this by reducing the transitions to a single matrix $\vec A$ independent of time step t.
-}
-\only<1-4>{
-	\begin{equation}
-	P(\vec{m}^{(t)} ~|~ \vec{m}^{(t - 1)}, \vec{A}) = \prod_{r=1}^M \prod_{q=1}^M A_{qr}^{m_q^{(t-1)} m_r^{(t)}}
-	\end{equation}
-}
-\only<2-4>{
-\question{What is the probability of a sequence of states ``$3, 1, 2, 5$''?}
+\end{equation}
+with $\sum_{r=1}^M A_{qr}^{(t)} = 1 \quad \forall q= 1, \dots, M$\\
+Assuming homogeneity simplifies this by reducing the transitions to a single matrix $\vec A$ independent of time step t.
 
-\only<3>{
-	\svspace{-3mm}
+\pause
 
-	1-out-of-$M$ coding implies:
-	\begin{itemize}
-	\item[] state ``\textcolor{blue}{3}'': $\vec m = (0, 0, {\color{blue}1}, 0, \ldots, 0)^\top$,
-	\item[] state ``\textcolor{darkgreen}1'': $\vec m = ({\color{darkgreen}1}, 0, 0, 0, \ldots, 0)^\top$
-	\end{itemize}
-
-	\begingroup
-	\small
-	\begin{align}
-		P(\text{``}3, 1, 2, 5\text{''} | \vec A) 
-		&= A_{31} \cdot A_{12} \cdot A_{25} \\
-		&\kern-7ex= 
-		%{\tiny 
-		P(\vec{m}^{(2)} ~|~ \vec{m}^{({1})}, \vec{A}) \cdot P(\vec{m}^{(3)} ~|~ \vec{m}^{(2)}, \vec{A}) \cdot P(\vec{m}^{(4)} ~|~ \vec{m}^{(3)}, \vec{A})
-	\end{align}
-	\endgroup
-}
-
-\only<4>{
-	The probability of a sequence $\{\vec m^{(t)}\}$ in general:
-
-	\begingroup
-	\small
-	\begin{align}
-		P(\{\vec m^{(t)}\} | \vec A) = \prod_{t={\color{red}2}}^{T} P(\vec{m}^{(t)} ~|~ \vec{m}^{({\color{red}t - 1})}, \vec{A})
-	\end{align}
-	\endgroup
-	}
-}
-}
+\begin{equation}
+P(\vec{m}^{(t)} ~|~ \vec{m}^{(t - 1)}; \vec{A}) = \prod_{r=1}^M \prod_{q=1}^M A_{qr}^{m_q^{(t-1)} m_r^{(t)}}
+\end{equation}
 
 \end{frame}
 
@@ -241,6 +256,67 @@ P(\vec{m}^{(1)} ~|~ \vec{b}) = \prod_{q=1}^M b_q^{m_q^{(1)}}
 \end{frame}
 
 
+\begin{frame}{The transition model}
+
+Given
+\begin{itemize}
+\item Transition probabilities
+\slidesonly{$
+	P(\vec{m}^{(t)} ~|~ \vec{m}^{(t - 1)}; \vec{A}) = \prod_{r=1}^M \prod_{q=1}^M A_{qr}^{m_q^{(t-1)} m_r^{(t)}}
+$
+	}
+\item Initial distributions
+\slidesonly{
+$
+P(\vec{m}^{(1)} ~|~ \vec{b}) = \prod_{q=1}^M b_q^{m_q^{(1)}}
+$
+}
+\end{itemize}
+
+\only<1>{
+
+\question{What is the probability of a sequence of states ``$3, 1, 2, 5$''?}
+
+}
+
+\only<2>{
+	\svspace{-3mm}
+
+	1-out-of-$M$ coding implies:
+	\begin{itemize}
+	\item[] state ``\textcolor{blue}{3}'': $\vec m = (0, 0, {\color{blue}1}, 0, \ldots, 0)^\top$,
+	\item[] state ``\textcolor{darkgreen}1'': $\vec m = ({\color{darkgreen}1}, 0, 0, 0, \ldots, 0)^\top$
+	\end{itemize}
+
+	\begingroup
+	\small
+	\begin{align}
+		P(\text{``}3, &1, 2, 5\text{''} | \vec A,\vec b) = P(\text{``}3\text{''} | \vec b) P(\text{``}3, 1, 2, 5\text{''} | \vec A) \\
+		&= b_3 \cdot A_{31} \cdot A_{12} \cdot A_{25} \\
+		&=
+		%\kern-7ex= 
+		%{\tiny 
+		P(\vec{m}^{(1)} |~ \vec{b}) \cdot 
+		P(\vec{m}^{(2)} |~ \vec{m}^{({1})}; \vec{A}) \cdot P(\vec{m}^{(3)} |~ \vec{m}^{(2)}; \vec{A}) \cdot P(\vec{m}^{(4)} |~ \vec{m}^{(3)}; \vec{A})
+	\end{align}
+	\endgroup
+}
+
+\only<3>{
+
+\svspace{5mm}
+
+	The probability of a sequence $\{\vec m^{(t)}\}$ in general:
+
+	\begingroup
+	\small
+	\begin{align}
+		P(\{\vec m^{(t)}\} ~|~ \vec A, \vec b) = P(\vec{m}^{(1)} |~ \vec{b}) \cdot \prod_{t={\color{red}2}}^{T} P(\vec{m}^{(t)} ~|~ \vec{m}^{({\color{red}t - 1})}; \vec{A})
+	\end{align}
+	\endgroup
+}
+\end{frame}
+
 \subsubsection{Emission model}
 \label{sec:hmm_emission}
 
@@ -253,7 +329,7 @@ Where $\vec \phi = \{\vec \phi_1, \ldots, \vec \phi_M\}$ specifies the parameter
 
 Analogous to mixture components $P(\vec x| q)$ of a mixture model, e.g. choosing Gaussian basis functions
 \begin{equation}
-P(\vec{x} ~|~ \vec{m}, \vec{\boldsymbol{\phi}}) = \prod_{q=1}^M
+P(\vec{x} ~|~ \vec{m}; \vec{\boldsymbol{\phi}}) = \prod_{q=1}^M
 	P(\vec{x}^{(t)} ~|~ \vec{\boldsymbol{\phi}}_q)^{m_q^{(t)}} := \prod_{q=1}^M \mathcal{N}^{m_q} (\vec{x} ~|~ \vec{\boldsymbol{\mu}}_q, \vec{\Sigma}_q)
 \end{equation}
 				
@@ -261,7 +337,7 @@ where $\vec{\boldsymbol{\phi}} := \big\{\underbrace{\vec{\boldsymbol{\mu}}_q, \v
 
 Example:\\
 \begin{equation}
-P(\mathit{temperature}=29^{\circ}, \mathit{humidity}=20\% | \text{``}\mathit{cloudy}\text{''}; \vec \phi)
+P(\mathit{temperature}=29^{\circ}, \mathit{humidity}=20\% ~|~ \text{``}\mathit{cloudy}\text{''}; \vec \phi)
 \end{equation}
 
 \end{frame}

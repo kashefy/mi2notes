@@ -37,8 +37,10 @@ $
 Example: ``Change detection''
 
 \begin{equation}
-P(\vec m^{(t)} \ne \vec m^{(t)} | \{\vec x^{(s)}\}_{s=1}^T )
+P(\vec m^{(t)} \ne \vec m^{(t-1)} | \{\vec x^{(s)}\}_{s=1}^T )
 \end{equation}
+
+\svspace{5mm}
 
 \slidesonly{
 \begin{center}
@@ -149,7 +151,7 @@ P(&\vec{x}^{(t+1)} ~|~ \vec{x}^{(1)}, \ldots, \vec{x}^{(t)})
 =& 
 \sum_{\{\vec{m}^{(t+1)}, \vec{m}^{(t)} \}} 
 \kern-2ex
-P_{\mathit{emission}} \cdot P_{\mathit{tansition}} \cdot~{\color{blue}P(\mathit{state~have~we~reached~so~far})}
+P_{\mathit{emission}} \cdot P_{\mathit{tansition}} \cdot~{\color{blue}P(\mathit{the ~state~we~have~reached~so~far})}
 }
 \end{align}
 

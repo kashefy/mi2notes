@@ -36,16 +36,17 @@ P(\vec{m}^{(t)}  ~|~ \vec{x}^{(1)},  \ldots,\vec{x}^{(T)}) =
 
 \begin{frame}{\subsecname}
 
-The forward procedure computes the joint distribution $P(\vec x^{(1)}, \ldots , \vec x^{(t)}, \vec m^{(t)}) \stackrel{\substack{\text{for}\\ \text{brevity}}}{=} P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$\\
-for any step $t \in \lbrack 1, T\rbrack$.\\
+The forward procedure computes the joint distribution $P(\vec x^{(1)}, \ldots , \vec x^{({\color{blue}t})}, \vec m^{({\color{blue}t})}) \stackrel{\substack{\text{for}\\ \text{brevity}}}{=} P(\{\vec x^{(s)}\}_{s=1}^{{\color{blue}t}}, \vec m^{({\color{blue}t})})$\\
+for any step ${\color{blue}t} \in \lbrack 1, T\rbrack$.\\
 
 \svspace{5mm}
 
-Here, $\{\vec x^{(s)}\}_{s=1}^t$ denotes the sequence of observations leading up to step $t$\\
+Here, $\{\vec x^{(s)}\}_{s=1}^{{\color{blue}t}}$ denotes the sequence of observations leading up to step ${\color{blue}t}$\\
 
 \svspace{5mm}
 
-Example interpretation for $P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$: ``The distribution of temperature and humidity measures that lead up to a ``sunny'' day on day $t$.''
+Example interpretation for $P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$:\\
+``The distribution of temperature and humidity measures that lead up to a ``sunny'' day on day $t$.''
 
 \end{frame}
 
@@ -161,17 +162,19 @@ To illustrate the recursion:
 The backward recursion computes the conditional distribution:
 \begin{equation}
 P(
-\underbrace{\vec x^{(t+1)}, \ldots, \vec x^{(T)}
+\underbrace{
+	\vec x^{({\color{orange}t+1})}, \ldots, \vec x^{({\color{orange}T})}
 }_{
-\{\vec x^{(s)}\}_{s=t+1}^T
-} | \vec m^{(t)})
+	\{\vec x^{(s)}\}_{s={\color{orange}t+1}}^{{\color{orange}T}}
+}
+| \vec m^{(t)})
 \qquad 
 \text{for any step }t \in \lbrack0, T)
 \end{equation}
 
 Interpretation of the above\notesonly{ distribution}:\\
 
-The distribution for the sub-sequence of observations \emph{following} step $t$
+The distribution for the sub-sequence of observations \emph{\textcolor{orange}{following}} step $t$
 
 \slidesonly{No need to manipulate this further}
 
