@@ -1,0 +1,328 @@
+\section{Inference in HMM: the forward-backward procedure}
+
+\begin{frame} 
+\mode<presentation>{
+    \begin{center} \huge
+        \secname
+    \end{center}
+    }    
+    \begin{center}
+    What can we do with a \underline{trained} HMM model
+    \end{center}
+	
+\end{frame}
+
+\begin{frame}
+
+\begin{itemize}
+\item[] \textbf{Goal}: Compute the probability of a state at any step $t$ given the observed sequence:
+\begin{equation}
+P(\vec{m}^{(t)}  ~|~ \vec{x}^{(1)},  \ldots,\vec{x}^{(T)}) =
+		P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(s)}\}_{s=1}^{T})
+\end{equation}
+
+\item[] \textbf{Assumptions}: parameters $\vec{w} := \{
+		\vec{A},
+		\vec{b},
+		\vec{\boldsymbol{\phi}}
+		\}$ are \underline{known} (have been found) We will cover estimating these parameters later.
+\item[] \textbf{Procedure}: The forward-backward procedure yields an expression for $P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(s)}\})$
+
+\end{itemize}
+
+\end{frame}
+
+\subsection{The forward recursion}
+
+\begin{frame}{\subsecname}
+
+The forward procedure computes the joint distribution $P(\vec x^{(1)}, \ldots , \vec x^{({\color{blue}t})}, \vec m^{({\color{blue}t})}) \stackrel{\substack{\text{for}\\ \text{brevity}}}{=} P(\{\vec x^{(s)}\}_{s=1}^{{\color{blue}t}}, \vec m^{({\color{blue}t})})$\\
+for any step ${\color{blue}t} \in \lbrack 1, T\rbrack$.\\
+
+\svspace{5mm}
+
+Here, $\{\vec x^{(s)}\}_{s=1}^{{\color{blue}t}}$ denotes the sequence of observations leading up to step ${\color{blue}t}$\\
+
+\svspace{5mm}
+
+Example interpretation for $P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$:\\
+``The distribution of temperature and humidity measures that lead up to a ``sunny'' day on day $t$.''
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+
+The joint distribution $P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})$ for any step $t \in \lbrack 1, T\rbrack$ is computed by \textit{marginalizing over the previous step in order to move ``forward''}:
+
+\begin{equation}
+P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})
+=
+\kern-3ex
+\underbrace{
+\sum_{\vec m^{(t-1)}}
+}_{
+\substack{
+\text{\tiny all possible}\\
+\text{\tiny valid assignments}\\
+\text{\tiny at the previous}\\
+\text{\tiny step t-1}
+}
+}
+\kern-3ex
+P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)}, \vec m^{(t-1)})
+\end{equation}
+
+\end{frame}
+
+\begin{frame}{\subsecname}
+%\svspace{-5mm}
+
+\begin{align}
+\slidesonly{
+\only<1->{
+	P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)})
+}
+\only<1,2>{
+	&=
+	\sum_{\vec m^{(t-1)}}
+	P(\{\vec x^{(s)}\}_{s=1}^t, \vec m^{(t)}, \vec m^{(t-1)})
+}
+}
+\only<1,2>{
+	\intertext{Applying the product rule:}
+	&=
+	\sum_{\vec m^{(t-1)}}
+	\bigg\lbrack
+	P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})\\
+	&\qquad\qquad\cdot 
+	P(\vec m^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t-1)})\\
+	&\qquad\qquad\cdot 
+	P(\vec m^{(t-1)},\{\vec x^{(s)}\}_{s=1}^{t-1})
+	\bigg\rbrack
+	}
+\only<2>{
+	\intertext{due to the Markov property
+	$P(\vec x^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t)}, \vec m^{(t-1)})
+	=
+	P(\vec x^{(t)}~|~\vec m^{(t)})
+	$}\\
+}
+\only<3>{
+	&=
+	\sum_{\vec m^{(t-1)}}
+	\bigg\lbrack
+	P(\vec x^{(t)}~|~ \vec m^{(t)})\\
+	&\qquad\qquad\cdot 
+	P(\vec m^{(t)}~|~\{\vec x^{(s)}\}_{s=1}^{t-1}, \vec m^{(t-1)})\\
+	&\qquad\qquad\cdot 
+	\underbrace{
+	P(\vec m^{(t{\color{red}-1})}, \{\vec x^{(s)}\}_{s=1}^{t{\color{red}-1}})
+	}_{\text{recursion}}
+	\bigg\rbrack
+}
+\end{align}
+
+
+\only<3>{
+
+To illustrate the recursion:
+
+\begingroup
+\footnotesize
+\begin{align}
+	P(&\{\vec x^{(s)}\}_{s=1}^{t{\color{red}-1}}, \vec m^{(t{\color{red}-1})})\\
+	=&
+	\kern-2ex
+	\sum_{\vec m^{(t-1{\color{red}-1})}}
+	\kern-1ex
+	\bigg\lbrack
+	P(\vec x^{(t{\color{red}-1})}|\vec m^{(t{\color{red}-1})})
+	%\\
+	%&\qquad\qquad
+	%\cdot 
+	P(\vec m^{(t{\color{red}-1})}|\{\vec x^{(s)}\}_{s=1}^{t-1{\color{red}-1}}, \vec m^{(t-1{\color{red}-1})})
+	%\\
+	%&\qquad\qquad
+	%\cdot 
+	\underbrace{
+	P(\vec m^{(t{\color{red}-1}{\color{cyan}-1})}|\{\vec x^{(s)}\}_{s=1}^{t{\color{red}-1}{\color{cyan}-1}})
+	}_{\text{recursion}}
+	\bigg\rbrack
+\end{align}
+\endgroup
+}
+
+\end{frame}
+
+
+\subsection{The backward recursion}
+
+\begin{frame}{\subsecname}
+
+The backward recursion computes the conditional distribution:
+\begin{equation}
+P(
+\underbrace{
+	\vec x^{({\color{orange}t+1})}, \ldots, \vec x^{({\color{orange}T})}
+}_{
+	\{\vec x^{(s)}\}_{s={\color{orange}t+1}}^{{\color{orange}T}}
+}
+| \vec m^{(t)})
+\qquad 
+\text{for any step }t \in \lbrack0, T)
+\end{equation}
+
+Interpretation of the above\notesonly{ distribution}:\\
+
+The distribution for the sub-sequence of observations \emph{\textcolor{orange}{following}} step $t$
+
+\slidesonly{No need to manipulate this further}
+
+\pause
+
+\question{Where is the recursion?}
+
+\pause
+
+\svspace{-5mm}
+
+\begin{align}
+P(&\vec{x}^{(t+1)}, \ldots, \vec{x}^{(T)} ~|~ \vec{m}^{(t)}) =\\
+				&\sum_{\big\{\vec{m}^{(t{\color{red}+1})}\big\}} \kern-2ex
+				\underbrace{
+				P(\vec{x}^{(t+1{\color{red}+1})}, \ldots, \vec{x}^{(T)} | \vec{m}^{(t{\color{red}+1})})
+				}_{
+				P(\vec{x}^{(t{\color{red}+2})}, \ldots, \vec{x}^{(T)} | \vec{m}^{(t{\color{red}+1})})
+				}
+				%{\color{orange}\beta(\vec{m}^{(t+1)})} ~
+				P(\vec{x}^{(t{+1})} | \vec{m}^{(t{\color{red}+1})}) ~
+				P(\vec{m}^{(t{\color{red}+1})} | \vec{m}^{(t)})
+\end{align}
+
+
+\end{frame}
+
+\subsection{The forward-backward procedure}
+
+\begin{frame}{\subsecname: Putting things together}
+
+\begin{equation}
+P(
+\vec m^{(t)} | \{\vec x^{(s)}\}_{s=1}^T )
+\propto 
+P(\vec m^{(t)} , \{\vec x^{(s)}\}_{s=1}^T)
+\end{equation}
+
+Here, $\{\vec x^{(s)}\}_{s=1}^T$ is the entire observed sequence.
+
+\pause
+
+\begin{align}
+P(\vec m^{(t)} , \{\vec x^{(s)}\}_{s=1}^T)
+&= 
+P( \{\vec x^{(s)}\}_{s=1}^T, \vec m^{(t)})\\
+\stackrel{\substack{\text{product}\\\text{rule}}}{=}&
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)})\\
+&\qquad\cdot 
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+\end{align}
+
+\pause
+
+We can simplify the above by exploiting the Markov property.\\
+Specifically, that
+$\vec x^{(t+1)}, \ldots, \vec x^{(T)}$ are conditionally independent of $\vec x^{(1)}, \ldots, \vec x^{(t)}$ \underline{given} $\vec m^{(t)}$.
+
+
+
+\end{frame}
+
+\begin{frame}{\subsecname: Putting things together}
+
+\notesonly{From this follows:}
+
+\slidesonly{
+\only<1>{
+\begin{align}
+P(\vec m^{(t)} , \{\vec x^{(s)}\}_{s=1}^T)
+&= 
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
+\cdot 
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+\end{align}
+}
+}
+\only<2>{
+\begin{align}
+P(\vec m^{(t)} , \{\vec x^{(s)}\}_{s=1}^T)
+&= 
+\underbrace{\color{orange}
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
+}_{
+\substack{
+\text{from backward}\\
+\text{recursion}
+}
+}
+\cdot 
+\underbrace{\color{blue}
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+}_{
+\substack{
+\text{from forward}\\
+\text{recursion}
+}
+}
+\end{align}
+}
+
+\pause
+
+\begin{align}
+P(
+\vec m^{(t)} | \{\vec x^{(s)}\}_{s=1}^T )
+\; \propto& \;
+{\color{orange}
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
+}
+\cdot 
+{\color{blue}
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+}\\[5mm]
+=& \;
+\frac{
+{\color{orange}
+P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
+}
+\cdot 
+{\color{blue}
+P(\vec m^{(t)}, \vec x^{(1)}, \ldots, \vec x^{(t)}) 
+}
+}{
+P(\vec x^{(1)}, \ldots, \vec x^{(T)})
+}
+\label{eq:hmmcondfwdbwd}
+\end{align}
+
+\pause
+
+\question{Where did the normalization factor come from?}
+
+\pause
+
+\notesonly{-The normalization in \eqref{eq:hmmcondfwdbwd} comes from Bayes' theorem:
+}
+\begin{equation}
+P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(s)}\})
+\kern-2ex
+	\underbrace{=}_{{\tiny \text{Bayes theorem}}} 
+\kern-3ex
+	\frac{P( \{\vec{x}^{(s)}\} ~|~ \vec{m}^{(t)})
+	\cdot
+	P(\vec{m}^{(t)})}
+		 {P( \{\vec{x}^{(s)}\})}
+\end{equation}
+
+\end{frame}
+
+
