@@ -18,7 +18,7 @@
 \item[] \textbf{Goal}: Compute the probability of a state at any step $t$ given the observed sequence:
 \begin{equation}
 P(\vec{m}^{(t)}  ~|~ \vec{x}^{(1)},  \ldots,\vec{x}^{(T)}) =
-		P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(t-1)}\})
+		P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(s)}\}_{s=1}^{T})
 \end{equation}
 
 \item[] \textbf{Assumptions}: parameters $\vec{w} := \{
@@ -26,7 +26,7 @@ P(\vec{m}^{(t)}  ~|~ \vec{x}^{(1)},  \ldots,\vec{x}^{(T)}) =
 		\vec{b},
 		\vec{\boldsymbol{\phi}}
 		\}$ are \underline{known} (have been found) We will cover estimating these parameters later.
-\item[] \textbf{Procedure}: The forward-backward procedure yields an expression for $P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(t-1)}\})$
+\item[] \textbf{Procedure}: The forward-backward procedure yields an expression for $P(\vec{m}^{(t)}  ~|~ \{\vec{x}^{(s)}\})$
 
 \end{itemize}
 

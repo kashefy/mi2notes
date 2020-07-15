@@ -10,6 +10,7 @@
 
 \begin{equation}
 P(\vec m^{(t)} | \{\vec x^{(s)}\}_{s=1}^T )
+\;=\;
 \frac{
 {\color{orange}
 P( \vec x^{(t+1)}, \ldots, \vec x^{(T)} | \vec m^{(t)} )
@@ -44,7 +45,7 @@ P(\vec m^{(t)} \ne \vec m^{(t-1)} | \{\vec x^{(s)}\}_{s=1}^T )
 
 \slidesonly{
 \begin{center}
-	\includegraphics[width=0.6\textwidth]{img/weather_changedetection}
+	\includegraphics[width=0.6\textwidth]{img/weather}
 	\captionof*{figure}{What are the chances of two sunny days in a row?}
 \end{center}
 }
@@ -124,7 +125,7 @@ Example from speech recognition where
 	\notesonly{\captionof{figure}{Source: \citep{bishop2006pattern}}}
 \end{center}
 
-\item<only@2> If we are interested in in the \emph{most likely} sequence, we employ the \emph{Viterbi algorithm}
+\item<only@2> If we are interested in the \emph{most likely} sequence, we employ the \emph{Viterbi algorithm}
 to find:
 \begin{equation}
 \{\vec m_*^{(t)} \} = 

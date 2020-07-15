@@ -100,7 +100,7 @@ Next: Formulation of the joint distribution of the entire sequence
 We recognize the Markov properties in the \emph{trellis diagram} of the HMM
 \begin{itemize}
 \item
-Every state $\vec{m}^{(t)}$ depends only on the previous state $\vec{m}^{(t)}$
+Every state $\vec{m}^{(t)}$ depends only on the previous state $\vec{m}^{(t-1)}$
 \begin{equation}
 P(\vec{m}^{(t)}  ~|~ \vec{m}^{(1)},  \dots,\vec{m}^{(t-1)}) =
 		{P(\vec{m}^{(t)}  ~|~ \vec{m}^{(t-1)})}
@@ -280,7 +280,7 @@ $
 }
 
 \only<2>{
-	\svspace{-3mm}
+	%\svspace{-3mm}rrrrr
 
 	1-out-of-$M$ coding implies:
 	\begin{itemize}

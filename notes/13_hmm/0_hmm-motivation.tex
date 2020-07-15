@@ -20,9 +20,9 @@
 	\includegraphics<3>[width=0.6\textwidth]{img/latentexample_gmm_weather_icons}
 }
 	\notesonly{\captionof{figure}
-	{Density estimation that does not account for any temporal aspects}
+	{A density estimation from a latent variable model}
 	}\slidesonly{\captionof*{figure}
-	{Density estimation that does not account for any temporal aspects}
+	{A density estimation from a latent variable model}
 	}
 \end{center}
 
@@ -68,7 +68,7 @@
 }
 \only<3->{
 \item Assumption:\\
-What we observe at every time step in the sequence $\{ \vec x^{t}\}_{t=1}^{T}$ is a result of the ``system'' being in a specific \emph{hidden state} at every time step $t$:\\
+What we observe at every time step in the sequence $\{ \vec x^{(t)}\}_{t=1}^{T}$ is a result of the ``system'' being in a specific \emph{hidden state} at every time step $t$:\\
 e.g. 1-out-of-$M$ coding for $M$ different states:
 \begin{itemize} 
 \item $\vec{m}^{(t)} = \big( m_1^{(t)}, \dots, m_M^{(t)} \big)^\top \in \left\{ 0, 1 \right\}^M$ \\
