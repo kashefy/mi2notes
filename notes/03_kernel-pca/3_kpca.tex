@@ -218,7 +218,7 @@ a^{(\beta)} \vec{\phi}^{(\alpha)}
 \sum^{p}_{\beta=1} a^{(\beta)} \vec{\phi}^{(\beta)}
 \end{equation}
 
-We are one step closer to not needing the eplxicit mapping $\phi$.
+We are one step closer to not needing the explicit mapping $\phi$.
 
 \end{frame}
 
@@ -243,7 +243,7 @@ We are one step closer to not needing the eplxicit mapping $\phi$.
 }
 
 \notesonly{
-Recall from \sectionref{sec:nonlin} that we not even be able compute $\vec{\phi}_{(\vec{x})}$ but we now see it is possible to avoid the transformation altogether by exploiting the kernel trick (cf. Eq.\ref{eq:trick}) by substituing 
+Recall from \sectionref{sec:nonlin} that we are not even able to compute $\vec{\phi}_{(\vec{x})}$ but we now see it is possible to avoid the transformation altogether by exploiting the kernel trick (cf. Eq.\ref{eq:trick}) by substituting 
 $ K_{\alpha \beta} $ for
 $
 \vec{\phi}^{\top}_{(\vec{x}^{(\alpha)})}
@@ -725,7 +725,7 @@ Recall in linear PCA, to get the component of $\vec x$ in the direction of the $
 u_k(\vec x) = \vec e_k^\top \vec x
 \end{equation}
 
-Assuming we have a the $\phi$'s:
+Assuming we have all the $\phi$'s:
 
 \svspace{-3mm}
 
@@ -771,8 +771,7 @@ u_k(\vec \phi_{(\vec x)}) &= \sum^{p}_{\beta=1} a^{(\beta)}
 \end{center}
 }
 
-Since we never had the transformation $\phi$ to begin with. 
-It is not psssible to simply project a sample from PC space back into the original $N$-dimensional input space. 
+Since we never had the transformation $\phi$ to begin with, it is not possible to simply project a sample from PC space back into the original $N$-dimensional input space. 
 Algorithms exist that \emph{approximate} a ``pre-image'' of some new observation.
 
 \end{frame}
