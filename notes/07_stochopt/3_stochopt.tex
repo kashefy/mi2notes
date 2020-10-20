@@ -105,7 +105,7 @@ We will use the inverse temperature $\beta = 1/T$\\\vspace{1cm}
 \end{frame}
 
 \notesonly{
-the transition probability $\mathrm{W}$ measures the probability of changing to a new state $\vec s$ or remaining at $\vec s_t$. It depends on (A) the difference in cost and (B) the inverse temperature. The difference $\Delta E$ is the only way of measuring whether we gain any improvement from the transition or not. We use the inverse temperature $\beta_t$ to control how much we favor such transitions, or if we prefer a more conservative system. Below illustrates how the transition probability can be modulated by the inverse temperature $\beta$ during the annealing process:
+The transition probability $\mathrm{W}$ measures the probability of changing to a new state $\vec s$ or remaining at $\vec s_t$. It depends on (A) the difference in cost and (B) the inverse temperature. The difference $\Delta E$ is the only way of measuring whether we gain any improvement from the transition or not. We use the inverse temperature $\beta_t$ to control how much we favor such transitions, or if we prefer a more conservative system. Below illustrates how the transition probability can be modulated by the inverse temperature $\beta$ during the annealing process:
 }
 
 \begin{frame} \frametitle{Modulating $\mathrm W$ during the annealing process}
@@ -144,7 +144,7 @@ In the case of:
 \item low $\beta \corresponds$ high temperature:\\
 The transition probability is nearly constant (W=0.5) regardless of $\Delta E$. It is equally probably to accept a transition or to remain at the same state. Therefore we can regard this as \emph{exploration} mode.
 \item intermediate $\beta$:\\
-Recall that we are currently considering a minimization problem. $\Delta E < 0$ whenever the new state is of lower cost than the previous one. We are no longer indifferent to this difference, but are more likely to accept transitions to lower-energy-states. Our process is still stochastic, therefore it is not guaranteed that we will accept every transition that yileds lower lower cost. We may either reject the transition and remain at the same higher-cost state or accept a transition to higher-cost state. such transitions are less likely to happen, but are still possible. This is where stochastic optimization is able to escape a local optimum and resume the search elsewhere instead of opting for the greedy approach. To reiterate, this is a stochastic process, if we sample long enough, we will find that intermediate values of $\beta$ are more likely to yield samples from the ``global'' minimum of this curve than the higher ``local'' minimum in this particular cost function.
+Recall that we are currently considering a minimization problem. $\Delta E < 0$ whenever the new state is of lower cost than the previous one. We are no longer indifferent to this difference, but are more likely to accept transitions to lower-energy-states. Our process is still stochastic, therefore it is not guaranteed that we will accept every transition that yields lower cost. We may either reject the transition and remain at the same higher-cost state or accept a transition to higher-cost state. such transitions are less likely to happen, but are still possible. This is where stochastic optimization is able to escape a local optimum and resume the search elsewhere instead of opting for the greedy approach. To reiterate, this is a stochastic process, if we sample long enough, we will find that intermediate values of $\beta$ are more likely to yield samples from the ``global'' minimum of this curve than the higher ``local'' minimum in this particular cost function.
 \item high $\beta \corresponds$ low temperature:\\
 This is the \emph{exploitation} mode. This reflects the behavior of a greedy learning algorithm such as gradient descent. Whenever we compare the cost of two successive states and find that $\Delta E < 0$ it tells us that the new state is of lower cost and more desirable for our minimization objective. The transition probability in this case will almost always accept a transition to a lower-cost state. Consequently it will almost always reject transitions to high-cost states, and the probability of remaining in a high-cost state is also very low. If the next sample is of lower-cost, we are very likely to accept that transition. Looking again at the stochastic nature of our process: We repeat the process multiple times and register how often each \emph{run} (not a single iteration) leads us to either minimum on this particular curve, we will find that the chances of finding the global minimum is just as likely as those of reaching the local minimum. This is because the initial state is the only decisive factor. high $\beta$ means we are in exploitation mode. We are only going to accept a transition if it lowers our cost. If we restrict our sampling to ``nearby'' states, we are emulating gradient descent. As soon as we've determined the direction of descent, we will follow it. The decisive factor is, where did we start? Since in our case, the two valleys around the two minima are equally ``wide'', it makes starting inside one equal to starting inside the other. If I am already in the vicinity of one minimum, the probability of transitioning \emph{outside} is very low. This probability is low, regardless of whether I am in the vicinity of the global or local minimum.
 \end{itemize}
@@ -159,7 +159,7 @@ Convergence to the global optimum is guaranteed if $\beta_t \sim \ln (t)$\footno
 	\itR therefore: $\beta_{t+1} = \tau \beta_t, \quad \tau \in [1.01,1.30]$
 		(exponential annealing)
 	\itR additionally: the \texttt{State Update loop} has to be iterated often enough, e.g. $M=500-2000$. \slidesonly{$\leadsto$ thermal equilibrium}
-	\notesonly{This is required for reaching thermal equilibrium. Another way to look at it is the need to capture the stationary distribution of the states in relation to their cost. We will talk more about when we discuss the Gibbs distribution.}
+	\notesonly{This is required for reaching thermal equilibrium. Another way to look at it is the need to capture the stationary distribution of the states in relation to their cost. We will talk more about this when we discuss the Gibbs distribution.}
 \end{itemize}
 \end{frame}
 
@@ -278,8 +278,8 @@ The condition is fulfilled for the \emph{Gibbs-Boltzmann} distribution:
 \end{frame}
 \begin{frame}\frametitle{The Gibbs distribution}
 \notesonly{
-The Gibbs (or Boltzmann-) distribution from statistical physics, measures the
-probability of a system to be in state $\vec s$ having Energy $E_{(\vec s)}$ is
+The Gibbs (or Boltzmann-) distribution from statistical physics measures the
+probability of a system to be in state $\vec s$ having Energy $E_{(\vec s)}$ and is
 given as
 }
 \begin{equation}  \label{eq:gibbs}

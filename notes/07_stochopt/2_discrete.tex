@@ -15,7 +15,7 @@ Find the arguments the optimize $E$.
 So far we've been concerned with optimization problems with real valued arguments. The free parameters form a continuous space. The direction of the principle components in PCA and the unmixing matrix we are trying to find in ICA are real-valued arguments to their respective problems.
 Gradient-based solutions are well suited for real-valued arguments as we tune the weights to minimize to optimize the cost function.
 
-But what if the problem we are trying to optimize operate on discrete arguments. This could be the case if we were tackling a problem such as K-Means clustering. K-Means clustering involves finding arguments with which to assign an observation to one of multiple clusters. The cost function that measures the quality of the assignments is continuous but a the arguments we optimize over, which effectively assign each observation to one cluster instead of another cluster, are discrete variables. Below is an example of such an assignment:
+But what if the problem we are trying to optimize operate on discrete arguments. This could be the case if we were tackling a problem such as K-Means clustering. K-Means clustering involves finding arguments with which to assign an observation to one of multiple clusters. The cost function that measures the quality of the assignments is continuous but the arguments we optimize over, which effectively assign each observation to one cluster instead of another cluster, are discrete variables. Below is an example of such an assignment:
 
 
 }
