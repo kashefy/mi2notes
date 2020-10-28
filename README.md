@@ -29,7 +29,7 @@ See [Releases](https://github.com/kashefy/mi2notes/releases) to download the lat
 
 Ubuntu:
 
-    apt install texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended latex-beamer texlive-science
+    apt install texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended texlive-science texlive-lang-german
     
 ## Contributing ##
 
