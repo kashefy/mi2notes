@@ -74,27 +74,30 @@ while retaining most of the intrinsic information content.
 
 	\resizebox{\textwidth}{!}{%
 	\begin{tabular}{c|cccc}
-			  & \multicolumn{1}{c}{$\vec x^{(1)}$} & \multicolumn{1}{c}{$\vec x^{(2)}$} & \multicolumn{1}{c}{\ldots} & $\vec x^{(p)}$ \\ \hline%\cline{1-3} \cline{5-5} 
-	$x_1$     & -0.2                           & 0.1                            &                       & 0.2       \\ \cline{1-1}
-	$x_2$     & 0.1                            & 3.1                            &                       & -1.0      \\ \cline{1-1}
-	$x_3$     & 2.5                            & 7.2                            &                       & -0.8      \\ %\cline{1-1}
+	\only<-3>{		  & \multicolumn{1}{c}{$\vec{{ x}}^{(1)}$} & \multicolumn{1}{c}{$\vec{{ x}}^{(2)}$} & \multicolumn{1}{c}{\ldots} & $\vec{{ x}}^{(p)}$ \\ \hline%\cline{1-3} \cline{5-5} 
+	}
+	\only<4->{		  & \multicolumn{1}{c}{$\vec{{\widetilde x}}^{(1)}$} & \multicolumn{1}{c}{$\vec{{\widetilde x}}^{(2)}$} & \multicolumn{1}{c}{\ldots} & $\vec{{\widetilde x}}^{(p)}$ \\ \hline%\cline{1-3} \cline{5-5} 
+	}
+	$ x_1$     & -0.2                           & 0.1                            &                       & 0.2       \\ \cline{1-1}
+	$ x_2$     & 0.1                            & 3.1                            &                       & -1.0      \\ \cline{1-1}
+	$ x_3$     & 2.5                            & 7.2                            &                       & -0.8      \\ %\cline{1-1}
 	  \vdots        &            \vdots                    &     \vdots                          & \begin{tabular}[c]{@{}c@{}}\ldots\vspace{2.5mm}\end{tabular} &      \vdots     \\ %\cline{1-1}
-	$x_{N-2}$ & -7.1                           & -3.5                           &                       & 7.0       \\ \cline{1-1}
+	$ x_{N-2}$ & -7.1                           & -3.5                           &                       & 7.0       \\ \cline{1-1}
 	\slidesonly{
 	\only<1>{
-	$x_{N-1}$ & -10.3                          & -0.3                           &                       & 4.5       \\ \cline{1-1}
-	$x_N$     & 4.0                            & 1.3                            &                       & 6.6       \\ \hline
+	$ x_{N-1}$ & -10.3                          & -0.3                           &                       & 4.5       \\ \cline{1-1}
+	$ x_N$     & 4.0                            & 1.3                            &                       & 6.6       \\ \hline
 	}
 	\only<3>{
 	%\hline{\vspace{\dimexpr 2.2ex-\doublerulesep}}
-	$\hcancel[red]{x_{N-1}}$ &          \textcolor{red}{?}             &          \textcolor{red}{?}             &                    &    \textcolor{red}{?}   \\ \cline{1-1}
-	$\hcancel[red]{x_{N}}$     &                      \textcolor{red}{?}        &               \textcolor{red}{?}            &                   & \textcolor{red}{?}      \\ \hline
+	$\hcancel[red]{{{ x}}_{N-1}}$ &          \textcolor{red}{?}             &          \textcolor{red}{?}             &                    &    \textcolor{red}{?}   \\ \cline{1-1}
+	$\hcancel[red]{{{ x}}_{N}}$     &                      \textcolor{red}{?}        &               \textcolor{red}{?}            &                   & \textcolor{red}{?}      \\ \hline
 	}
 	}
 	\only<4->{
 	%\hline{\vspace{\dimexpr 2.2ex-\doublerulesep}}
-	$\color{blue}{x_{N-1}}$ &          \textcolor{blue}{0}             &          \textcolor{blue}{0}          &                    &   \textcolor{blue}{0}  \\ \cline{1-1}
-	$\color{blue}{x_{N}}$     &                      \textcolor{blue}{0}        &              \textcolor{blue}{0}           &                   & \textcolor{blue}{0}   \\ \hline
+	$\color{blue}{{{\widetilde x}}_{N-1}}$ &          \textcolor{blue}{0}             &          \textcolor{blue}{0}          &                    &   \textcolor{blue}{0}  \\ \cline{1-1}
+	$\color{blue}{{{\widetilde x}}_{N}}$     &                      \textcolor{blue}{0}        &              \textcolor{blue}{0}           &                   & \textcolor{blue}{0}   \\ \hline
 	}
 	\end{tabular}%
 	}
@@ -104,7 +107,7 @@ while retaining most of the intrinsic information content.
 \mode<presentation>{
 	\begin{center}
 		\includegraphics[width=0.2\textwidth]{img/telegram}
-		\captionof*{figure}{\footnotesize
+		\captionof*{figure}{\tiny
 		Photo by \href{https://unsplash.com/@sandratansh?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText}{Sandra Tan} on \href{https://unsplash.com/s/photos/telegram?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText}{Unsplash}
 	}%
 	\end{center}
@@ -125,7 +128,7 @@ while retaining most of the intrinsic information content.
 \hfill
 \begin{minipage}{0.33\textwidth}
 	\begin{center}
-		\includegraphics[width=0.99\textwidth]{img/tram_missing}%
+		\includegraphics[width=0.99\textwidth]{img/tram_missing_box}%
 	\end{center}
 \end{minipage}
 \end{minipage}
@@ -142,19 +145,19 @@ while retaining most of the intrinsic information content.
 \begin{frame}\frametitle{\subsecname:~\subsubsecname}
 
 Let
-\slidesonly{\vspace{-5mm}}
+\svspace{-5mm}
 \begin{itemize}
 \item[]$\vec x \in \R^N$,\\
 \item[] w.l.o.g. $\E[\vec x] \eqexcl \vec 0$ \notesonly{\\
 
-}(i.e. for each variable $x_i$ its mean $m_i = \sum_{\alpha=1}^{p} x_i^{(\alpha)} \eqexcl 0$)
+}, i.e. for each variable $x_i$ its mean $m_i = \sum_{\alpha=1}^{p} x_i^{(\alpha)} \eqexcl 0$.
 \end{itemize}
 
 \pause
 
 \begin{enumerate}
-\item \underline{Dimensionality Reduction}: From $N$ to $M$ with $0 < M\, < N$\\
-$\Rightarrow$ simply transmit the first $M$ elements of $\vec x$. 
+\item \underline{Dimensionality Reduction}: From $N$ to $\color{red}M$ with $0 < {\color{red}M}\, < N$\\
+$\Rightarrow$ simply transmit the first $\color{red}M$ elements of $\vec x$. 
 \pause
 \item \underline{Reconstruction}: The recipient reconstructs all $N$ elements by adding zero entries for all missing elements (i.e. \textit{zero-padding}):\\
 Let $\widetilde{\vec{x}}$ be the reconstructed observation, where\\ 
@@ -162,8 +165,8 @@ Let $\widetilde{\vec{x}}$ be the reconstructed observation, where\\
  \begin{equation}
  % = $ for $j=1,\ldots,M% (perfect reconstruction for the first $M$ elements),
  \widetilde{x}_j = \begin{cases} 
-      {x}_j & \text{for}~j=1,\ldots,M \qquad \text{(perfect reconstruction)} \\
-      0 & \text{for}~j=M+1,\ldots,N \quad \text{zero-padding} 
+      {x}_j & \text{for}~j=1,\ldots,{\color{red}M} \qquad \text{(perfect reconstruction)} \\
+      0 & \text{for}~j={\color{red}M}+1,\ldots,N \quad \text{zero-padding} 
    \end{cases}
  \end{equation}
 \end{enumerate}
@@ -187,22 +190,22 @@ Let $\widetilde{\vec{x}}$ be the reconstructed observation. }
 \label{eq:mse}
 \visible<1->{
 \mathit{MSE}  &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p ( \vec{x}^{(\alpha)} - \widetilde{\vec{x}}^{(\alpha)} )^2
-	\notesonly{\\&}=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = 1}^N ( {x}_j^{(\alpha)} - \widetilde{{x}}^{(\alpha)}_j )^2\\
+	\notesonly{\\&}=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \sum\limits_{j = 1}^N ( {x}_j^{(\alpha)} - {\widetilde{{x}}}^{(\alpha)}_j )^2\\
 	\intertext{The \textcolor{red}{first $M$} elements were transmitted perfectly, \textcolor{blue}{zero padding} is used to extend the vector to its original size of $N$ elements}
 }
 \visible<2->{
      &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p \bigg(
      \underbrace{
-		{\color{red}\sum\limits_{j = 1}^M} ( x_j^{(\alpha)} - \widetilde{x_j}^{(\alpha)} )^2
+		{\color{red}\sum\limits_{j = 1}^M} ( x_j^{(\alpha)} - \widetilde{x}_j^{(\alpha)} )^2
 		}_{
 		\substack{=0 \\\text{ (perfect transmission)}}
 		} 
 		+ {\color{blue}\sum\limits_{j = M+1}^N} ( x_j^{(\alpha)} - 
 	\underbrace{
-	\vphantom{\sum\limits_{j = 1}^M ( x_j^{(\alpha)} - \widetilde{x_j}^{(\alpha)} )^2}
-	\widetilde{x_j}^{(\alpha)}
+	\vphantom{\sum\limits_{j = 1}^M ( x_j^{(\alpha)} - \widetilde{x}_j^{(\alpha)} )^2}
+	\widetilde{x}_j^{(\alpha)}
 	}_{\substack{=0\\ \text{padded}}}
-	\;)^2 \bigg)\\
+	\kern-0.5ex)^2 \bigg)\\
      &=  \frac{1}{p} \sum\limits_{\alpha = 1}^p {\color{blue}\sum\limits_{j = M+1}^N} ( x_j^{(\alpha)} )^2
      \slidesonly{\;\;}\notesonly{\\&}=  {\color{blue}\sum\limits_{j = M+1}^N} \frac{1}{p} \sum\limits_{\alpha = 1}^p  ( x_j^{(\alpha)} )^2 \\
      &=  {\color{blue}\sum\limits_{j = M+1}^N} \sigma_j^2
@@ -239,7 +242,7 @@ Let $\widetilde{\vec{x}}$ be the reconstructed observation. }
 \vec u = \vec M^\top \vec x \qquad\quad \vec M := \text{TBD}
 \end{equation}
 
-s.t. truncating the transformed vector $\vec u \in \R^N$ is optimum in the sense of minimal MSE.
+s.t. truncating the transformed vector $\vec u \in \R^N$ \notesonly{is optimum in the sense of}\slidesonly{has} minimal MSE.
 
 
 \question{Any ideas?}
@@ -248,7 +251,15 @@ s.t. truncating the transformed vector $\vec u \in \R^N$ is optimum in the sense
 
 - Sort the $N$ components in $\vec x$ from highest to lowest variance. \notesonly{The transformation here would be some permutation of the identity matrix that accomplishes the sorting.}\slidesonly{transformation: permutation of identity matrix}
 
+\pause
+
 \question{Is this enough to be minimal in MSE?}
+
+\only<4->{
+\slidesonly{
+	\placeimage{11.5}{11.3}{img/meme_sort}{width=3.5cm}
+}
+}
 
 \pause
 
