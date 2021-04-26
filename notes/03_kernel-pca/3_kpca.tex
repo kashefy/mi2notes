@@ -100,7 +100,7 @@ It's direct input are the $\phi$'s. Therefore,
 
 \pause
 
-- No, Centering $\vec X$ does not guranatee it stays centered after the transformation.
+- No, Centering $\vec X$ does not guarantee it stays centered after the transformation.
 Therefore, there is no need to center $\vec X$ beforehand.
 
 Example:
@@ -184,7 +184,7 @@ Eq.\ref{eq:ephi} tells us that we can describe $\vec e$ in terms of the transfor
 }
 
 \notesonly{
-Substituting Eq.\ref{eq:cov} and Eq.\ref{eq:ephi} into the eignevalue problem Eq.\ref{eq:eig}:
+Substituting Eq.\ref{eq:cov} and Eq.\ref{eq:ephi} into the eigenvalue problem Eq.\ref{eq:eig}:
 }
 \slidesonly{
 Express the eigenvalue problem in terms of $\phi$'s:
@@ -725,7 +725,7 @@ Recall in linear PCA, to get the component of $\vec x$ in the direction of the $
 u_k(\vec x) = \vec e_k^\top \vec x
 \end{equation}
 
-Assuming we have all the $\phi$'s:
+Assuming we have a the $\phi$'s:
 
 \svspace{-3mm}
 
@@ -771,7 +771,8 @@ u_k(\vec \phi_{(\vec x)}) &= \sum^{p}_{\beta=1} a^{(\beta)}
 \end{center}
 }
 
-Since we never had the transformation $\phi$ to begin with, it is not possible to simply project a sample from PC space back into the original $N$-dimensional input space. 
+Since we never had the transformation $\phi$ to begin with. 
+It is not psssible to simply project a sample from PC space back into the original $N$-dimensional input space. 
 Algorithms exist that \emph{approximate} a ``pre-image'' of some new observation.
 
 \end{frame}
