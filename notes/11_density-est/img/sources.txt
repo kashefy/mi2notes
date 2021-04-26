@@ -1,0 +1,2 @@
+sphx_glr_plot_kde_1d_0011 from https://scikit-learn.org/stable/modules/density.html
+sphx_glr_plot_kde_1d_0021 from https://scikit-learn.org/stable/modules/density.html

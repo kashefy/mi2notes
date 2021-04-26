@@ -55,14 +55,38 @@
 \titlepage
 \end{frame}
 
+\setcounter{tocdepth}{2}
 \begin{frame}
+\mode<presentation>{
+\tableofcontents[subsubsectionstyle=show/show/show/hide]
+}
+\mode<article>{
 \tableofcontents
+}
 \end{frame}
 
 \newpage
 
 \mode<all>
 \input{./1_kde}
+\mode*
+
+\clearpage
+
+\mode<all>
+\input{./2_mle}
+\mode*
+
+\clearpage
+
+\mode<all>
+\input{./2_parametric}
+\mode*
+
+\clearpage
+
+\mode<all>
+\input{./3_estbias}
 \mode*
 
 \clearpage

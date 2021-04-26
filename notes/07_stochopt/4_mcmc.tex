@@ -1,0 +1,300 @@
+\section{Monte Carlo Markov Chain (MCMC)}
+
+
+\begin{frame}
+
+
+
+Whenever it is difficult to evaluate the joint distribution\\
+opt for ``learning through trial and error''\\
+
+\notesonly{
+MCMC methods are a popular
+strategy in situations where it is hard to evaluate the joint (e.g.\
+posterior distribution) of a rnadom variable analytically but where it is easy to
+sample from the conditional distribution (and finally the joint
+distribution). Using samples from such a posterior distribution, one
+can estimate many summaries of interest without explicitly knowing the
+joint distribution\footnote{credit to Dr. Timm Lochmann for the content on MCMC}.
+
+}
+
+\slidesonly{
+\vspace{1cm}
+What is:
+
+\begin{itemize}
+\item a Markov Chain
+\item the Markov property
+\item the stationary distribution
+\item Monte Carlo
+\item the Metropolis algorithm
+\item Metropolis sampling (Monte Carlo + Markov Chain) - simulated annealing
+\item deterministic annealing (variational approach) - for further reading
+\end{itemize}
+
+The following is for providing a framework around stochastic optimization.
+}
+
+\end{frame}
+\begin{frame} \frametitle{Markov chain and the Markov property}
+Consider a family of random variables $X_t$, $t=1,2,\ldots$, which describe a stochastic process. $x_t$ denotes the state at time $t$.
+
+\notesonly{
+A sequence of such is referred to as a \emph{Markov chain} whenever $X_{t+1}$ depends only on the predecessor $X_t$ and is \emph{independent} of all values previous to that:
+}
+
+\begin{align}
+\label{eq:markovprop}
+P(X_{t+1} &= x_{t+1} | X_{t} = x_{t}, X_{t-1} = x_{t-1}, \ldots, X_{0} = x_{0})\\
+&= P(X_{t+1} = x_{t+1} | X_{t} = x_{t})
+\end{align}
+
+\notesonly{\eqref{eq:markovprop}}
+\slidesonly{This} is refered to as the \emph{Markov property}. 
+\notesonly{The conditional distribution of $X_t$ depends only on its
+predecessor. In the more general case of Markov Random Fields, the
+Markov property induces a ``local neigborhood''/ set of \emph{parents}
+which fully determines the conditional distribution).}
+The transition probabilities between subsequent states
+$$
+P(X_{t+1}=j|X_{t}=i)=p_{ij}
+$$
+can be described via the stochastic matrix $M = \{m_{ij}\}_{ij}$ with
+$m_{ij}=p_{ij}$. 
+\\
+
+\pause
+
+\slidesonly{Exactly what $W$ in simulated annealing describes for the states $\vec s$:
+}
+\notesonly{
+The transition probability $W$ we just encountered in simulated annealing with states $\vec s$ describes exactly this:
+}
+\begin{align}
+\label{eq:markovproptransition}
+W_{s_i \rightarrow s_j} = P(X_{t+1} = s_j | X_{t} = s_i)
+\end{align}
+
+\begin{center}
+s.t. $W_{s_i \rightarrow s_j} > 0 \;\;\forall (i,j)\quad$
+and $\quad\sum_j W_{s_i \rightarrow s_j} = 1 \;\;\forall i$.
+
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Stationary distribution:}
+\label{sec:stat-distr}
+The \emph{stationary distribution} of a homogeneous Markov chain is a
+distribution $\pi=[\pi_1,\pi_2,..., \pi_N$] such that
+\begin{equation}
+M \pi  = \pi
+\end{equation}
+where 
+\begin{align}
+p(x_{t+1}=j) &= \sum_i p(x_{t+1}=j,x_{t}=i) \\
+&= \sum_i p(x_{t+1}=j|x_{t}=i)\,p(x_{t}=i)\\
+&= M \pi
+\end{align}
+and can be derived from the eigen-decomposition of the transition matrix
+(given certain conditions on the Markov chain $\rightarrow$ irreducibility, recurrence etc.)
+
+If the Markov chain is \emph{reversible}, the stationary distribution is
+characterized by a \emph{detailed balance} between going from one
+state to another one, i.e.\
+$$
+\pi_i p_{ij} = \pi_j p_{ji}
+$$
+\end{frame}
+
+\begin{frame}\frametitle{Monte Carlo}
+\notesonly{
+Monte Carlo methods
+have been used to } evaluate certain integrals with stochastic methods.\\
+
+Example:\\
+Estimate $\pi$ via random sampling from $[0,1]$ and counting how
+many of the points have distance smaller than 1. Using the fact that
+$A = \pi r^2$ and $4 A/F_\mathrm{square} = 4 N_\mathrm{A}/N$ gives $\approx \pi$.
+\\
+\end{frame}
+
+\begin{frame}
+\slidesonly{
+\frametitle{Monte Carlo}
+Evaluating probability of states (e.g.\ to compute integrals, expectation values
+etc.) is difficult.
+Easier to sample from conditional distributions.\\
+
+Approaches:
+\begin{enumerate}
+\item Gibbs sampler:\\
+    Sample from conditional distribution to produce a Markov chain with the joint
+posterior density as its stationary distribution.
+\item Metropolis algorithm:\\
+    sampling strategy with which to accept or reject transitions
+\end{enumerate}
+}
+\end{frame}
+
+While it can be difficult to evaluate the
+probability of states (e.g.\ to compute integrals, expectation values
+etc.) it is possible to sample from the joint distribution by
+sequential sampling from conditional distributions that are easier to
+compute. There are two approaches: the \emph{Gibbs sampler} and
+\emph{Metropolis} type algorithms (Note: this material is taken nearly
+verbatim from Kass et. al. 1997, roundtable discussion??).
+
+\subsection{Gibbs sampler:}
+\label{sec:gibbs-sampler}
+
+The Gibbs sampler \citep{GemanGeman1984} samples from the collection
+of full (or complete) conditional distributions and it does, under
+fairly broad conditions, produce a Markov chain with the joint
+posterior density as its stationary distribution.  A tutorial can be
+found in \citep{CasellaGeorge1992}.
+
+\newpage
+\begin{frame}\frametitle{Metropolis algorithm}
+
+\notesonly{
+When it is difficult to directly sample from the conditionals, one may
+instead simulate from a different Markov chain with a different
+stationary distribution, but then modify it in such a way so that a
+new Markov chain is constructed which has the targeted posterior as its
+stationary distribution. This is done by the Metropolis-Hastings
+algorithm -- It samples from a prespecified candidate (proposal)
+distribution for and subsequently uses an accept-reject step (see Kass
+et. al. 1997).
+}
+
+The \emph{Metropolis algorithm} describes the sampling strategy with which to accept or reject transitions:
+\begin{equation}
+P(Y_n = x_j | X_{n} = x_i) = P(Y_n = x_i | X_{n} = x_j)
+\end{equation}
+
+IF $\Delta E < 0$ (minimization) then \\
+
+\oident accept transition \\
+
+ELSE \\
+
+\oident Sample $\varepsilon$ from $\mathcal{U} \sim \lbrack 0, 1 \rbrack$ \\
+
+IF $\varepsilon < \exp \left( - \beta \Delta E \right)$ then \\
+
+\oident accept transition
+
+\oident the new state is similar/``close'' to the prev. state (e.g. bit flip)\\
+
+
+ELSE\\
+
+\oident reject transiton and remain at the same state\\
+
+\vspace{0.5cm}
+Simulated annealing follows the Metropolis algorithm.
+
+\end{frame}
+
+\begin{frame}\frametitle{Metropolis sampling}
+\label{sec:metropolis-sampling}
+The MCMC strategy of Metropolis sampling uses a 2-step approach
+\begin{enumerate}
+\item Markov Chain $\rightarrow$   Proposal Density
+\item Monte Carlo $\rightarrow$   Acceptance Probability
+\end{enumerate}
+
+\textbf{Proposal Distribution:}
+The Proposal density determines which nodes to \emph{poll} (``select
+and test'') next and needs to fulfil the following properties:
+\begin{itemize}
+\item nonnegative: $\tau_{ij} \geq 0$ 
+\item normalized: $\sum_j \tau_{ij} =1$ 
+\item symmetric: $\tau_{ij}=\tau_{ji}$
+\end{itemize}
+
+\end{frame}
+
+\newpage
+
+\subsection{Acceptance Probability:}
+This probability specifies how likeli it is to go from state $i$ to
+$j$. In our scenario, this depends only on their energy levels (and the current value of
+temperature).
+
+\subsection{Example:} Using the difference in energy levels 
+$\Delta_{ij} = E_j -E_i$, the sigmoidal acceptance rule is given as
+$$
+p_\mathrm{switch}(i \rightarrow j) = p_{ij} = \frac{1}{1+e^{\Delta_{ij}}} = \frac{1}{1+e^{(E_j -E_i)}}.
+$$
+From the assumption of detailed balance then follows
+\begin{eqnarray*}
+  \tau_i p_{ij} & = & \tau_j p_{ji}\\
+  \frac{\tau_i}{\tau_j}& = &  \frac{p_{ji}}{ p_{ij}} 
+= \frac{1+\exp(\Delta_{ij})}{1+\exp(\Delta_{ji})}
+= \frac{1+\exp(\Delta_{ij})}{1+\exp(-\Delta_{ij})}\\
+& = & \exp(\Delta_{ij}) \frac{1+\exp(\Delta_{ij})}{1+\exp(\Delta_{ij})}
+= \exp(\Delta_{ij})\\
+&= &\exp(E_j-E_i) = \frac{Z \exp(E_i)}{Z \exp(E_j)}
+\end{eqnarray*}
+demonstrating that 
+$p(X_i)= \frac{1}{Z} \exp \big(-\frac{E_i}{k_b T}\big)$
+is a consistent choice. 
+\\
+
+\begin{itemize}
+\item Determination of the \emph{transition probability} $p(X_T|X_{j})$
+  requires only knowledge of $E_i - E_j$. Applying the Metropolis
+  algorithm with these parameters will lead to a stationary
+  distribution $\pi$ with $\pi_i= p(x_i)$.
+\item This means, we can sample from the distribution $p_\beta(x)$
+  without knowing $Z=\sum_{i \in I} \exp(-\beta E_i)$ which is
+  difficult to estimate for large $I$ as e.g.\ $2^N$.
+\item Acceptance depends only on the \emph{energy difference} between
+  the current and suggested state. This difference depends only on the
+  \emph{neighborhood} of the polled unit an not necessarily the full
+  system!
+\end{itemize}
+
+\question{How does this all tie back to Simulated Annealing?}
+
+Making use of the temperature parameter (and an annealing schedule),
+Metropolis sampling can be used to optimize cost functions.
+
+\textbf{Motivation:} At each temperature, the MCMC relaxes into the
+stationary distribution. For lower and lower temperatures (higher $\beta$), the entropy
+of this distribution becomes lower and lower, more ``peaked'', i.e.\
+only the \emph{most} probable states have nonzero probability. 
+The probability of states that initial started with moderate or lower probability values are pulled towards near-zero values. 
+\textbf{Also}: The average
+Energy becomes lower and lower. This motivates simulated annealing as
+an optimization approach.
+
+\begin{itemize}
+\item For each temperature, relax towards stationary distribution
+\item gradually decrease temperature
+\item[$\leadsto$] observed states represent approximately ``optimal solutions''
+\end{itemize}
+If the shape of distribution changes smoothly and cooling is ``slow
+enough'', this will result in a distribution concentrated on the
+minimum-energy state, i.e. will end up in an optimal solution with
+probability 1.
+
+\subsection{Simulated (stochastic) annealing (revisited)} \label{sec:stochastic-annealing}
+``classical'' MCMC approach: select variable, stochastically accept
+change in state for that variable. 
+
+Depending on the distribution, sampling might be the only feasible
+solution.  There are different strategies (Gibbs sampling,
+Proposal-Reject) depending on whether direct sampling from the
+conditional distributions makes Gibbs-Sampling possible.
+
+
+\textbf{Caveat:} Sampling takes a lot of time and depends on the
+annealing schedule. In some cases, deterministic strategies can make
+use of efficient approximations of the true distribution and thereby
+significantly speed up the optimization proces.
+
+
+

@@ -6,7 +6,7 @@
 }
 %\setcounter{section}{\sheetnum-3}
 \newcommand{\tutorialtitle}{%
-    K-means Clustering and Pairwise Clustering
+    From hard to soft K-means via Pairwise Clustering
 }
 \newcommand{\tutorialtitleshort}{%
 	Clustering
@@ -55,14 +55,54 @@
 \titlepage
 \end{frame}
 
+\setcounter{tocdepth}{2}
 \begin{frame}
+\mode<presentation>{
+\tableofcontents[subsubsectionstyle=show/show/show/hide]
+}
+\mode<article>{
 \tableofcontents
+}
 \end{frame}
 
 \newpage
 
 \mode<all>
-\input{./1_clustering}
+\input{./1_kmeans}
+\mode*
+
+%\clearpage
+
+\mode<all>
+\input{./2_kmeans_batch}
+\mode*
+
+%\clearpage
+
+\mode<all>
+\input{./3_kmeans_online}
+\mode*
+
+\clearpage
+
+
+\mode<all>
+\input{./4_pairwise}
+\mode*
+
+\mode<all>
+\input{./5_pairwise_data}
+\mode*
+
+%\clearpage
+
+\mode<all>
+\input{./6_pairwsie_meanfield}
+\mode*
+
+
+\mode<all>
+\input{./7_soft_kmeans_eucl}
 \mode*
 
 \clearpage

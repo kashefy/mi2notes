@@ -1,0 +1,90 @@
+\section{Deterministic annealing} \label{sec:determ-anne}
+
+\begin{frame}
+
+Mean field methods provide a specific type of variational approach for
+optimization problems (\cite{Bishop2006,Murphy2012}). This is useful
+more generally for density estimation ($\rightarrow$ Variational
+Bayes) where it often provides a more efficient option than sampling
+techniques if the posterior distribution can be well approximated by a
+factorizing distribution. The following description of the variational
+approach closely follows \citep[ch. 21.3]{Murphy2012}.
+
+\textbf{more about this in the notes.}\\
+\textbf{switch to mean field lecture slides}
+
+\end{frame}
+
+\begin{eqnarray*}
+  \label{eq:1}
+ L(q_i) & = & \sum_x \prod_i q_i(x_i) \Big( \log \tilde{p}(x) - \sum_k \log q_k(x_k) \Big) \\
+ & = & \sum_{x_j} \sum_{x_{-j}} q_j (x_j) \prod_{i \neq j} q_i(x_i) \Big( \log \tilde{p}(x) - \sum_k \log q_k(x_k)   \Big) \\ 
+ & = & \sum_{x_j} q_j(x_j) \sum_{x_{-j}} \prod_{i \neq j} q_i(x_i) \log \tilde{p}(x) \\
+& &  - \sum_{x_j} q_j(x_j) \sum_{x_{-j}} \prod_{i \neq j} q_i(x_i) \Big(\log q_j(x_j)+ \sum_{k \neq j} \log q_k(x_k) \Big) \\ 
+& = &  \sum_{x_j} q_j(x_j) \log f_j(x_j) - \sum_{x_j} q_j(x_j) \log q_j(x_j) +  const
+\end{eqnarray*}
+where we introduced the definition
+$$
+\log f_j(x_j):= \sum_{x_{-j}} \prod_{i \neq j} q_i(x_i) \log
+\tilde{p}(x). 
+$$
+Although $f_j$ is not a proper distribution (not normalized), the last
+term can be interpreted as a KL-divergence
+$$
+L(q_j) \sim - \dkl(q_j||f_j).
+$$
+Therefore, $L(q) = - \dkl(q||\tilde{p})$ can be maximised by
+minimizing $\dkl(q_j||f_j)$  i.e. setting $q_j = f_j$ by
+$$
+q_j(x_j) = \frac{1}{Z_j} \exp\big(\E_{-q_j}[\log \tilde{p}(x)]\big)
+$$
+Ignoring the normalisation constant we get as the optimal component $q_j$
+\begin{equation}
+  \label{eq:MeanField}
+\log q_j(x_j) = \E_{-q_j}[\log \tilde{p}(x)]  
+\end{equation}
+
+\subsection{Alternative motivation of the mean-field annealing
+  approach} \label{sec:motivation} at each step we actually know
+$p_{\Delta E}(\mathrm{flip})$ which enables us to estimate
+$E[X_i|X_{-i}]$ i.e.\ the average value of $X_i$ given its parents.
+
+Mean field annealing generalizes this approach by making use of the fact that 
+the marginal distributions of $X_i$ are known in this way and then using the relation: 
+i.e.\ with $p(v_j) = \frac{1}{1+e^{-v_j/t}}$ we can write: 
+$$
+\langle x_j \rangle =  (+1) P(v_j) +(-1)(1-P(v_j)) = 2 P(v_j) -1 = \tanh(v_j/2T)
+$$
+Although v is not known exactly (depends on the exact states of the
+other $X$ and their interactions) we can approximate it as
+$$
+v_j \approx \langle v_j \rangle = \Big\langle \sum_i w_{ji} x_i \Big\rangle = 
+ \sum_i w_{ji}  \langle x_i \rangle 
+$$
+where $\langle v_j \rangle$ is called the ``mean field'' and gives the average value of $x_j$ as 
+$$\langle x_j \rangle \approx \tanh\frac{\langle v_j\rangle}{2T}$$
+
+\textbf{Relation between the sigmoidal and tanh:} Using the sigmoidal acceptance probability is equivalent to using $\tanh$ for \emph{states} $x \in \{-1,+1\}$  of the RV i.e.\ $\tanh(z) \in (-1,1)$ for $z \in (-\infty,+\infty)$. 
+
+\begin{equation}
+\tanh(x) = \quad\frac{e^{2x}-1}{e^{2x}+1} 
+ \quad = \frac{1-e^{-2x}}{1+e^{-2x}} \quad = \frac{2-1-e^{-2x}}{e^{-2x}+1} \quad =  \frac{2}{1+e^{-2x}} -1 
+\end{equation}
+or the other way round: 
+$$
+\frac{1}{1+e^{-x}} = \frac{1}{2}\left(1+\tanh(\frac{1}{2}x)\right)
+$$
+
+\section{Boltzmann machines}
+\label{sec:boltzmann-machines}
+
+Approach can be generalized to hidden units and details on Boltzmann
+machines in \cite{AartsKorst1990}. Restricted BMs (RBMs) do not have connections between observable or hidden units, which simplifies computation of conditional probabilities necessary for learning considerably. RBMs have been developed (among others) by P. Smolensky, who called them "Harmoniums" (\cite{Smolensky1986}). 
+\begin{itemize}
+\item General model of distributions
+\item parameters (W) can be learned from samples
+\item works for Systems with nonobservable (latent) variables 
+\item interesting model of cognitive processes
+\item structured boltzmann machines as efficient pattern recognition systems
+\end{itemize}
+

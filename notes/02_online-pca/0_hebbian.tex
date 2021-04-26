@@ -5,7 +5,7 @@
 
 \begin{itemize}
 \item requires centering the data
-\item eigendecomposition of $\text{Cov}(\vec X)$, alternatively: SVD($\vec X$)
+\item \notesonly{eigendecomposition of $\text{Cov}(\vec X)$}\slidesonly{$\text{eig(}\text{Cov}(\vec X))$}, alternatively: SVD($\vec X$)
 \item sensitive to the scales of the individual variables
 \item deterministic, insensitive to the order of the observations
 \item Applications: dimensionality reduction, outlier detection, whitening
@@ -13,7 +13,13 @@
 \item will be referred to as ``standard'' or ``batch'' PCA.
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}{Non-stationary data}
+
 \pause
+
+\svspace{35mm}
 
 \question{What are the implications of computing PCA on \emph{non-stationary} data?}
 
@@ -33,6 +39,7 @@
 	\begin{center}
 	\textit{``Neurons that fire together wire together.''} - Donald Hebb
 	\end{center}
+	\svspace{10mm}
 \end{frame}
 }
 
@@ -42,7 +49,8 @@
 \end{center}
 }
 
-\begin{frame}{\secname}
+\begin{frame}
+\frametitle{\secname\only<4->{: What is the neuron learning?}}
 
 \svspace{-3mm}
 
@@ -118,10 +126,10 @@ for the \slidesonly{first PC}\notesonly{\emph{first principle component}} \citep
 \pause
 
 \mode<presentation>{
+\svspace{5mm}
     \begin{center}
-		\includegraphics[width=5cm]{img/meme_hebbian}
+		\includegraphics[width=3cm]{img/meme_hebbian}
     \end{center}
-
 }
 
 \end{itemize}
@@ -150,8 +158,9 @@ As $t \rightarrow \infty$ \qquad $\leadsto |\vec{w}| \rightarrow \infty$\\
 
 \mode<presentation>{
 \only<2>{
+\svspace{5mm}
     \begin{center}
-		\includegraphics[width=5cm]{img/meme_diverges}
+		\includegraphics[width=3.5cm]{img/meme_diverges}
     \end{center}
 }
 }

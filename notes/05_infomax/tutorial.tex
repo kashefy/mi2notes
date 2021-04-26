@@ -6,7 +6,7 @@
 }
 %\setcounter{section}{\sheetnum-3}
 \newcommand{\tutorialtitle}{%
-    Independent Component Analysis (Infomax)
+    Independent Component Analysis - The Infomax Method
 }
 \newcommand{\tutorialtitleshort}{%
 	Infomax ICA
@@ -14,7 +14,7 @@
 % for slides
 \subtitle{\sheetnum \tutorialtitle}
 
-%\maxdeadcycles=1000 % Workaround for ! Output loop---100 consecutive dead cycles because of too many figures
+\maxdeadcycles=1000 % Workaround for ! Output loop---100 consecutive dead cycles because of too many figures
 
 % The following use of algroithms does not work well with the notes:
 %
@@ -56,23 +56,55 @@
 \end{frame}
 
 \begin{frame}
+\mode<presentation>{
+\tableofcontents[hideallsubsections]
+}
+\mode<article>{
 \tableofcontents
+}
 \end{frame}
 
 \newpage
 
 \mode<all>
-\input{./1_infomax}
+\input{./0_ica_intro}
 \mode*
 
 \clearpage
 
-%\section{References}
-%\begin{frame}[allowframebreaks] \frametitle{References}
-	%\scriptsize
-	%\bibliographystyle{plainnat}
-	%\bibliography{bibliography}
-%\end{frame}
+
+\mode<all>
+\input{./1_primer_info_theory}
+\mode*
+
+\clearpage
+
+
+\mode<all>
+\input{./2_infomax}
+\mode*
+
+\clearpage
+
+
+\mode<all>
+\input{./3_cost}
+\mode*
+
+\clearpage
+
+\mode<all>
+\input{./4_gradient}
+\mode*
+
+%\clearpage
+
+\section{References}
+\begin{frame}[allowframebreaks] \frametitle{References}
+	\scriptsize
+	\bibliographystyle{plainnat}
+	\bibliography{bibliography}
+\end{frame}
 
 \end{rightcolumn}
 \end{paracol}

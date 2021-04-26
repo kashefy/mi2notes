@@ -40,7 +40,7 @@
 \newpage
 
 
-\subsubsection{A note on implementation:}
+\subsubsection{A note on implementation}
 
 \begin{frame}\frametitle{\subsubsecname}
 
@@ -88,8 +88,8 @@ where,
 \end{equation} (i.e. $\vec U$, $\vec V$ are orthogonal).
 \begin{itemize}
 
-\item<only@2> The columns of $\vec V$ (or rows of $\vec V^\top$) make up the eigenvectors of $\vec X^\top\vec X$.
-\item<only@3,4,5> The columns of $\vec U$ make up the eigenvectors of $\vec X~\vec X^\top$.
+\item<only@2-> The columns of $\vec V$ (or rows of $\vec V^\top$) make up the eigenvectors of $\vec X^\top\vec X$.
+\item<only@3-5> The columns of $\vec U$ make up the eigenvectors of $\vec X~\vec X^\top$.
 \item<only@4,5> $\vec S$ is a diagonal matrix. The singular values in $\vec S$ (the diagonal entries) are the \textbf{square roots} of the  eigenvalues of the eigenvectors of $\vec X~\vec X^\top$ or $\vec X^\top\vec X$.
 \end{itemize}
 
@@ -104,12 +104,12 @@ $$
 
 \begin{frame}\frametitle{\subsubsecname}
 
-\question{When to use \textit{SVD} vs. \text{Eig}? \textbf{Not dogma}}
+\question{When to use \textit{SVD} vs. \textit{eig}? \textbf{Not dogma}}
 
 \begin{itemize}
 
 \item Numerical instabilities in eigendecomposition of very large covariance matrix $\rightarrow$ \textit{SVD}
-\item SVD not applicable to Kernel-PCA $\rightarrow$ \textit{Eig}
+\item \textit{SVD} is not applicable to Kernel-PCA $\rightarrow$ \textit{eig}
 \item Computational efficiency $\rightarrow$ \textit{SVD} (depends...?)
 
 \slidesonly{
@@ -117,19 +117,20 @@ $$
 \vec X \in \R^{N \times p} \quad \leadsto \quad \vec C = \frac{1}{p} \vec X~\vec X^\top
 $$
 }
-\item Possible differences between PCA via SVD and PCA via eig: SVD may flip the sign.
+\item Possible differences between PCA via \textit{SVD} and PCA via \textit{eig}: \textit{SVD} may flip the sign.
 
 \notesonly{
 
-The reason for the difference in sign between the eigenvector's you would get via \text{Eig} and the eigenvector you would get via \text{SVD}\footnote{Python's scikit-learn package uses SVD for its PCA implementation.}, is that SVD, in practice, may arbitrarily flip the direction of the eigenevectors.
+The reason for the difference in sign between the eigenvector's you would get via \textit{eig} and the eigenvector you would get via \textit{SVD}\footnote{Python's scikit-learn package uses SVD for its PCA implementation.}, is that SVD, in practice, may arbitrarily flip the direction of the eigenevectors.
 Possible reasons for the sign ambiguity according to \ref{bro2008resolving}:
 \begin{enumerate}
-\item  It's a mechanism in the SVD implementation (there's more than one SVD implementation) to mitigate numerical instabilities,
+\item  It's a mechanism in the \textit{SVD} implementation (there's more than one \textit{SVD} implementation) to mitigate numerical instabilities,
 \item Due to centering of the data,
-\item an SVD impelementation could have a random component.
+\item an \textit{SVD} impelementation could have a random component.
 \end{enumerate}
 
-In both approaches you should be able to get the same reconstructions from both of them, i.e. the sign of the components along the flipped PC will also be flipped. Depending on the application, it may be necessary to "detect" if SVD flipped the direction or not. Numerical methods to detect this exist. A reason to care about what the sign should be, is when you want to interpret what an eigenvector represents to possibly assign meaning to the component along this PC: Is the component positive or negative along the PC, or this point has a larger component along the PC than another point. The classicial example of "interpreting" PCs would be "Eigenfaces". PCA is applied on images of faces. It is similar to what we ask you to do in Exercise 1.4. The Eigenvectors extracted form image data can be represented as images themselves. If SVD gives you "flipped" eigenvectors, visualizing them would give you the "negative" of that image. It's not as intuitive to look at negatives, but a person will still be able to make sense of them. However, imagine trying to interpret the eigenvector of other highdimensional data that isn't as pretty as pictures. Lnowing that SVD could have flipped the sign, could give you a hard time trying to make sense of what the eigenvector represents.
+In both approaches you should be able to get the same reconstructions from both of them, i.e. the sign of the components along the flipped PC will also be flipped. Depending on the application, it may be necessary to ``detect'' if \textit{SVD} flipped the direction or not. Numerical methods to detect this exist. A reason to care about what the sign should be is when you want to interpret what an eigenvector represents to possibly assign meaning to the component along this PC: ``\textit{Is the component positive or negative along the PC or does this point have a larger component along the PC than another point?}''
+The classical example of ``interpreting'' PCs would be ``Eigenfaces''. PCA is applied on images of faces. It is similar to what we ask you to do in Exercise 1.4. The Eigenvectors extracted from image data can be represented as images themselves. If \textit{SVD} gives you ``flipped'' eigenvectors, visualizing them would give you the ``negative'' of that image. It's not as intuitive to look at negatives, but a person will still be able to make sense of them. However, imagine trying to interpret the eigenvector of other high-dimensional data that isn't as pretty as pictures. Knowing that \textit{SVD} could have flipped the sign could give you a hard time trying to make sense of what the eigenvector represents.
 
 }
 
