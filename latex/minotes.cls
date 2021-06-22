@@ -62,7 +62,7 @@
 	\setcounter{sheetno}{#1}%
 	\thispagestyle{plain}%
 	\textbf{\large \coursetitle \hfill Tutorial Notes #1} \\%
-	\authorname \hfill #2\\%
+	SoSe \the\year,~\authorname \hfill #2\\%
 	\rule{\textwidth}{1pt}%
 	\vspace{0.5cm}
 }
