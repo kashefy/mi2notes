@@ -1,6 +1,6 @@
 # Machine Intelligence 2: Unsupervised Learning - Tutorial Notes #
 
-[![Build Status](https://travis-ci.com/kashefy/mi2notes.svg?branch=master)](https://www.travis-ci.com/kashefy/mi2notes)
+[![Build Status](https://app.travis-ci.com/kashefy/mi2notes.svg?branch=master)](https://app.travis-ci.com/kashefy/mi2notes)
 [![License: CC BY-SA 4.0](https://licensebuttons.net/l/by-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 This is a collection of notes I've been making for the course [Machine Intelligence 2: Unsupervised Learning](https://www.ni.tu-berlin.de/menue/teaching_activities/all_courses/machine_intelligence_ii/) at the TU Berlin. 
