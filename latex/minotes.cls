@@ -51,7 +51,8 @@
 % Update the following presets
 % presets - BEGIN
 \newcommand{\coursetitle}{Machine Intelligence 2}
-\newcommand{\authorname}{Kashef}
+%\newcommand{\authorname}{Kashef}
+\newcommand{\authorname}{}
 % presets - END
 
 % The sheet number has to be set before \maketitle
@@ -62,7 +63,8 @@
 	\setcounter{sheetno}{#1}%
 	\thispagestyle{plain}%
 	\textbf{\large \coursetitle \hfill Tutorial Notes #1} \\%
-	SoSe \the\year,~\authorname \hfill #2\\%
+	%SoSe \the\year,~\authorname \hfill #2\\%
+	SoSe \the\year~\authorname \hfill #2\\%
 	\rule{\textwidth}{1pt}%
 	\vspace{0.5cm}
 }

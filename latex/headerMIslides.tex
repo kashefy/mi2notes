@@ -96,8 +96,10 @@ inner ysep=10pt
 
 \title[MI 2 Tutorial]{Machine Intelligence 2 Tutorial}
 \institute[www.ni.tu-berlin.de]{Fachgebiet Neuronale Informationsverarbeitung (NI)}
-\author[Kashef]{Youssef Kashef}
-\date{SoSe 21}
+\author[NI]{Youssef Kashef}
+\def\shortyear#1{\expandafter\shortyearhelper#1}
+\def\shortyearhelper#1#2#3#4{#3#4}
+\date{SoSe \shortyear{\the\year}}
 %\date{}
 
 \graphicspath{{../../../../../figures/pdf/}}
