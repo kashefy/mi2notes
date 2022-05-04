@@ -122,7 +122,7 @@ $$
 \notesonly{
 
 The reason for the difference in sign between the eigenvector's you would get via \textit{eig} and the eigenvector you would get via \textit{SVD}\footnote{Python's scikit-learn package uses SVD for its PCA implementation.}, is that SVD, in practice, may arbitrarily flip the direction of the eigenevectors.
-Possible reasons for the sign ambiguity according to \ref{bro2008resolving}:
+Possible reasons for the sign ambiguity according to \cite{bro2008resolving}:
 \begin{enumerate}
 \item  It's a mechanism in the \textit{SVD} implementation (there's more than one \textit{SVD} implementation) to mitigate numerical instabilities,
 \item Due to centering of the data,
