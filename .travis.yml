@@ -18,7 +18,6 @@ deploy:
   - "./notes/**/tutorial_*.slides.pdf"
   - "./notes/**/tutorial_*.notes.pdf"
   - "./tutorial_*.zip"
-  skip_cleanup: true
   on:
     branch: master
 #  edge: true
