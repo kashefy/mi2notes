@@ -17,7 +17,7 @@ Topics covered throughout the course:
 * Self-Organizing Maps
 * Locally Linear Embedding
 * Probability density estimation
-* Mixture models & Expectation-Maximization algorithm
+* Mixture models & the Expectation-Maximization algorithm
 * Hidden Markov Models
 * Estimation theory
 

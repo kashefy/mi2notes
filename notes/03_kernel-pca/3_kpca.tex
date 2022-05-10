@@ -91,7 +91,7 @@ The difference is in the details.
 Remember, we will first assume that we have the non-linear mapping $\phi$.\\
 
 PCA assumes its input is centered.
-It's direct input are the $\phi$'s. Therefore,
+Its direct input are the $\phi$'s. Therefore,
 \begin{equation}
 \frac{1}{p} \sum^{p}_{\alpha=1} \vec{\phi}_{(\vec{x}^{(\alpha)})} \eqexcl \vec 0
 \end{equation}
@@ -156,12 +156,34 @@ a^{(\alpha)}
 \vec{\phi}^{(\beta)}
 \end{equation}
 
-\notesonly{
-Eq.\ref{eq:ephi} tells us that we can describe $\vec e$ in terms of the transformed observations (a weighted summation of $\phi$'s).
- The use of the index $\beta$ is only to avoid collisions with $\alpha$ later.
-}
-
 \end{frame}
+
+\mode<article>{
+
+It is possible to arrive at the linear relationship in \eqref{eq:ephi} by substituting \eqref{eq:cov} into the eigenvalue problem in \eqref{eq:eig}:
+
+\begin{align}
+\underbrace{\frac{1}{p} \sum_{\alpha=1}^{p} \vec{\phi}^{(\alpha)} {\color{blue}\big(\vec{\phi}^{(\alpha)}\big)^\top} 
+}_{=\,\vec C_{\phi}}
+ \, 
+{\color{blue}\vec e}
+= \lambda \;\, \vec e\\
+\intertext{with ${\color{blue}\big(\vec{\phi}^{(\alpha)}\big)^\top \vec e = \vec e^\top\vec{\phi}^{(\alpha)}}$ measuring the scalar projection $u_{(\vec{\phi}^{(\alpha)})}$ along $\vec e$:}
+\frac{1}{p} \sum_{\alpha=1}^{p} u_{(\vec{\phi}^{(\alpha)})} \vec{\phi}^{(\alpha)}
+= \lambda \;\, \vec e\\
+\vec e = 
+\frac{1}{p} \sum_{\alpha=1}^{p} \frac{u_{(\vec{\phi}^{(\alpha)})}}{\lambda} \vec{\phi}^{(\alpha)}\\
+\intertext{This effectivley expresses $\vec e$ as a linear combination of the transformed observations:}
+\vec e = 
+\frac{1}{p} \sum_{\alpha=1}^{p} a^{(\alpha)} \vec{\phi}^{(\alpha)} \stackrel{\substack{\text{switch index}\\{\alpha \rightarrow \beta}}}{=} \frac{1}{p} \sum_{\beta=1}^{p} a^{(\beta)} \vec{\phi}^{(\beta)}
+\end{align}
+
+\paragraph{Deriving the transformed eigenvalue problem}
+
+\eqref{eq:ephi} tells us that we can describe $\vec e$ in terms of the transformed observations (a weighted summation of $\phi$'s).
+ The use of the index $\beta$ is only to avoid collisions with $\alpha$ later.
+ 
+}
 
 \begin{frame}{\subsubsecname}
 
@@ -184,7 +206,7 @@ Eq.\ref{eq:ephi} tells us that we can describe $\vec e$ in terms of the transfor
 }
 
 \notesonly{
-Substituting Eq.\ref{eq:cov} and Eq.\ref{eq:ephi} into the eigenvalue problem Eq.\ref{eq:eig}:
+Substituting \eqref{eq:cov} and \eqref{eq:ephi} into the eigenvalue problem \eqref{eq:eig}:
 }
 \slidesonly{
 Express the eigenvalue problem in terms of $\phi$'s:
@@ -243,7 +265,7 @@ We are one step closer to not needing the explicit mapping $\phi$.
 }
 
 \notesonly{
-Recall from \sectionref{sec:nonlin} that we are not even able to compute $\vec{\phi}_{(\vec{x})}$ but we now see it is possible to avoid the transformation altogether by exploiting the kernel trick (cf. Eq.\ref{eq:trick}) by substituting 
+Recall from \sectionref{sec:nonlin} that we are not even able to compute $\vec{\phi}_{(\vec{x})}$ but we now see it is possible to avoid the transformation altogether by exploiting the kernel trick (cf. \eqref{eq:trick}) by substituting 
 $ K_{\alpha \beta} $ for
 $
 \vec{\phi}^{\top}_{(\vec{x}^{(\alpha)})}
@@ -251,7 +273,7 @@ $
   \vec{\phi}_{(\vec{x}^{(\beta)})}
 $
 
-Eq.\ref{eq:eig2} becomes:}
+\eqref{eq:eig2} becomes:}
 
 \begin{equation} \label{eq:eig3}
 \frac{1}{p} \sum_{\alpha=1}^{p} \sum^{p}_{\beta=1} 
@@ -267,7 +289,7 @@ We now proceed with reformulating the above until we no longer have any $\phi$'s
 
 \pause
 
-\notesonly{We }left-multiply\notesonly{ Eq.\ref{eq:eig3}} with $\big(\vec \phi_{(\vec x^{(\gamma)})}\big)^\top$, where $\gamma = 1, \ldots, p$.
+\notesonly{We }left-multiply\notesonly{ \eqref{eq:eig3}} with $\big(\vec \phi_{(\vec x^{(\gamma)})}\big)^\top$, where $\gamma = 1, \ldots, p$.
  We can pull $\big(\vec \phi^{(\gamma)}\big)^\top$ directly into the sum on the \slidesonly{LHS}\notesonly{left-hand-side} and the sum on the \slidesonly{RHS}\notesonly{right-hand-side}:
 
 \only<2,3>{
@@ -289,7 +311,7 @@ K_{\alpha \beta}
 
 \pause
 
-\newpage
+%\newpage
 
 \notesonly{\eqref{eq:eig4} without the clutter:}
 
@@ -592,13 +614,13 @@ At the solution, $\widetilde{\vec a}^\top \widetilde{\vec a} = 1 \quad \nRightar
 
 \begin{frame}{\subsubsecname}
 
-Recall\notesonly{ing Eq.\ref{eq:ephi} (we add the index $k$ to denote which eigenvector):}
+Recall\notesonly{ing \eqref{eq:ephi} (we add the index $k$ to denote which eigenvector):}
 \begin{equation}
 \label{eq:ephik}
 \vec e_k = \sum^{p}_{\beta=1} a_k^{(\beta)} \vec{\phi}_{(\vec{x}^{(\beta)})},
 \end{equation}
 
-We want an expression for the norm $\vec e^{\top}_k \vec e_k$ that does not involve $\phi$'s. We left-multiply\slidesonly{ the above}\notesonly{ Eq.\ref{eq:ephik}} with $\left(\vec e_k\right)^\top$:
+We want an expression for the norm $\vec e^{\top}_k \vec e_k$ that does not involve $\phi$'s. We left-multiply\slidesonly{ the above}\notesonly{ \eqref{eq:ephik}} with $\left(\vec e_k\right)^\top$:
 \begin{align}
 \vec e^{\top}_k \vec e_k &= \sum^{p}_{\alpha=1}  a_k^{(\alpha)} \vec{\phi}_{(\vec{x}^{(\alpha)})}^\top \sum^{p}_{\beta=1} a_k^{(\beta)} \vec{\phi}_{(\vec{x}^{(\beta)})} \\
 &= \sum^{p}_{\alpha=1}  \sum^{p}_{\beta=1}  a_k^{(\beta)}  \underbrace{\vec{\phi}_{(\vec{x}^{(\alpha)})}^\top  \vec{\phi}_{(\vec{x}^{(\beta)})}} a_k^{(\alpha)} \\
@@ -611,7 +633,7 @@ We want an expression for the norm $\vec e^{\top}_k \vec e_k$ that does not invo
 \begin{frame}{\subsubsecname}
 
 \notesonly{
-And when we plug Eq.\ref{eq:eigsimple1} into the above:
+And when we plug \eqref{eq:eigsimple1} into the above:
 }
 \slidesonly{
 From $\vec{K} \, \widetilde {\vec a}_k = p \lambda \widetilde {\vec a}_k$ follows:
@@ -641,7 +663,7 @@ Remark: a unit-length vector $\widetilde {\vec a}_k$ does not imply \emph{normli
 
 \notesonly{
 Scaling $\widetilde {\vec a}_k$ by $\frac{1}{\sqrt{p \lambda_k}}$ yields 
-a vector in the same direction as $\widetilde {\vec a}_k$ to satisfy \notesonly{Eq.\ref{eq:eignorm}}\slidesonly{$\vec e^{\top}_k \vec e_k \eqexcl 1$}.\\
+a vector in the same direction as $\widetilde {\vec a}_k$ to satisfy \notesonly{\eqref{eq:eignorm}}\slidesonly{$\vec e^{\top}_k \vec e_k \eqexcl 1$}.\\
 }
 With
 \svspace{-5mm}
@@ -737,7 +759,7 @@ u_k(\phi_{(\vec x)}) = \vec e_k^\top \vec \phi_{(\vec x)}
 \pause
 
 \notesonly{
-We substitute $\vec \phi_{(\vec x)}$ for $\vec x$ and plug Eq.\ref{eq:ephi} into Eq.\ref{eq:projlin}:
+We substitute $\vec \phi_{(\vec x)}$ for $\vec x$ and plug \eqref{eq:ephi} into \eqref{eq:projlin}:
 }
 
 \visible<3>{
