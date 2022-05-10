@@ -1,5 +1,6 @@
+os: linux
 dist: bionic
-#language: r
+language: ruby
 before_install:
 - sudo apt-get -qq update && sudo apt-get install -qq -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended texlive-science
 #- tlmgr install index
