@@ -6,8 +6,9 @@
 
 \notesonly{\question{How do I interpret the role of PCs?}}
 
-\svspace{-7mm}
 
+\only<1>{
+\svspace{-7mm}
 \begin{center}
 	\includegraphics[height=5cm]{img/contourplot_kpca_rbf}
 	\notesonly{\captionof{figure}{Projections onto individual PCs}}
@@ -17,6 +18,24 @@
 	\includegraphics[height=3.2cm]{img/screeplot_kpca_rbf.pdf}
 	\notesonly{\captionof{figure}{Scree plot}}
 \end{center}
+}
+\only<2>{
+\slidesonly{
+\begin{minipage}{0.45\textwidth}
+	\begin{center}
+		\includegraphics[width=6cm,trim={12mm 115mm 0 0},clip]{img/contourplot_sigma1_kpca_rbf}
+    \end{center}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+}
+	\begin{center}
+		\includegraphics[width=7cm]{img/correspondence_rbf_sigma1}
+	    \notesonly{\captionof{figure}{Correspondences between spaces}}
+    \end{center}
+\slidesonly{
+\end{minipage}
+}
+}
 
 \end{frame}
 
