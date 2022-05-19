@@ -18,12 +18,12 @@ density function $f_{X_1, X_2}$:
 \svspace{-3mm}
 
 \begin{equation}
-f_{X_1, X_2}(x_1, x_2) = f(\vec x) \qquad \vec x \in \Omega \subset \R^2
+f_{X_1, X_2}(x_1, x_2) = f{(\vec x)} \qquad \vec x \in \Omega \subset \R^2
 \end{equation}
 
 \pause
 
-and let $\vec u = \vec u(\vec x) = ( u_1(\vec x), u_2(\vec x)) = ( u_1(x_1, x_2), u_2(x_1, x_2)) $ be a one-to-one mapping/transformation.
+and let $\vec g(\vec x) =\notesonly{ ( g_1(\vec x), g_2(\vec x))^\top =} ( g_1(x_1, x_2), g_2(x_1, x_2))^\top = (u_1, u_2)^\top = \vec u$ be a one-to-one mapping/transformation.
 
 \svspace{-3mm}
 
@@ -41,11 +41,11 @@ and let $\vec u = \vec u(\vec x) = ( u_1(\vec x), u_2(\vec x)) = ( u_1(x_1, x_2)
 -conservation of probability.
 \notesonly{The probability of the event $(x_1,x_2)$ should equal the probability of its counterpart in $(u_1,u_2)$ and vice-versa.}
 
-\svspace{-3mm}
+\svspace{-8mm}
 
 \begin{equation}
-P_{u_i}({u}_i) d {u}_i 
-= P_{x_i} ({x}_i) d {x}_i
+P_{\vec u}({\vec u}) \mathbf{d} {\vec u}
+= \overbrace{P_{\vec x}({\vec x})}^{f (\vec {x})} \mathbf{d} {\vec x}
 \end{equation}
 
 \end{frame}
@@ -74,13 +74,14 @@ The goal is to show that in order for probability to be conserved}, we need to k
 
 \pause
 
-This implies the following relationship:
+This implies the following relationship which we will derive:
 \begin{equation}
 \int_{\Omega} f(\vec{x}) \mathbf{d}\vec{x}
-=\int_{u(\Omega)} f({\vec x(\vec u)}) \frac{1}{\left|\det \frac{\partial \vec{u}(\vec{x})}{\partial \vec{x}} \right|} \mathbf{d}\vec{u},
+=\int_{u(\Omega)} f(~\underbrace{\vec g^{-1}(\vec u)}_{= \vec x}~) \frac{1}{\left|\det \frac{\partial \vec{u}}{\partial \vec{x}} \right|} \mathbf{d}\vec{u},
 \end{equation}
 
-which we will now derive.
+\notesonly{where $\vec g^{-1}(\vec u) = \vec x$ is the inverse mapping.}
+
 
 \end{frame}
 
@@ -97,8 +98,8 @@ which we will now derive.
 \only<1>{
 
 \begin{itemize}
-\item Because $dx_1$ and $dx_2$ are \emph{infinitesimally small} we can consider the mapping 
-$\vec u$ to act as a \emph{linear transformation}, resulting in a different shape in $u(\Omega)$. 
+\item Because $dx_1$ and $dx_2$ are \emph{infinitesimally small} we can consider the mapping from $\vec x$ to  
+$\vec u$ to act as a \emph{linear} transformation, resulting in a different shape in $u(\Omega)$. 
 \item The shape of the shaded area in $u(\Omega)$ is \emph{approximately} a parallelogram.
 \item We will compute the ratio of the areas between the two transforms.
 \item If we want to go back from $u(\Omega)$ to $\Omega$ we only need $\frac{1}{\text{ratio}}$.
@@ -115,11 +116,14 @@ Approximating the above as a linear transformation (i.e. a small rectangle turns
 
 }
 
-\only<3>{
+\only<3->{
 
 Before we can compute the area of the parallelogram in $u(\Omega)$ we need to find out what the vectors ${\color{blue}\vec e_1}, {\color{red}\vec e_2}$ map to in $u(\Omega)$.
 
 \question{How do we get the area of the parallelogram?}
+
+}
+\only<4>{
 
 From vector calculus:
 \notesonly{
@@ -130,7 +134,7 @@ The area of the parallelogram is the magnitude of the cross product between the 
 \svspace{-3mm}
 
 \begin{equation}
-A_{\text{parr.}} = \big| \vec u({\color{blue}\vec e_1}) \times \vec u({\color{red}\vec e_2}) \big|
+A_{\text{parr.}} = \big| \vec g({\color{blue}\vec e_1}) \times \vec g({\color{red}\vec e_2}) \big|
 \end{equation}
 
 }
@@ -219,7 +223,7 @@ The difference vector in $u(\Omega)$ becomes:}
 
 \only<5>{
 \begin{equation}
-u: {\color{blue}\vec e_1} \mapsto 
+\vec g: {\color{blue}\vec e_1} \mapsto 
 \rmat{
 \frac{\partial u_1}{\partial x_1} \Delta x_1\\[0.2cm]
 \frac{\partial u_2}{\partial x_1} \Delta x_1
@@ -367,8 +371,8 @@ $$
 This matrix of partial derivatives is called the \emph{Jacobian}:
 \begin{equation}
 \frac{\partial (u_1, u_2)}{\partial (x_1,x_2)} = 
-\frac{\partial (u_1(\vec x), u_2(\vec x))}{\partial (x_1,x_2)} = 
-\frac{\partial (\vec u(\vec x))}{\partial (\vec x)} =
+\frac{\partial (g_1(\vec x), g_2(\vec x))}{\partial (x_1,x_2)} = 
+\frac{\partial \vec u}{\partial \vec x} =
 \underbrace{
 \rmat{
 {\partial u_1}/{\partial x_1} & {\partial u_1}/{\partial x_2}\\[0.2cm]
@@ -480,9 +484,9 @@ $$
 \notesonly{\captionof{figure}{Inverse mapping}}
 \end{center}
 
-We apply the inverse mapping.\notesonly{ A very small rectangle in $u(\Omega)$ transforms into a parallelogram in $\Omega$.} 
+We apply the inverse mapping $\vec g^{-1}(\vec x)$\notesonly{, assuming it exists and is differentiable. A very small rectangle in $u(\Omega)$ transforms into a parallelogram in $\Omega$.} 
 This reverse transformation would require the inverse of the above matrix of partial derivatives.
-The matrix of partial derivatives tells us how to transform infinitesimally small vectors back and forth.
+\notesonly{The matrix of partial derivatives tells us how to transform infinitesimally small vectors back and forth.}
 
 %Transformation between the spaces for infinitesimally small vectors:
 
@@ -512,6 +516,32 @@ The matrix of partial derivatives tells us how to transform infinitesimally smal
 \end{frame}
 
 \begin{frame}{\subsubsecname}
+
+\slidesonly{
+$$
+\begingroup
+\footnotesize
+\underbrace{
+A_{\text{parr.}} }_{\text{in }u(\Omega)}= 
+\bigg| \; \det\,
+\underbrace{
+\left(
+\frac{\partial (u_1, u_2)}{\partial (x_1,x_2)}
+\right)
+}_{\text{the Jacobian}}
+\; \bigg| \, \underbrace{\Delta x_1 \Delta x_2}_{\substack{\text{Original area}\\ \text{in }\Omega}}
+\endgroup
+$$
+
+$$
+\begingroup
+\footnotesize
+\underbrace{
+A_{\text{parr.}} }_{\text{in }\Omega}=\ldots
+\endgroup
+$$
+}
+
 
 \question{Do we really have to compute the inverse of the matrix?}
 
