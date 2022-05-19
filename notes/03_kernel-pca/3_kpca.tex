@@ -753,7 +753,7 @@ Assuming we have a the $\phi$'s:
 
 \begin{equation}
 \label{eq:projlin}
-u_k(\phi_{(\vec x)}) = \vec e_k^\top \vec \phi_{(\vec x)}
+u_k(\phi_{(\vec x)}) = {\slidesonly{\color{magenta}}\vec e_k^\top} \vec \phi_{(\vec x)}
 \end{equation}
 
 \pause
@@ -768,15 +768,16 @@ We substitute $\vec \phi_{(\vec x)}$ for $\vec x$ and plug \eqref{eq:ephi} into 
 
 \begin{align}
 \label{eq:projk1}
-u_k(\vec \phi_{(\vec x)}) &= \sum^{p}_{\beta=1} a^{(\beta)} 
-\hspace{-3mm}
+u_k(\vec \phi_{(\vec x)}) &=
+{\slidesonly{\color{magenta}}\sum^{p}_{\beta=1} a^{(\beta)}}
+\hspace{-5mm}
 \underbrace{
-\vec{\phi}^\top_{(\vec{x}^{(\beta)})} \, \vec \phi_{(\vec x)}
+{\color{magenta}\vec{\phi}^\top_{(\vec{x}^{(\beta)})}} \, \vec \phi_{(\vec x)}
 }_{\substack{
 \text{recognize the familiar}\\
 \text{scalar product?}
-\\ =k(\vec x^{(\beta)}, \vec x) = K_{\beta,\vec x}}}\notesonly{\\
-&}= \sum_{\beta=1}^{p} a_k^{(\beta)} K_{\beta, \vec x}
+\\ = k(\vec x^{(\beta)}, \vec x) = K_{\beta,\vec x}}}\notesonly{\\
+&} \kern-4mm = \sum_{\beta=1}^{p} a_k^{(\beta)} K_{\beta, \vec x}
 \end{align}
 
 \notesonly{Note that }$\vec x$ can be a sample that was used in computing the PCs or a completly new ``test'' point.
