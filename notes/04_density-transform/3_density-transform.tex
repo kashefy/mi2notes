@@ -529,16 +529,19 @@ The matrix of partial derivatives tells us how to transform infinitesimally smal
 
 \underline{Transformation between probability densities:}
 
-Conservation of probability: The area represents the probability of the event, 
-transforming it into another space should not cause any increase or decrease in the probability of the event.
+\notesonly{A transformation has to conserve the probabilities of events. }If the area represents the probability of the event, 
+transforming it into another space should not \notesonly{cause any }increase or decrease \notesonly{in }the probability of the event.
 
 Therefore, if we multiply the area of the rectangle in $\Omega$ by the pdf $f(\vec x)$ at $\vec x$, we get the probability of the parallelogram in $u(\Omega)$:
 
 \begin{align}
 \int_{\Omega} f(\vec{x}) \mathbf{d}\vec{x}
-&=\int_{u(\Omega)} f({\vec x(\vec u)}) \left|\det \frac{\partial \vec{x}(\vec{u})}{\partial \vec{u}} \right| \mathbf{d}\vec{u}\\
-&=\int_{u(\Omega)} f({\vec x(\vec u)}) \frac{1}{\left|\det \frac{\partial \vec{u}(\vec{x})}{\partial \vec{x}} \right|} \mathbf{d}\vec{u}.
+&=\int_{u(\Omega)} f(~\overbrace{{\vec g^{-1}(\vec u)}}^{= \vec x}~) \left|\det \frac{\partial \vec{x}}{\partial \vec{u}} \right| \mathbf{d}\vec{u}\\
+&=\int_{u(\Omega)} f({\vec g^{-1}(\vec u)}) \frac{1}{\left|\det \frac{\partial \vec{u}}{\partial \vec{x}} \right|} \mathbf{d}\vec{u},
 \end{align}
+
+where $\vec g:\vec x \mapsto \vec g(\vec x)$ is a mapping \notesonly{with which we change the variables}\slidesonly{from} $\vec x$ to\notesonly{ a new coordinate system with coordinates} $\vec{u}=(g_1({\vec{x}}),\dots,g_N(\vec{x}))=(u_1,\dots,u_N)^{\top},$ whose inverse mapping
+ $\vec g^{-1}(\vec{u})=\vec x$ exists and is differentiable.
 
 \end{frame}
 
