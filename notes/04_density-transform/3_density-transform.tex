@@ -23,7 +23,7 @@ f_{X_1, X_2}(x_1, x_2) = f{(\vec x)} \qquad \vec x \in \Omega \subset \R^2
 
 \pause
 
-and let $\vec g(\vec x) =\notesonly{ ( g_1(\vec x), g_2(\vec x))^\top =} ( g_1(x_1, x_2), g_2(x_1, x_2))^\top = (u_1, u_2)^\top = \vec u$ be a one-to-one mapping/transformation.
+and let $\vec g(\vec x) = ( g_1(x_1, x_2), g_2(x_1, x_2))^\top = (u_1, u_2)^\top = \vec u$ be a one-to-one mapping/transformation.
 
 \svspace{-3mm}
 
@@ -80,7 +80,7 @@ This implies the following relationship which we will derive:
 =\int_{u(\Omega)} f(~\underbrace{\vec g^{-1}(\vec u)}_{= \vec x}~) \frac{1}{\left|\det \frac{\partial \vec{u}}{\partial \vec{x}} \right|} \mathbf{d}\vec{u},
 \end{equation}
 
-\notesonly{where $\vec g^{-1}(\vec u) = \vec x$ is the inverse mapping.}
+\notesonly{where $\vec g^{-1}(\vec u) = \vec x$ is the inverse mapping which we assume to exist and to be differentiable.}
 
 
 \end{frame}
@@ -248,7 +248,7 @@ The difference vector in $u(\Omega)$ becomes:}
 - We use the same procedure on ${\color{red}\vec e_2}$:
 
 \begin{equation}
-u: {\color{red}\vec e_2} \mapsto 
+\vec g: {\color{red}\vec e_2} \mapsto 
 \rmat{
 \frac{\partial u_1}{\partial x_2} \Delta x_2\\[0.2cm]
 \frac{\partial u_2}{\partial x_2} \Delta x_2
