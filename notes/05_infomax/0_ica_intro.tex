@@ -133,7 +133,7 @@ Consider the following two random scalar variables $X$ and $Y$:
 \includegraphics[width=0.4\textwidth]{img/uniform_fixed}
 \end{center}
 
-Knowing anything about $X$ reveals absolutely nothing about $Y$, and vice-versa. This is because both variables are \emph{independent}. 
+Knowing anything about $X$ reveals absolutely nothing about $Y$, and vice-versa. \notesonly{This is because b}\slidesonly{B}oth variables are \emph{independent}. 
 
 \end{frame}
 
@@ -145,7 +145,7 @@ the marginal probabilities $p_X(x)$ and  $p_Y(y)$:
 
 \begin{equation}
 \label{eq:statindep}
-p_{X,Y}(x,y) = p_X(x) p_Y(y)
+p_{X,Y}(x,y) = p_X(x) \cdot p_Y(y)
 \end{equation}
 
 From this follows:
@@ -154,7 +154,7 @@ From this follows:
 
 \begin{equation}
 \label{eq:statindepexp}
-\E  \lbrack \, g(x) h(y) \, \rbrack = \E \lbrack g(x) \rbrack \, \E \lbrack h(y) \rbrack  \,,
+\E  \big\lbrack \, g(x) \cdot h(y) \, \big\rbrack = \E \big\lbrack \, g(x) \, \big\rbrack \cdot \E \big\lbrack \, h(y) \, \big\rbrack  \,,
 \end{equation}
 
 where $g(x)$ and $h(y)$ are absolutely integrable functions of $X$ and $Y$.
