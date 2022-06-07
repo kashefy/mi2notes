@@ -194,10 +194,13 @@ still prone to overshooting.
 }
 }
 \only<2->{
-The natural gradient enables \emph{comparable learning steps over time}\footnote{For a more detailed explanation and justification for the natural gradient, see \citep{amari1998natural}}.
-It allows for a more stable, therefore efficient, and faster learning rule (no matrix inversion for $\vec W$ in Infomax'
+The natural gradient enables \emph{comparable learning steps over time}\footnote{\slidesonly{\tiny}For a more detailed explanation and justification for the natural gradient, see \citep{amari1998natural}}.
+It allows for a more stable, therefore efficient, and faster learning rule (no matrix inversion for $\vec W$ in Infomax
   necessary) to do steepest ascent under normalized step size.%\notesonly{ (cf. lecture slides 2.2.1 for details)}
-  
+
+
+\svspace{-7mm}
+
 \slidesonly{
 \only<2>{
 \begin{equation}
@@ -220,6 +223,7 @@ It allows for a more stable, therefore efficient, and faster learning rule (no m
 	\Delta \vec{W} = \varepsilon \frac{ \overbrace{\partial e}^{
 		\substack{	\text{``original''} \\ 
 				\text{gradient}} }}{\partial \vec{W}}
+                \kern-2ex
 		\underbrace{ \vec{W}^\top \vec{W} }_{
 			\substack{	\text{normalization} \\
 					\text{of step size}} }
@@ -283,7 +287,7 @@ A typical choice to resemble the cdf of such a peaky function:
 	\frac{\widehat{f}_{(y)}^{''}}{\widehat{f}_{(y)}^{'}}
 	= 1 - 2 \widehat{f}_{(y)}
 \end{equation}
-Observation: ICA is fairly robust against false choice of $\widehat{f}$.
+Observation: ICA is fairly robust against a false choice of $\widehat{f}$.
 
 \begin{itemize}
 	\itR however: if $\widehat{f}_i$ deviates too strongly from its true
@@ -291,7 +295,7 @@ Observation: ICA is fairly robust against false choice of $\widehat{f}$.
 	\itR if in doubt (and enough training data is available)
 	\begin{itemize}
 		\itl make a parametrized ansatz for $\widehat{f}_i$
-		\itl estimate parameters in addition to $\vec{W}$
+		\itl estimate the new parameters in $\widehat{f}_i$ in addition to $\vec{W}$
 	\end{itemize}
 \end{itemize}
 }
