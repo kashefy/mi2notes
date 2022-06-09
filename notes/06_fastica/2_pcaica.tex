@@ -24,7 +24,7 @@ We've established that
 \pause
 
 \notesonly{
-If we were to apply \emph{Singular Value Decomposition} on the symmetric matrix $\Sigma_x$:
+If we were to apply \emph{Singular Value Decomposition} on the symmetric matrix $\vec \Sigma_x$:
 }
 
 \begin{equation}
@@ -38,12 +38,12 @@ $\vec U$ is an orthogonal matrix,} $\vec U^\top\vec U = \vec I_N$ and
 
 We define the two following transformation $\vec Q$ and $\widetilde{\vec A}$:
 \begin{equation}
-\label{eq:defq}
-\vec Q := \vec D^{-\frac{1}{2}} \vec U^\top
-\end{equation}
-\begin{equation}
-\label{eq:defatilde}
-\widetilde{\vec A} := \vec Q \, \vec A 
+    \label{eq:defq}
+    \vec Q := \vec D^{-\frac{1}{2}} \vec U^\top
+    \end{equation}
+    \begin{equation}
+    \label{eq:defatilde}
+    \widetilde{\vec A} := \vec Q \, \vec A 
 \end{equation}
 
 Which yields\only<3>{ a new ICA problem:
