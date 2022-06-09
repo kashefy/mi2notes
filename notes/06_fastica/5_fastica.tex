@@ -12,10 +12,10 @@
 }
 \notesonly{
 
-Negentropy $J(\widehat{s})$ of the reconstructed sources $\widehat{\vec s}$ is defined as:
+Negentropy $J_n(\widehat{s})$ of the reconstructed sources $\widehat{\vec s}$ is defined as:
 
 \begin{equation}
-	J(\widehat{s}) \coloneqq \underbrace{ H(\widehat{s})_\normal}_{
+	J_n(\widehat{s}) \coloneqq \underbrace{ H(\widehat{s})_\normal}_{
 			\substack{ 	\text{entropy of a Gaussian} \\
 					\text{distribution with} \\
 					\text{same variance}}}
@@ -43,7 +43,7 @@ $$
 
 \begin{block}{Definition of negentropy}
 \begin{equation}
-	J(\widehat{s}) \coloneqq \underbrace{ H(\widehat{s})_\normal}_{
+	J_n(\widehat{s}) \coloneqq \underbrace{ H(\widehat{s})_\normal}_{
 			\substack{ 	\text{entropy of a Gaussian} \\
 					\text{distribution with} \\
 					\text{same variance}}}
@@ -73,7 +73,7 @@ The properties that make negentropy suitable:
 
 \slidesonly{
 \begin{equation}
-	J(\widehat{s}) \coloneqq \underbrace{ H(\widehat{s})_\normal}_{
+	J_n(\widehat{s}) \coloneqq \underbrace{ H(\widehat{s})_\normal}_{
 			\substack{ 	\text{entropy of a Gaussian} \\
 					\text{distribution with} \\
 					\text{same variance}}}
@@ -104,7 +104,7 @@ Estimating negentropy using the definition in \eqref{eq:negentropy} is computati
 
 \begin{equation}
 \label{eq:negentropyapprox}
-J(\hat{s}) \approx \frac{1}{12} \langle (\hat{s})^3 \rangle^2 + \frac{1}{48} (\kurt{(\hat{s}))^2} + \text{higher order terms}
+J_n(\hat{s}) \approx \frac{1}{12} \langle (\hat{s})^3 \rangle^2 + \frac{1}{48} (\kurt{(\hat{s}))^2} + \text{higher order terms}
 \end{equation}
 
 \notesonly{
@@ -118,7 +118,7 @@ The approximation is modified using
 ``nonpolynomial moments'' contrast functions $G$:
 
 \begin{equation}
- J(\hat{s}) \approx \left( \langle G(\hat{s}) \rangle - \langle G(u_{\text{Gauss}}) \rangle \right)^2
+ J_c(\hat{s}) \approx \left( \langle G(\hat{s}) \rangle - \langle G(u_{\text{Gauss}}) \rangle \right)^2
 \end{equation}
 
 \end{frame}
