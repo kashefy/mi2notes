@@ -324,7 +324,7 @@ $\hat{s} \,=\, \vec{z}^\top \vec{s} \,=\, \vec{w}^\top \underbrace{\vec{A} \, \v
 
 \question{What can we optimize kurtosis with?}
 
-\pause
+%\pause
 	\begin{enumerate}
 		\item $\max_{\vec{z}} | \kurt{(\vec{z}^\top \vec{s})} | \; \; \;\quad s.t. \quad |\vec{z}| = 1$
 		\item $\max_{\vec{w}} | \kurt{(\vec{w}^\top \vec{x})} | \quad s.t. \quad |\vec{A}^\top \vec{w}| = 1$
@@ -420,6 +420,7 @@ Recall:
 In order to apply the gradient algorithm in an online fashion as described by \eqref{eq:kurtgradientsimple}, we have to account for the fact that the kurtosis term inside our expression for the gradient involves an expectation operator which cannot be omitted (cf. \eqref{eq:kurt} for how kurtosis is defined). We therefore resort to estimating the kurtosis from a moving average $\gamma$ which starts at zero and is updated at each iteration using:
 }
 \slidesonly{
+\pause
 Estimate kurtosis via moving average:
 }
 \begin{equation}
