@@ -9,7 +9,7 @@
 \RequirePackage{etoolbox, comment} % not ifthen, xstring, 
 \RequirePackage[latin9]{inputenc}
 \RequirePackage[T1]{fontenc}
-\usepackage{hyperref}
+\usepackage[hyperfootnotes=false]{hyperref}
 \hypersetup{
   colorlinks   = true, %Colours links instead of ugly boxes
 }
