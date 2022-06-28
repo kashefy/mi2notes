@@ -85,19 +85,19 @@ Group the dataset $\left\{ \vec x^{(1)}, \vec x^{(2)}, \ldots, \vec x^{(p)} \rig
 
 \begin{frame}{Formalizing K-means}
 
-\only<1-3>{
+\only<1-2>{
 
 \notesonly{
 \underline{The K-means approach}:\\
 }
 
-Determine $M$ ``good'' prototypes $\vec w_1, \ldots, \vec w_M \in \R^N$ and \only<3>{\underline}{assign} each data point $\vec x^{(\alpha)}$ to the prototype closest to it.\\
+Determine $M$ ``good'' prototypes $\vec w_1, \ldots, \vec w_M \in \R^N$ and {\only<2>{\color{magenta}\underline}{assign}} each data point $\vec x^{(\alpha)}$ to the prototype closest to it.\\
 }
 
 \slidesonly{
 \begin{center}
-	\includegraphics<1>[width=6cm]{img/clustering_color}
-	\includegraphics<2>[width=6cm]{img/clustering_color_proto}
+	%\includegraphics<1>[width=6cm]{img/clustering_color}
+	\includegraphics<1->[width=6cm]{img/clustering_color_proto}
 \end{center}
 	}
 
