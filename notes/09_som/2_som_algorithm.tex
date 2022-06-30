@@ -97,12 +97,8 @@
 \question{What is the effect of the width $\sigma$?}
 
 \begin{itemize}
-\only<1>{
-\item large $\sigma$ (very wide width): all neurons will move towards the new point.
-}
-\only<2>{
-\item  $\sigma \rightarrow 0$: standard on-line K-means (only update $\vec{q}=\vec{p}$)
-}
+    \item<only@2,3> large $\sigma$ (very wide width): \only<3>{all neurons will move towards the new point.}
+    \item<only@4,5> $\sigma \rightarrow 0$: \only<5>{standard on-line K-means (only update $\vec{q}=\vec{p}$)}
 \end{itemize}
 
 \end{frame}
