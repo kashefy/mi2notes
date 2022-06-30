@@ -13,6 +13,7 @@ slides: $(projname).slides.tex $(projname).tex
 	$(compile) $(projname).slides.tex
 	bibtex $(projname).slides
 	$(compile) $(projname).slides.tex
+	$(compile) $(projname).slides.tex
 #	$(compile) --interaction=batchmode  $(projname).slides.tex
 	mv $(projname).slides.pdf $(targetname).slides.pdf 
 
