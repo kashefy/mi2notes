@@ -488,18 +488,21 @@ Compute the expectation w.r.t. $P(\vec m)$:
 \big\lbrack
 \ln \widehat{P}(~\vec x ~|~ \vec w)
 \big\rbrack
-&= \int P(\vec m) \ln \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m 
-\;+ \int P(\vec m) \ln \frac{P(\vec m)}{\widehat{P}(~\vec m~|~\vec x;\vec w)} d\vec m\slidesonly{\\[-7mm]}
-\intertext{\footnotesize switching numerator and denominator in second integral adds a minus sign in front of the integral}
-&= \int P(\vec m) \ln  \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m
-~
-{\color{red}-} \int P(\vec m) \ln \frac{\color{red}\widehat{P}(~\vec m~|~\vec x;\vec w)}{\color{red}P(\vec m)} d\vec m \\ 
+%&= 
+%\int P(\vec m) \ln \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m 
+%\;+ \int P(\vec m) \ln \frac{P(\vec m)}{\widehat{P}(~\vec m~|~\vec x;\vec w)} d\vec m\slidesonly{\\[-7mm]}
+%\intertext{\footnotesize switching numerator and denominator in second integral adds a minus sign in front of the integral}
+%&= \int P(\vec m) \ln  \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m
+%~
+%{\color{red}-} \int P(\vec m) \ln \frac{\color{red}\widehat{P}(~\vec m~|~\vec x;\vec w)}{\color{red}P(\vec m)} d\vec m \\ 
 &= 
 \underbrace{\int P(\vec m) \ln \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m
 }_{\substack{=:~\mathscr{L}(P(\vec m), \vec w)\\\text{the expected complete}\\\text{data log-likelihood}}}
 \,
-\underbrace{-\int P(\vec m) \ln \frac{\widehat{P}(~\vec m~|~\vec x;\vec w)}{P(\vec m)} d\vec m
-}_{+\dkl \left\lbrack P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) \right\rbrack}
+%\underbrace{-\int P(\vec m) \ln \frac{\widehat{P}(~\vec m~|~\vec x;\vec w)}{P(\vec m)} d\vec m
+%}_{+\dkl \left\lbrack P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) \right\rbrack}
+\underbrace{+\int P(\vec m) \ln \frac{P(\vec m)}{\widehat{P}(~\vec m~|~\vec x;\vec w)} d\vec m
+}_{\color{red}+\dkl \big\lbrack P(\vec m) ~||~ \widehat{P}(~\vec m~|~ \vec x; \vec w) \big\rbrack}
 \end{align}
 \endgroup
 
@@ -517,7 +520,7 @@ Compute the expectation w.r.t. $P(\vec m)$:
 \ln \widehat{P}(~\vec x ~|~ \vec w)
 \big\rbrack
 &= 
-\mathscr{L}(P(\vec m), \vec w) + {\color{red}\dkl \left\lbrack P(\vec m) ~||~ P(~\vec m~|~ \vec x; \vec w) \right\rbrack}\\
+\mathscr{L}(P(\vec m), \vec w) + {\color{red}\dkl \left\lbrack P(\vec m) ~||~ \widehat{P}(~\vec m~|~ \vec x; \vec w) \right\rbrack}\\
 &= 
 \int P(\vec m) \ln \frac{\widehat{P}(~\vec m, \vec x ~|~ \vec w)}{P(\vec m)} d\vec m
 + 
