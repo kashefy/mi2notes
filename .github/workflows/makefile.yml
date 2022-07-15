@@ -15,6 +15,15 @@ jobs:
         with:
           run: |
             apk add make
-            pwd
             bash .ci/travis/make_all.sh
-            make
+      - name: Zip all PDFs
+        run: |
+          bash .ci/travis/zip_pdfs.sh
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            ./notes/**/tutorial_*.slides.pdf
+            ./notes/**/tutorial_*.notes.pdf
+            tutorial_*.zip
