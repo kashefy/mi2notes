@@ -12,7 +12,6 @@
 \hypersetup{
   colorlinks   = true, %Colours links instead of ugly boxes
 }
-\usepackage{titlesec}
 \usepackage[overlay,absolute]{textpos}
 \usepackage{enumerate}
 \RequirePackage{graphics,graphicx}
@@ -71,9 +70,6 @@
 \renewcommand*{\thesection}{
 %\sectionprefix
 \thesheetno.\arabic{section}}
-\titleformat{\section}
-  {}{T\thesection~T}
-  {0em}{}
     
 % Custom referencing - BEGIN
 % Use custom text for sections, figures and equations
