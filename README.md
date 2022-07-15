@@ -1,5 +1,6 @@
 # Machine Intelligence 2: Unsupervised Learning - Tutorial Notes #
 
+[![make LaTeX](https://github.com/kashefy/mi2notes/actions/workflows/makefile.yml/badge.svg)](https://github.com/kashefy/mi2notes/actions/workflows/makefile.yml)
 [![Build Status](https://app.travis-ci.com/kashefy/mi2notes.svg?branch=master)](https://app.travis-ci.com/kashefy/mi2notes)
 [![License: CC BY-SA 4.0](https://licensebuttons.net/l/by-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-sa/4.0/)
 
