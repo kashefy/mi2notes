@@ -15,4 +15,6 @@ jobs:
         with:
           run: |
             apk add make
+            pwd
+            bash .ci/travis/make_all.sh
             make
