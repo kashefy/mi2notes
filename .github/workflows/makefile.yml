@@ -1,4 +1,4 @@
-name: Makefile LaTeX CI
+name: make LaTeX
 
 on:
   push:
