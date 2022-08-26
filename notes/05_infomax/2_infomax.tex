@@ -29,8 +29,11 @@
   \svspace{5mm}
   
 \item[]  
-  Choosing the transformation such that their marginal distributions become uniform 
-  simplifies the computations to find independent sources. i.e. choosing the transformation \\
+  Choosing the transformation such that their marginal distributions become uniform
+  \begin{itemize}
+  \item allows for an interpretation of the nonlinearity as the cdf of peaky function,
+  \item simplifies the computations to find independent sources. i.e. choosing the transformation \\
+  \end{itemize}
   
 \begin{equation}
 \widehat{u}_i = \widehat{f}_i(\widehat{s}_i)
@@ -218,6 +221,29 @@ Maximizing $I(Y,X)$ boils down to maximizing the (differential) entropy of the o
 %or finding a factorization via the KL-divergence,
 %both are based on the Infomax principle and arrive at the same solution.
 %}
+
+% TODO
+%\begin{align}
+%I(X_1, X_2, Y_1, Y_2)
+%=&~ h(X_1) + h(X_2) + h(Y_1) + h(Y_2)\\
+    %&- h(X_1, X_2) - h(X_1, Y_1) - h(X_1, Y_2)\\
+    %&- h(X_2, Y_1) - h(X_2, Y_2)\\
+    %&- h(Y_1, Y_2)\\
+    %&+ h(X_1, X_2, Y_1) + h(X_1, X_2, Y_2)\\
+    %&+ h(X_1, Y_1, Y_2) + h(X_2, Y_1, Y_2)\\
+    %&-h(X_1,X_2,Y_1,Y_2)\\
+%=&~ h(X_1) + h(X_2) + h(Y_1) + h(Y_2)\\
+    %&- h(X_1, X_2) {-h(X_1) - h(Y_1) +I(X_1, Y_1)} \\
+    %&- h(X_1) - h(Y_2) +I(X_1, Y_2)\\
+    %&- h(X_2) - h(Y_1) +I(X_2, Y_1)\\
+    %&- h(X_2) - h(Y_2) + I(X_2, Y_2)\\
+    %&- h(Y_1)- h(X_2) + I(Y_1, X_2)\\
+    %&+ {h(Y_1|X_1,X_2)+h(X_1,X_2)}\\
+    %&+ {h(Y_2|X_1,X_2)+h(X_1,X_2)}\\
+    %&+ {h(X_1|Y_1, Y_2)+h(Y_1, Y_2)}\\
+    %&+ {h(X_2|Y_1, Y_2)+h(Y_1, Y_2)}\\
+    %&- \underbrace{h(Y_2|X_1,X_2,Y_1)}_{h(X_1,X_2,Y_1,Y_2)-h(X_1,X_2,Y_1)}-h(Y_1|X_1,X_2)
+%\end{align}
 
 \end{frame}
 
