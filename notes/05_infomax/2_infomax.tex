@@ -83,7 +83,7 @@ Analogously for the joint distribution:
 \begin{equation}
 \label{eq:conservation1joint}
 	\widehat{P}_{\vec u}(\widehat{\vec u}) \quad
-	 =  \quad \bigg| 
+	 =  \quad \bigg| \det
 		\frac{d \widehat{\vec s}}{d \widehat{\vec u}} \bigg| 
 			 \widehat{P}_{\vec s}(\widehat{\vec s})
 \end{equation}
@@ -273,7 +273,7 @@ Maximizing $I(Y,X)$ boils down to maximizing the (differential) entropy of the o
 	\begin{equation}
 \label{eq:conservation1joint}
 	{P}_{\vec u}(\widehat{\vec u}) \;
-	 =  \; \bigg| 
+	 =  \; \bigg| \det
 		\frac{d \widehat{\vec s}}{d \widehat{\vec u}} \bigg| 
 			 {P}_{\vec s}(\widehat{\vec s})
 \end{equation}
@@ -307,11 +307,11 @@ Maximizing $I(Y,X)$ boils down to maximizing the (differential) entropy of the o
   & = \int d \, \widehat{\vec{s}} P_{\vec{s}}(\widehat{\vec{s}}) \ln 
   \frac
   {
-  \Big|  \frac{d \widehat{\vec u}}{d \widehat{\vec s}} \Big|
+  \Big| \det \frac{d \widehat{\vec u}}{d \widehat{\vec s}} \Big|
   {P}_{\vec u}(\widehat{\vec u}) 
   }
   {
-    \Big|  \frac{d \widehat{\vec u}}{d \widehat{\vec s}} \Big|
+    \Big| \det \frac{d \widehat{\vec u}}{d \widehat{\vec s}} \Big|
   \widehat{P}_{\vec u}(\widehat{\vec u}) 
   }
 }
