@@ -27,6 +27,7 @@
 \usepackage{paralist}
 \usepackage{xcolor,cancel}
 \usepackage{soul} % for strikethrough
+\usepackage{tocloft} % for spacing in toc
 
 % Margins - BEGIN
 \setlength{\oddsidemargin}{0.25 in}
@@ -40,11 +41,14 @@
 % Margins - END
 
 % TOC - BEGIN
-% Requires KOMA-Script version > 3.15
-\RedeclareSectionCommand[tocnumwidth=3.0em]{section}
-\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
-\RedeclareSectionCommand[tocnumwidth=4.0em]{subsubsection}
-% TOC - END
+%% Requires KOMA-Script version > 3.15
+%\RedeclareSectionCommand[tocnumwidth=3.0em]{section}
+%\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
+%\RedeclareSectionCommand[tocnumwidth=4.0em]{subsubsection}
+\addtolength{\cftsecnumwidth}{10pt}
+\addtolength{\cftsubsecnumwidth}{10pt}
+\addtolength{\cftsubsubsecnumwidth}{10pt}
+%% TOC - END
 
 % Update the following presets
 % presets - BEGIN
