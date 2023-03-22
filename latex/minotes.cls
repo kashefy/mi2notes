@@ -45,9 +45,10 @@
 %\RedeclareSectionCommand[tocnumwidth=3.0em]{section}
 %\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
 %\RedeclareSectionCommand[tocnumwidth=4.0em]{subsubsection}
-\addtolength{\cftsecnumwidth}{10pt}
-\addtolength{\cftsubsecnumwidth}{10pt}
-\addtolength{\cftsubsubsecnumwidth}{10pt}
+%\addtolength{\cftsecnumwidth}{10pt}
+%\addtolength{\cftsubsecnumwidth}{10pt}
+%\addtolength{\cftsubsubsecnumwidth}{10pt}
+\usepackage[tocindentauto]{tocstyle}
 %% TOC - END
 
 % Update the following presets
