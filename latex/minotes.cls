@@ -16,6 +16,7 @@
 \usepackage{enumerate}
 \RequirePackage{graphics,graphicx}
 \usepackage{paracol}
+\usepackage{paralist}
 \usepackage{algorithm2e}
 \usepackage[mathscr]{euscript}
 \usepackage{beamerarticle}
@@ -24,7 +25,6 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \newsavebox{\imagebox}
-\usepackage{paralist}
 \usepackage{xcolor,cancel}
 \usepackage{soul} % for strikethrough
 \usepackage{tocloft} % for spacing in toc
