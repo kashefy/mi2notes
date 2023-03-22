@@ -1,5 +1,4 @@
 \usepackage[authoryear,round]{natbib}
-\usepackage{multirow}
 
 \newcommand{\sheetnum}{%
 	00
@@ -33,9 +32,9 @@
 %\end{figure}
 %\begin{algorithm}
 % Below is the definition for the command \removelatexerror:
-\makeatletter
-\newcommand{\removelatexerror}{\let\@latex@error\@gobble}
-\makeatother
+%\makeatletter
+%\newcommand{\removelatexerror}{\let\@latex@error\@gobble}
+%\makeatother
 
 \begin{document} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,14 +42,6 @@
 
 \ttopic{\tutorialtitle}
 
-\columnratio{0.2,0.8}\textbf{}
-\begin{paracol}{2}
-%\setlength{\columnseprule}{0.1pt}
-%\setlength{\columnsep}{5em}
-
-\begin{rightcolumn}
-
-% notes version will ignore it
 \begin{frame}
 \titlepage
 \end{frame}
@@ -60,6 +51,12 @@
 \end{frame}
 
 \newpage
+
+\columnratio{0.2,0.8}\textbf{}
+\begin{paracol}{2}
+%\setlength{\columnseprule}{0.1pt}
+%\setlength{\columnsep}{5em}
+\begin{rightcolumn}
 
 \mode<all>
 \input{./0_intro}
