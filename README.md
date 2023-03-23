@@ -28,7 +28,7 @@ See [Releases](https://github.com/kashefy/mi2notes/releases) to download the lat
 
 ## Instructions on compiling the LaTeX sources ##
 
-Ubuntu:
+Ubuntu 18.04:
 
     apt install texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended texlive-science texlive-lang-german
     
@@ -49,7 +49,13 @@ Please keep the scope of changes small to make it easier to spot the differences
 
 For broader changes, open an issue for the proposed broad change so we can discuss it.
 
-At this point I would like to avoid making any major changes to styling but open to discussing them.
+## Style ##
+
+At this point I would like to avoid making any major styling changes but open to discussing them.
+
+The notes leave space on the left for your own annotations. You can adjust this space by changing the value for the following under latex/minotes.cls. The changes will apply to all sections:
+    \newcommand{\mycolumnleft}{0.2} # in the range of 0 to 1 increasing this value leaves more space on the left.
+
 
 ## Acknowledgment ##
 

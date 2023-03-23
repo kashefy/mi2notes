@@ -115,3 +115,5 @@
 
 % vertical space for slides only
 \newcommand{\svspace}[1]{}
+
+\newcommand{\mycolumnleft}{0.2}
